@@ -1,0 +1,11 @@
+active player = 1
+players number = 3
+1 player hand cards: 14 green 4 green 4 green 11 blue 12 blue 14 blue 5 blue 7 blue 1 red 2 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
+1 player deck cards: 5 red 7 blue 
+2 player hand cards: 4 green 4 green 4 green 1 blue 2 blue 5 blue 17 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
+2 player deck cards: 1 violet 18 blue 
+3 player hand cards: 4 green 14 green 1 blue 2 blue 14 blue 5 blue 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 5 violet 7 violet 
+3 player deck cards: 2 black 19 green 
+1 pile cards: 2 black 
+2 pile cards: 17 green 
+3 pile cards: 7 black 

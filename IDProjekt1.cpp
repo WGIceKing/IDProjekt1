@@ -232,8 +232,6 @@ void wczytajStanWartosci(int* cardCount, int* greenCount, int* greenValue, int* 
                         }
                     }
 
-                    const char* colorName = NULL;
-
                     if (flagaDwa > 0) {
                         element[index] = '\0';
 
@@ -351,6 +349,7 @@ void wczytajStanWartosci(int* cardCount, int* greenCount, int* greenValue, int* 
                 char element[10];
                 int index = 0;
                 int flagaDwa = 0;
+                int valueLength = 0;
 
                 if (lineEnd[y] != '\n') {
                     while (lineEnd[y] != ' ') {
@@ -358,6 +357,7 @@ void wczytajStanWartosci(int* cardCount, int* greenCount, int* greenValue, int* 
                         index++;
                         y++;
                         flagaDwa++;
+                        valueLength++;
                     }
                 }
 
@@ -367,7 +367,12 @@ void wczytajStanWartosci(int* cardCount, int* greenCount, int* greenValue, int* 
                    element[index] = '\0';
 
                     if (even % 2 == 0) {
-                        value = (int)element[0] - '0';
+                        if (valueLength < 2) {
+                            value = (int)element[0] - '0';
+                        }
+                        else {
+                            value = 10 * ((int)element[0] - '0') + (int)element[1] - '0';
+                        }
                         (*pileCount)++;
                         even++;
                     }
@@ -414,7 +419,9 @@ void wczytajStan(int n, int* tabelaWartosciLoaded, int cardCount, int* tabelaKol
     const char* colorName = NULL;
     int value = 0;
     int indexWartosci = 0;
+    int indexWartosciDeck = 0;
     int indexKolorow = 0;
+    int indexKolorowDeck = 0;
     const char* green = "green";
     const char* blue = "blue";
     const char* red = "red";
@@ -430,7 +437,7 @@ void wczytajStan(int n, int* tabelaWartosciLoaded, int cardCount, int* tabelaKol
         int x = 0;
         if (i > 1 and i < 2 * n + 2) {
             list_t* cur = players[i/2 - 1];
-            list_t* curDeck = deckCards[i / 2 - 1];
+            list_t* curDeck = deckCards[i/2 - 1];
             int z = 0;
             int flaga = 0;
             char lineEnd[1000];
@@ -456,6 +463,7 @@ void wczytajStan(int n, int* tabelaWartosciLoaded, int cardCount, int* tabelaKol
                     char element[10];
                     int index = 0;
                     int flagaDwa = 0;
+                    int valueLength = 0;
 
                     if (lineEnd[y] != '\n') {
                         while (lineEnd[y] != ' ') {
@@ -463,6 +471,7 @@ void wczytajStan(int n, int* tabelaWartosciLoaded, int cardCount, int* tabelaKol
                             index++;
                             y++;
                             flagaDwa++;
+                            valueLength++;
                         }
                     }
 
@@ -470,7 +479,12 @@ void wczytajStan(int n, int* tabelaWartosciLoaded, int cardCount, int* tabelaKol
                         element[index] = '\0';
 
                         if (even % 2 == 0) {
-                            value = (int)element[0] - '0';
+                            if (valueLength < 2) {
+                                value = (int)element[0] - '0';
+                            }
+                            else {
+                                value = 10 * ((int)element[0] - '0') + (int)element[1] - '0';
+                            }
                             tabelaWartosciLoaded[indexWartosci] = value;
                             indexWartosci++;
                             even++;
@@ -535,6 +549,7 @@ void wczytajStan(int n, int* tabelaWartosciLoaded, int cardCount, int* tabelaKol
                     char element[10];
                     int index = 0;
                     int flagaDwa = 0;
+                    int valueLength = 0;
 
                     if (lineEnd[y] != '\n') {
                         while (lineEnd[y] != ' ') {
@@ -542,6 +557,7 @@ void wczytajStan(int n, int* tabelaWartosciLoaded, int cardCount, int* tabelaKol
                             index++;
                             y++;
                             flagaDwa++;
+                            valueLength++;
                         }
                     }
 
@@ -549,55 +565,60 @@ void wczytajStan(int n, int* tabelaWartosciLoaded, int cardCount, int* tabelaKol
                         element[index] = '\0';
 
                         if (even % 2 == 0) {
-                            value = (int)element[0] - '0';
-                            tabelaWartosciLoaded[indexWartosci] = value;
-                            indexWartosci++;
+                            if (valueLength < 2) {
+                                value = (int)element[0] - '0';
+                            }
+                            else {
+                                value = 10 * ((int)element[0] - '0') + (int)element[1] - '0';
+                            }
+                            tabelaWartosciDeck[indexWartosciDeck] = value;
+                            indexWartosciDeck++;
                             even++;
                         }
                         else {
                             if (element[0] != 'b') {
                                 if (element[0] == 'g') {
-                                    tabelaKolorowDeck[indexKolorow] = GREEN;
-                                    addElement(curDeck, value, colorsWithGreen[tabelaKolorowDeck[indexKolorow] - 1]);
+                                    tabelaKolorowDeck[indexKolorowDeck] = GREEN;
+                                    addElement(curDeck, value, colorsWithGreen[tabelaKolorowDeck[indexKolorowDeck] - 1]);
                                     curDeck = curDeck->next;
-                                    indexKolorow++;
+                                    indexKolorowDeck++;
                                 }
                                 if (element[0] == 'r') {
-                                    tabelaKolorowDeck[indexKolorow] = RED;
-                                    addElement(curDeck, value, colorsWithGreen[tabelaKolorowDeck[indexKolorow] - 1]);
+                                    tabelaKolorowDeck[indexKolorowDeck] = RED;
+                                    addElement(curDeck, value, colorsWithGreen[tabelaKolorowDeck[indexKolorowDeck] - 1]);
                                     curDeck = curDeck->next;
-                                    indexKolorow++;
+                                    indexKolorowDeck++;
                                 }
                                 if (element[0] == 'y') {
-                                    tabelaKolorowDeck[indexKolorow] = YELLOW;
-                                    addElement(curDeck, value, colorsWithGreen[tabelaKolorowDeck[indexKolorow] - 1]);
+                                    tabelaKolorowDeck[indexKolorowDeck] = YELLOW;
+                                    addElement(curDeck, value, colorsWithGreen[tabelaKolorowDeck[indexKolorowDeck] - 1]);
                                     curDeck = curDeck->next;
-                                    indexKolorow++;
+                                    indexKolorowDeck++;
                                 }
                                 if (element[0] == 'w') {
-                                    tabelaKolorowDeck[indexKolorow] = WHITE;
-                                    addElement(curDeck, value, colorsWithGreen[tabelaKolorowDeck[indexKolorow] - 1]);
+                                    tabelaKolorowDeck[indexKolorowDeck] = WHITE;
+                                    addElement(curDeck, value, colorsWithGreen[tabelaKolorowDeck[indexKolorowDeck] - 1]);
                                     curDeck = curDeck->next;
-                                    indexKolorow++;
+                                    indexKolorowDeck++;
                                 }
                                 if (element[0] == 'v') {
-                                    tabelaKolorowDeck[indexKolorow] = VIOLET;
-                                    addElement(curDeck, value, colorsWithGreen[tabelaKolorowDeck[indexKolorow] - 1]);
+                                    tabelaKolorowDeck[indexKolorowDeck] = VIOLET;
+                                    addElement(curDeck, value, colorsWithGreen[tabelaKolorowDeck[indexKolorowDeck] - 1]);
                                     curDeck = curDeck->next;
-                                    indexKolorow++;
+                                    indexKolorowDeck++;
                                 }
                             }
                             else if (element[2] == 'u') {
-                                tabelaKolorowDeck[indexKolorow] = BLUE;
-                                addElement(curDeck, value, colorsWithGreen[tabelaKolorowDeck[indexKolorow] - 1]);
+                                tabelaKolorowDeck[indexKolorowDeck] = BLUE;
+                                addElement(curDeck, value, colorsWithGreen[tabelaKolorowDeck[indexKolorowDeck] - 1]);
                                 curDeck = curDeck->next;
-                                indexKolorow++;
+                                indexKolorowDeck++;
                             }
                             else {
-                                tabelaKolorowDeck[indexKolorow] = BLACK;
-                                addElement(curDeck, value, colorsWithGreen[tabelaKolorowDeck[indexKolorow] - 1]);
+                                tabelaKolorowDeck[indexKolorowDeck] = BLACK;
+                                addElement(curDeck, value, colorsWithGreen[tabelaKolorowDeck[indexKolorowDeck] - 1]);
                                 curDeck = curDeck->next;
-                                indexKolorow++;
+                                indexKolorowDeck++;
                             }
                             even++;
                         }
@@ -844,11 +865,17 @@ int main(){
             cout << "Card number: " << cardCount << endl;
             cout << "Pile number: " << pileCount << endl;
 
+            cout << "hands: " << endl;
             for (int i = 0; i < n; i++) {
                 print(players[i]);
                 cout << endl;
             }
             cout << endl;
+            cout << "decks: " << endl;
+            for (int i = 0; i < n; i++) {
+                print(deckCards[i]);
+                cout << endl;
+            }
 
             break;
     }
