@@ -1,12 +1,18 @@
 active player = 1
-players number = 3
-1 player hand cards: 14 green 4 green 4 green 11 blue 12 blue 14 blue 5 blue 7 blue 1 red 2 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-1 player deck cards: 5 red 7 blue 
-2 player hand cards: 4 green 4 green 4 green 1 blue 2 blue 5 blue 17 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-2 player deck cards: 1 violet 18 blue 
-3 player hand cards: 4 green 14 green 1 blue 2 blue 14 blue 5 blue 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 5 violet 7 violet 
-3 player deck cards: 2 black 19 green 
-1 pile cards: 1 red 2 black 
-2 pile cards: 17 violet 4 green 
-3 pile cards: 8 white 
-4 pile cards: 3 blue 
+players number = 5
+1 player hand cards: 1 red 4 white 15 blue 8 white 17 blue 18 blue 1 violet 11 black 2 yellow 17 red 18 white 7 violet 19 red 3 red 4 blue 
+1 player deck cards: 11 blue 2 violet 20 violet 10 green 6 violet 5 red 
+2 player hand cards: 6 blue 1 yellow 3 blue 10 white 9 white 11 yellow 8 red 11 red 2 white 18 red 8 yellow 10 green 14 yellow 10 green 9 black 7 yellow 14 blue 14 white 10 green 3 violet 16 white 5 black 
+2 player deck cards: 20 blue 19 violet 20 white 
+3 player hand cards: 19 black 15 red 15 white 12 white 9 blue 16 yellow 
+3 player deck cards: 19 white 14 red 18 yellow 1 blue 7 white 12 violet 16 violet 13 red 15 violet 20 yellow 14 violet 4 black 10 violet 8 black 12 blue 3 white 
+4 player hand cards: 9 red 5 white 10 green 7 blue 10 green 16 black 4 violet 13 violet 1 white 
+4 player deck cards: 8 blue 10 red 6 black 10 blue 15 yellow 6 yellow 3 yellow 10 yellow 10 green 12 red 14 black 
+5 player hand cards: 5 blue 13 white 11 violet 9 yellow 6 red 4 red 9 violet 10 black 5 violet 7 black 18 black 5 yellow 20 red 17 yellow 16 blue 
+5 player deck cards: 17 black 
+1 pile cards: 15 black 10 green 
+2 pile cards: 8 violet 
+3 pile cards: 2 red 
+4 pile cards: 
+5 pile cards: 6 white 
+6 pile cards: 19 yellow 12 yellow 

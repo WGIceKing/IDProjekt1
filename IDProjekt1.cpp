@@ -176,7 +176,7 @@ int LiczbaGraczy() {
     fclose(loadFile);
 }
 
-void wczytajStanWartosci(int* cardCount, int* greenCount, int* greenValue, int* pileCount, int* greenValueCheck, int* deckCardCount, int* iloscPile) {
+void wczytajStanWartosci(int* cardCount, int* greenCount, int* greenValue, int* greenValueCheck, int* deckCardCount, int* iloscPile, int* iloscPileKart) {
 
     FILE* loadFile;
     loadFile = fopen("save.txt", "r");
@@ -374,7 +374,9 @@ void wczytajStanWartosci(int* cardCount, int* greenCount, int* greenValue, int* 
                         else {
                             value = 10 * ((int)element[0] - '0') + (int)element[1] - '0';
                         }
-                        (*pileCount)++;
+                        if (value >= 0 and value <= 20) {
+                            (*iloscPileKart)++;
+                        }
                         even++;
                     }
                     else {
@@ -412,7 +414,7 @@ void wczytajStanWartosci(int* cardCount, int* greenCount, int* greenValue, int* 
 }
 
 
-void wczytajStan(int n, int* tabelaWartosciLoaded, int cardCount, int* tabelaKolorowLoaded, list_t** players, const char** colorsWithGreen, list_t** deckCards, int* tabelaWartosciDeck, int* tabelaKolorowDeck, list_t** pileCards, int* tabelaWartosciPile, int* tabelaKolorowPile, int iloscPile) {
+void wczytajStan(int n, int* tabelaWartosciLoaded, int cardCount, int* tabelaKolorowLoaded, list_t** players, const char** colorsWithGreen, list_t** deckCards, int* tabelaWartosciDeck, int* tabelaKolorowDeck, list_t** pileCards, int* tabelaWartosciPile, int* tabelaKolorowPile, int iloscPile, int* tabelaWszystkichKolory, int* tabelaWszystkichWartosci) {
 
     FILE* loadFile;
     loadFile = fopen("save.txt", "r");
@@ -422,9 +424,11 @@ void wczytajStan(int n, int* tabelaWartosciLoaded, int cardCount, int* tabelaKol
     int indexWartosci = 0;
     int indexWartosciDeck = 0;
     int indexWartosciPile = 0;
+    int indexWartosciAll = 0;
     int indexKolorow = 0;
     int indexKolorowDeck = 0;
     int indexKolorowPile = 0;
+    int indexKolorowAll = 0;
     const char* green = "green";
     const char* blue = "blue";
     const char* red = "red";
@@ -490,6 +494,8 @@ void wczytajStan(int n, int* tabelaWartosciLoaded, int cardCount, int* tabelaKol
                                 value = 10 * ((int)element[0] - '0') + (int)element[1] - '0';
                             }
                             tabelaWartosciLoaded[indexWartosci] = value;
+                            tabelaWszystkichWartosci[indexWartosciAll] = value;
+                            indexWartosciAll++;
                             indexWartosci++;
                             even++;
                         }
@@ -497,30 +503,40 @@ void wczytajStan(int n, int* tabelaWartosciLoaded, int cardCount, int* tabelaKol
                             if (element[0] != 'b') {
                                 if (element[0] == 'g') {
                                     tabelaKolorowLoaded[indexKolorow] = GREEN;
+                                    tabelaWszystkichKolory[indexKolorowAll] = GREEN;
+                                    indexKolorowAll++;
                                     addElement(cur, value, colorsWithGreen[tabelaKolorowLoaded[indexKolorow] - 1]);
                                     cur = cur->next;
                                     indexKolorow++;
                                 }
                                 if (element[0] == 'r') {
                                     tabelaKolorowLoaded[indexKolorow] = RED;
+                                    tabelaWszystkichKolory[indexKolorowAll] = RED;
+                                    indexKolorowAll++;
                                     addElement(cur, value, colorsWithGreen[tabelaKolorowLoaded[indexKolorow] - 1]);
                                     cur = cur->next;
                                     indexKolorow++;
                                 }
                                 if (element[0] == 'y') {
                                     tabelaKolorowLoaded[indexKolorow] = YELLOW;
+                                    tabelaWszystkichKolory[indexKolorowAll] = YELLOW;
+                                    indexKolorowAll++;
                                     addElement(cur, value, colorsWithGreen[tabelaKolorowLoaded[indexKolorow] - 1]);
                                     cur = cur->next;
                                     indexKolorow++;
                                 }
                                 if (element[0] == 'w') {
                                     tabelaKolorowLoaded[indexKolorow] = WHITE;
+                                    tabelaWszystkichKolory[indexKolorowAll] = WHITE;
+                                    indexKolorowAll++;
                                     addElement(cur, value, colorsWithGreen[tabelaKolorowLoaded[indexKolorow] - 1]);
                                     cur = cur->next;
                                     indexKolorow++;
                                 }
                                 if (element[0] == 'v') {
                                     tabelaKolorowLoaded[indexKolorow] = VIOLET;
+                                    tabelaWszystkichKolory[indexKolorowAll] = VIOLET;
+                                    indexKolorowAll++;
                                     addElement(cur, value, colorsWithGreen[tabelaKolorowLoaded[indexKolorow] - 1]);
                                     cur = cur->next;
                                     indexKolorow++;
@@ -528,12 +544,16 @@ void wczytajStan(int n, int* tabelaWartosciLoaded, int cardCount, int* tabelaKol
                             }
                             else if (element[2] == 'u') {
                                 tabelaKolorowLoaded[indexKolorow] = BLUE;
+                                tabelaWszystkichKolory[indexKolorowAll] = BLUE;
+                                indexKolorowAll++;
                                 addElement(cur, value, colorsWithGreen[tabelaKolorowLoaded[indexKolorow] - 1]);
                                 cur = cur->next;
                                 indexKolorow++;
                             }
                             else {
                                 tabelaKolorowLoaded[indexKolorow] = BLACK;
+                                tabelaWszystkichKolory[indexKolorowAll] = BLACK;
+                                indexKolorowAll++;
                                 addElement(cur, value, colorsWithGreen[tabelaKolorowLoaded[indexKolorow] - 1]);
                                 cur = cur->next;
                                 indexKolorow++;
@@ -576,6 +596,8 @@ void wczytajStan(int n, int* tabelaWartosciLoaded, int cardCount, int* tabelaKol
                                 value = 10 * ((int)element[0] - '0') + (int)element[1] - '0';
                             }
                             tabelaWartosciDeck[indexWartosciDeck] = value;
+                            tabelaWszystkichWartosci[indexWartosciAll] = value;
+                            indexWartosciAll++;
                             indexWartosciDeck++;
                             even++;
                         }
@@ -583,30 +605,40 @@ void wczytajStan(int n, int* tabelaWartosciLoaded, int cardCount, int* tabelaKol
                             if (element[0] != 'b') {
                                 if (element[0] == 'g') {
                                     tabelaKolorowDeck[indexKolorowDeck] = GREEN;
+                                    tabelaWszystkichKolory[indexKolorowAll] = GREEN;
+                                    indexKolorowAll++;
                                     addElement(curDeck, value, colorsWithGreen[tabelaKolorowDeck[indexKolorowDeck] - 1]);
                                     curDeck = curDeck->next;
                                     indexKolorowDeck++;
                                 }
                                 if (element[0] == 'r') {
                                     tabelaKolorowDeck[indexKolorowDeck] = RED;
+                                    tabelaWszystkichKolory[indexKolorowAll] = RED;
+                                    indexKolorowAll++;
                                     addElement(curDeck, value, colorsWithGreen[tabelaKolorowDeck[indexKolorowDeck] - 1]);
                                     curDeck = curDeck->next;
                                     indexKolorowDeck++;
                                 }
                                 if (element[0] == 'y') {
                                     tabelaKolorowDeck[indexKolorowDeck] = YELLOW;
+                                    tabelaWszystkichKolory[indexKolorowAll] = YELLOW;
+                                    indexKolorowAll++;
                                     addElement(curDeck, value, colorsWithGreen[tabelaKolorowDeck[indexKolorowDeck] - 1]);
                                     curDeck = curDeck->next;
                                     indexKolorowDeck++;
                                 }
                                 if (element[0] == 'w') {
                                     tabelaKolorowDeck[indexKolorowDeck] = WHITE;
+                                    tabelaWszystkichKolory[indexKolorowAll] = WHITE;
+                                    indexKolorowAll++;
                                     addElement(curDeck, value, colorsWithGreen[tabelaKolorowDeck[indexKolorowDeck] - 1]);
                                     curDeck = curDeck->next;
                                     indexKolorowDeck++;
                                 }
                                 if (element[0] == 'v') {
                                     tabelaKolorowDeck[indexKolorowDeck] = VIOLET;
+                                    tabelaWszystkichKolory[indexKolorowAll] = VIOLET;
+                                    indexKolorowAll++;
                                     addElement(curDeck, value, colorsWithGreen[tabelaKolorowDeck[indexKolorowDeck] - 1]);
                                     curDeck = curDeck->next;
                                     indexKolorowDeck++;
@@ -614,12 +646,16 @@ void wczytajStan(int n, int* tabelaWartosciLoaded, int cardCount, int* tabelaKol
                             }
                             else if (element[2] == 'u') {
                                 tabelaKolorowDeck[indexKolorowDeck] = BLUE;
+                                tabelaWszystkichKolory[indexKolorowAll] = BLUE;
+                                indexKolorowAll++;
                                 addElement(curDeck, value, colorsWithGreen[tabelaKolorowDeck[indexKolorowDeck] - 1]);
                                 curDeck = curDeck->next;
                                 indexKolorowDeck++;
                             }
                             else {
                                 tabelaKolorowDeck[indexKolorowDeck] = BLACK;
+                                tabelaWszystkichKolory[indexKolorowAll] = BLACK;
+                                indexKolorowAll++;
                                 addElement(curDeck, value, colorsWithGreen[tabelaKolorowDeck[indexKolorowDeck] - 1]);
                                 curDeck = curDeck->next;
                                 indexKolorowDeck++;
@@ -660,38 +696,53 @@ void wczytajStan(int n, int* tabelaWartosciLoaded, int cardCount, int* tabelaKol
                             else {
                                 value = 10 * ((int)element[0] - '0') + (int)element[1] - '0';
                             }
-                            tabelaWartosciPile[indexWartosciPile] = value;
-                            indexWartosciPile++;
+
+                            if (value >= 0 and value <= 20) {
+                                tabelaWartosciPile[indexWartosciPile] = value;
+                                tabelaWszystkichWartosci[indexWartosciAll] = value;
+                                indexWartosciAll++;
+                                indexWartosciPile++;
+                            }
                             even++;
                         }
                         else {
                             if (element[0] != 'b') {
                                 if (element[0] == 'g') {
                                     tabelaKolorowPile[indexKolorowPile] = GREEN;
+                                    tabelaWszystkichKolory[indexKolorowAll] = GREEN;
+                                    indexKolorowAll++;
                                     addElement(curPile, value, colorsWithGreen[tabelaKolorowPile[indexKolorowPile] - 1]);
                                     curPile = curPile->next;
                                     indexKolorowPile++;
                                 }
                                 if (element[0] == 'r') {
                                     tabelaKolorowPile[indexKolorowPile] = RED;
+                                    tabelaWszystkichKolory[indexKolorowAll] = RED;
+                                    indexKolorowAll++;
                                     addElement(curPile, value, colorsWithGreen[tabelaKolorowPile[indexKolorowPile] - 1]);
                                     curPile = curPile->next;
                                     indexKolorowPile++;
                                 }
                                 if (element[0] == 'y') {
                                     tabelaKolorowPile[indexKolorowPile] = YELLOW;
+                                    tabelaWszystkichKolory[indexKolorowAll] = YELLOW;
+                                    indexKolorowAll++;
                                     addElement(curPile, value, colorsWithGreen[tabelaKolorowPile[indexKolorowPile] - 1]);
                                     curPile = curPile->next;
                                     indexKolorowPile++;
                                 }
                                 if (element[0] == 'w') {
                                     tabelaKolorowPile[indexKolorowPile] = WHITE;
+                                    tabelaWszystkichKolory[indexKolorowAll] = WHITE;
+                                    indexKolorowAll++;
                                     addElement(curPile, value, colorsWithGreen[tabelaKolorowPile[indexKolorowPile] - 1]);
                                     curPile = curPile->next;
                                     indexKolorowPile++;
                                 }
                                 if (element[0] == 'v') {
                                     tabelaKolorowPile[indexKolorowPile] = VIOLET;
+                                    tabelaWszystkichKolory[indexKolorowAll] = VIOLET;
+                                    indexKolorowAll++;
                                     addElement(curPile, value, colorsWithGreen[tabelaKolorowPile[indexKolorowPile] - 1]);
                                     curPile = curPile->next;
                                     indexKolorowPile++;
@@ -699,12 +750,16 @@ void wczytajStan(int n, int* tabelaWartosciLoaded, int cardCount, int* tabelaKol
                             }
                             else if (element[2] == 'u') {
                                 tabelaKolorowPile[indexKolorowPile] = BLUE;
+                                tabelaWszystkichKolory[indexKolorowAll] = BLUE;
+                                indexKolorowAll++;
                                 addElement(curPile, value, colorsWithGreen[tabelaKolorowPile[indexKolorowPile] - 1]);
                                 curPile = curPile->next;
                                 indexKolorowPile++;
                             }
                             else {
                                 tabelaKolorowPile[indexKolorowPile] = BLACK;
+                                tabelaWszystkichKolory[indexKolorowAll] = BLACK;
+                                indexKolorowAll++;
                                 addElement(curPile, value, colorsWithGreen[tabelaKolorowPile[indexKolorowPile] - 1]);
                                 curPile = curPile->next;
                                 indexKolorowPile++;
@@ -732,59 +787,31 @@ void colorNumber(list_t** playerHand, int numOfPlayers, const char** colors, int
     int colorCount[6] = { 0, 0, 0, 0, 0, 0 }; //blue, red, violet, yellow, white, black
 
     for (int i = 0; i < numOfPlayers; i++) {
-        if (sposob == 1) {
+        playerHand[i] = playerHand[i]->next;
+
+        while (playerHand[i] != NULL) {
+            if (playerHand[i]->karta.kolor[0] != 'b') {
+
+                if (playerHand[i]->karta.kolor[0] == 'r') {
+                    colorCount[1]++;
+                }
+                if (playerHand[i]->karta.kolor[0] == 'y') {
+                    colorCount[3]++;
+                }
+                if (playerHand[i]->karta.kolor[0] == 'w') {
+                    colorCount[4]++;
+                }
+                if (playerHand[i]->karta.kolor[0] == 'v') {
+                    colorCount[2]++;
+                }
+            }
+            else if (playerHand[i]->karta.kolor[2] == 'u') {
+                colorCount[0]++;
+            }
+            else {
+                colorCount[5]++;
+            }
             playerHand[i] = playerHand[i]->next;
-
-            while (playerHand[i] != NULL) {
-                if (playerHand[i]->karta.kolor[0] != 'b') {
-
-                    if (playerHand[i]->karta.kolor[0] == 'r') {
-                        colorCount[1]++;
-                    }
-                    if (playerHand[i]->karta.kolor[0] == 'y') {
-                        colorCount[3]++;
-                    }
-                    if (playerHand[i]->karta.kolor[0] == 'w') {
-                        colorCount[4]++;
-                    }
-                    if (playerHand[i]->karta.kolor[0] == 'v') {
-                        colorCount[2]++;
-                    }
-                }
-                else if (playerHand[i]->karta.kolor[2] == 'u') {
-                    colorCount[0]++;
-                }
-                else {
-                    colorCount[5]++;
-                }
-                playerHand[i] = playerHand[i]->next;
-            }
-        }
-        else {
-            while (playerHand[i]->next != NULL) {
-                if (playerHand[i]->karta.kolor[0] != 'b') {
-
-                    if (playerHand[i]->karta.kolor[0] == 'r') {
-                        colorCount[1]++;
-                    }
-                    if (playerHand[i]->karta.kolor[0] == 'y') {
-                        colorCount[2]++;
-                    }
-                    if (playerHand[i]->karta.kolor[0] == 'w') {
-                        colorCount[4]++;
-                    }
-                    if (playerHand[i]->karta.kolor[0] == 'v') {
-                        colorCount[3]++;
-                    }
-                }
-                else if (playerHand[i]->karta.kolor[2] == 'u') {
-                    colorCount[0]++;
-                }
-                else {
-                    colorCount[5]++;
-                }
-                playerHand[i] = playerHand[i]->next;
-            }
         }
     }
     int ilosc;
@@ -831,6 +858,8 @@ int main(){
     int* tabelaKolorowDeck = NULL;
     int* tabelaWartosciPile = NULL;
     int* tabelaKolorowPile = NULL;
+    int* tabelaWszystkichWartosci = NULL;
+    int* tabelaWszystkichKolory = NULL;
     list_t** players = NULL;
     list_t** deckCards = NULL;
     list_t** pileCards = NULL;
@@ -888,13 +917,13 @@ int main(){
             sposob = 1;
             int greenCount = 0;
             int cardCount = 0;
-            int pileCount = 0;
+            int iloscKartPile = 0;
             int iloscPile = 0;
             int deckCardCount = 0;
             int greenValue;
             int greenValueCheck = 0;
 
-            wczytajStanWartosci(&cardCount, &greenCount, &greenValue, &pileCount, &greenValueCheck, &deckCardCount, &iloscPile);
+            wczytajStanWartosci(&cardCount, &greenCount, &greenValue, &greenValueCheck, &deckCardCount, &iloscPile, &iloscKartPile);
 
             tabelaWartosciLoaded = (int*)malloc(cardCount*sizeof(int));
             if (tabelaWartosciLoaded == NULL) {
@@ -920,17 +949,33 @@ int main(){
                 return 1;
             }
 
-            tabelaKolorowPile = (int*)malloc(pileCount * sizeof(int));
+            tabelaKolorowPile = (int*)malloc(iloscKartPile * sizeof(int));
             if (tabelaKolorowPile == NULL) {
                 cout << "Allocation error" << endl;
                 return 1;
             }
 
-            tabelaWartosciPile = (int*)malloc(deckCardCount * sizeof(int));
+            tabelaWartosciPile = (int*)malloc(iloscKartPile * sizeof(int));
             if (tabelaWartosciDeck == NULL) {
                 cout << "Allocation error" << endl;
                 return 1;
             }
+
+            int allCardsTogether = iloscKartPile + deckCardCount + cardCount;
+
+            tabelaWszystkichWartosci = (int*)malloc(allCardsTogether * sizeof(int));
+            if (tabelaWszystkichWartosci == NULL) {
+                cout << "Allocation error" << endl;
+                return 1;
+            }
+
+            tabelaWszystkichKolory = (int*)malloc(allCardsTogether * sizeof(int));
+            if (tabelaWszystkichKolory == NULL) {
+                cout << "Allocation error" << endl;
+                return 1;
+            }
+
+
 
             n = LiczbaGraczy();
 
@@ -953,24 +998,25 @@ int main(){
             }
 
 
-            wczytajStan(n, tabelaWartosciLoaded, cardCount, tabelaKolorowLoaded, players, colorsWithGreen, deckCards, tabelaWartosciDeck, tabelaKolorowDeck, pileCards, tabelaWartosciPile, tabelaKolorowPile, iloscPile);
+            wczytajStan(n, tabelaWartosciLoaded, cardCount, tabelaKolorowLoaded, players, colorsWithGreen, deckCards, tabelaWartosciDeck, tabelaKolorowDeck, pileCards, tabelaWartosciPile, tabelaKolorowPile, iloscPile, tabelaWszystkichKolory, tabelaWszystkichWartosci);
     
             if (greenCount == 0) {
                 cout << "Green cards does not exist" << endl;
             }
             else {
-                cout << "Green number: " << greenCount << endl;
                 if (greenValueCheck > 1) {
                     cout << "Different green cards values occurred" << endl;
                 }
                 else {
+                    cout << "Green number: " << greenCount << endl;
                     cout << "Green value: " << greenValue << endl;
                 }
             }
 
             cout << "Deck card number: " << deckCardCount << endl;
             cout << "Card number: " << cardCount << endl;
-            cout << "Pile number: " << pileCount << endl;
+            cout << "Pile number: " << iloscKartPile << endl;
+            cout << endl;
 
             cout << "hands: " << endl;
             for (int i = 0; i < n; i++) {
@@ -989,7 +1035,12 @@ int main(){
                 print(pileCards[i]);
                 cout << endl;
             }
+            cout << endl;
+            cout << endl;
 
+            for (int i = 0; i < allCardsTogether; i++) {
+                cout << tabelaWszystkichWartosci[i] << " " << colorsWithGreen[tabelaWszystkichKolory[i] - 1] << " ";
+            }
             break;
     }
 
@@ -1001,6 +1052,10 @@ int main(){
     free(tabelaKolorowDeck);
     free(tabelaWartosciDeck);
     free(tabelaKolorowLoaded);
+    free(tabelaKolorowPile);
+    free(tabelaWartosciPile);
+    free(tabelaWszystkichKolory);
+    free(tabelaWszystkichWartosci);
 
     fclose(fp);
     return 0;
