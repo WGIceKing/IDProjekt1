@@ -705,7 +705,7 @@ void wczytajStan(int n, int* tabelaWartosciLoaded, int cardCount, int* tabelaKol
                             }
                             even++;
                         }
-                        else {
+                        else if(value >= 0 and value <= 20) {
                             if (element[0] != 'b') {
                                 if (element[0] == 'g') {
                                     tabelaKolorowPile[indexKolorowPile] = GREEN;
@@ -775,7 +775,7 @@ void wczytajStan(int n, int* tabelaWartosciLoaded, int cardCount, int* tabelaKol
     fclose(loadFile);
 }
 
-void colorNumber(list_t** playerHand, int numOfPlayers, const char** colors, int sposob) {
+void colorNumber(list_t *allCards, const char** colors, int sposob) {
     
     //int blueCount = 0;
     //int redCount = 0;
@@ -785,34 +785,30 @@ void colorNumber(list_t** playerHand, int numOfPlayers, const char** colors, int
     //int blackCount = 0;
 
     int colorCount[6] = { 0, 0, 0, 0, 0, 0 }; //blue, red, violet, yellow, white, black
+    allCards = allCards->next;
+    while (allCards != NULL) {
+        if (allCards->karta.kolor[0] != 'b') {
 
-    for (int i = 0; i < numOfPlayers; i++) {
-        playerHand[i] = playerHand[i]->next;
-
-        while (playerHand[i] != NULL) {
-            if (playerHand[i]->karta.kolor[0] != 'b') {
-
-                if (playerHand[i]->karta.kolor[0] == 'r') {
-                    colorCount[1]++;
-                }
-                if (playerHand[i]->karta.kolor[0] == 'y') {
-                    colorCount[3]++;
-                }
-                if (playerHand[i]->karta.kolor[0] == 'w') {
-                    colorCount[4]++;
-                }
-                if (playerHand[i]->karta.kolor[0] == 'v') {
-                    colorCount[2]++;
-                }
+            if (allCards->karta.kolor[0] == 'r') {
+                colorCount[1]++;
             }
-            else if (playerHand[i]->karta.kolor[2] == 'u') {
-                colorCount[0]++;
+            if (allCards->karta.kolor[0] == 'y') {
+                colorCount[3]++;
             }
-            else {
-                colorCount[5]++;
+            if (allCards->karta.kolor[0] == 'w') {
+                colorCount[4]++;
             }
-            playerHand[i] = playerHand[i]->next;
+            if (allCards->karta.kolor[0] == 'v') {
+                colorCount[2]++;
+            }
         }
+        else if (allCards->karta.kolor[2] == 'u') {
+            colorCount[0]++;
+        }
+        else {
+            colorCount[5]++;
+        }
+        allCards = allCards->next;
     }
     int ilosc;
     int flaga = 0;
@@ -863,6 +859,7 @@ int main(){
     list_t** players = NULL;
     list_t** deckCards = NULL;
     list_t** pileCards = NULL;
+    list_t allCards;
 
     FILE* fp;
     fp = fopen("save.txt", "a");
@@ -1036,15 +1033,21 @@ int main(){
                 cout << endl;
             }
             cout << endl;
-            cout << endl;
 
+            init(&allCards);
+
+            list_t* cur = &allCards;
             for (int i = 0; i < allCardsTogether; i++) {
-                cout << tabelaWszystkichWartosci[i] << " " << colorsWithGreen[tabelaWszystkichKolory[i] - 1] << " ";
+                addElement(cur, tabelaWszystkichWartosci[i], colorsWithGreen[tabelaWszystkichKolory[i] - 1]);
+                cur = cur->next;
             }
+
+            //print(&allCards);
+
             break;
     }
 
-    colorNumber(players, n, colors, sposob);
+    colorNumber(&allCards, colors, sposob);
 
     free(tabelaKart);
     free(tabelaWartosci);
