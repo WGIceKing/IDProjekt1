@@ -176,7 +176,7 @@ int LiczbaGraczy() {
     fclose(loadFile);
 }
 
-void wczytajStanWartosci(int* cardCount, int* greenCount, int* greenValue, int* pileCount, int* greenValueCheck, int* deckCardCount) {
+void wczytajStanWartosci(int* cardCount, int* greenCount, int* greenValue, int* pileCount, int* greenValueCheck, int* deckCardCount, int* iloscPile) {
 
     FILE* loadFile;
     loadFile = fopen("save.txt", "r");
@@ -196,6 +196,7 @@ void wczytajStanWartosci(int* cardCount, int* greenCount, int* greenValue, int* 
             playerNumber = (int)line[17] - '0';
             //(*pileCount) -= 3;
         }
+        (*iloscPile) = (int)line[0] - '0';
         if (i > 1 and i < 2 * playerNumber + 2) {
             int z = 0;
             int flaga = 0;
@@ -411,7 +412,7 @@ void wczytajStanWartosci(int* cardCount, int* greenCount, int* greenValue, int* 
 }
 
 
-void wczytajStan(int n, int* tabelaWartosciLoaded, int cardCount, int* tabelaKolorowLoaded, list_t** players, const char** colorsWithGreen, list_t** deckCards, int* tabelaWartosciDeck, int* tabelaKolorowDeck) {
+void wczytajStan(int n, int* tabelaWartosciLoaded, int cardCount, int* tabelaKolorowLoaded, list_t** players, const char** colorsWithGreen, list_t** deckCards, int* tabelaWartosciDeck, int* tabelaKolorowDeck, list_t** pileCards, int* tabelaWartosciPile, int* tabelaKolorowPile, int iloscPile) {
 
     FILE* loadFile;
     loadFile = fopen("save.txt", "r");
@@ -420,8 +421,10 @@ void wczytajStan(int n, int* tabelaWartosciLoaded, int cardCount, int* tabelaKol
     int value = 0;
     int indexWartosci = 0;
     int indexWartosciDeck = 0;
+    int indexWartosciPile = 0;
     int indexKolorow = 0;
     int indexKolorowDeck = 0;
+    int indexKolorowPile = 0;
     const char* green = "green";
     const char* blue = "blue";
     const char* red = "red";
@@ -431,13 +434,14 @@ void wczytajStan(int n, int* tabelaWartosciLoaded, int cardCount, int* tabelaKol
     const char* black = "black";
     int i = 0;
 
-    for (i; i < 2 + 3 * n; i++) {
+    for (i; i < 2 + (2 * n) + iloscPile; i++) {
         char line[1000];
         fgets(line, 1000, loadFile);
         int x = 0;
-        if (i > 1 and i < 2 * n + 2) {
+        if (i > 1) {
             list_t* cur = players[i/2 - 1];
             list_t* curDeck = deckCards[i/2 - 1];
+            list_t* curPile = pileCards[i - (2 + 2 * n)];
             int z = 0;
             int flaga = 0;
             char lineEnd[1000];
@@ -454,7 +458,7 @@ void wczytajStan(int n, int* tabelaWartosciLoaded, int cardCount, int* tabelaKol
             }
 
             lineEnd[z] = '\0';
-            if (i % 2 == 0) {
+            if (i % 2 == 0 and i < 2 * n + 2) {
 
                 int y = 0;
                 int even = 0;
@@ -540,7 +544,7 @@ void wczytajStan(int n, int* tabelaWartosciLoaded, int cardCount, int* tabelaKol
                     y++;
                 }
             }
-            if (i % 2 == 1) {
+            if (i % 2 == 1 and i < 2 * n + 2) {
 
                 int y = 0;
                 int even = 0;
@@ -626,10 +630,91 @@ void wczytajStan(int n, int* tabelaWartosciLoaded, int cardCount, int* tabelaKol
                     y++;
                 }
             }
-        }
-        else if (i >= 2 * n + 2) {
-            char line[1000];
-            fgets(line, 1000, loadFile);
+            else if (i >= 2 * n + 2) {
+                int y = 0;
+                int even = 0;
+
+                while (lineEnd[y + 1] != '\0') {
+                    char element[10];
+                    int index = 0;
+                    int flagaDwa = 0;
+                    int valueLength = 0;
+
+                    if (lineEnd[y] != '\n') {
+                        while (lineEnd[y] != ' ') {
+                            element[index] = lineEnd[y];
+                            index++;
+                            y++;
+                            flagaDwa++;
+                            valueLength++;
+                        }
+                    }
+
+                    if (flagaDwa > 0) {
+                        element[index] = '\0';
+
+                        if (even % 2 == 0) {
+                            if (valueLength < 2) {
+                                value = (int)element[0] - '0';
+                            }
+                            else {
+                                value = 10 * ((int)element[0] - '0') + (int)element[1] - '0';
+                            }
+                            tabelaWartosciPile[indexWartosciPile] = value;
+                            indexWartosciPile++;
+                            even++;
+                        }
+                        else {
+                            if (element[0] != 'b') {
+                                if (element[0] == 'g') {
+                                    tabelaKolorowPile[indexKolorowPile] = GREEN;
+                                    addElement(curPile, value, colorsWithGreen[tabelaKolorowPile[indexKolorowPile] - 1]);
+                                    curPile = curPile->next;
+                                    indexKolorowPile++;
+                                }
+                                if (element[0] == 'r') {
+                                    tabelaKolorowPile[indexKolorowPile] = RED;
+                                    addElement(curPile, value, colorsWithGreen[tabelaKolorowPile[indexKolorowPile] - 1]);
+                                    curPile = curPile->next;
+                                    indexKolorowPile++;
+                                }
+                                if (element[0] == 'y') {
+                                    tabelaKolorowPile[indexKolorowPile] = YELLOW;
+                                    addElement(curPile, value, colorsWithGreen[tabelaKolorowPile[indexKolorowPile] - 1]);
+                                    curPile = curPile->next;
+                                    indexKolorowPile++;
+                                }
+                                if (element[0] == 'w') {
+                                    tabelaKolorowPile[indexKolorowPile] = WHITE;
+                                    addElement(curPile, value, colorsWithGreen[tabelaKolorowPile[indexKolorowPile] - 1]);
+                                    curPile = curPile->next;
+                                    indexKolorowPile++;
+                                }
+                                if (element[0] == 'v') {
+                                    tabelaKolorowPile[indexKolorowPile] = VIOLET;
+                                    addElement(curPile, value, colorsWithGreen[tabelaKolorowPile[indexKolorowPile] - 1]);
+                                    curPile = curPile->next;
+                                    indexKolorowPile++;
+                                }
+                            }
+                            else if (element[2] == 'u') {
+                                tabelaKolorowPile[indexKolorowPile] = BLUE;
+                                addElement(curPile, value, colorsWithGreen[tabelaKolorowPile[indexKolorowPile] - 1]);
+                                curPile = curPile->next;
+                                indexKolorowPile++;
+                            }
+                            else {
+                                tabelaKolorowPile[indexKolorowPile] = BLACK;
+                                addElement(curPile, value, colorsWithGreen[tabelaKolorowPile[indexKolorowPile] - 1]);
+                                curPile = curPile->next;
+                                indexKolorowPile++;
+                            }
+                            even++;
+                        }
+                    }
+                    y++;
+                }
+            }
         }
     }
     fclose(loadFile);
@@ -744,8 +829,11 @@ int main(){
     int* tabelaPileLoaded = NULL;
     int* tabelaWartosciDeck = NULL;
     int* tabelaKolorowDeck = NULL;
+    int* tabelaWartosciPile = NULL;
+    int* tabelaKolorowPile = NULL;
     list_t** players = NULL;
     list_t** deckCards = NULL;
+    list_t** pileCards = NULL;
 
     FILE* fp;
     fp = fopen("save.txt", "a");
@@ -801,11 +889,12 @@ int main(){
             int greenCount = 0;
             int cardCount = 0;
             int pileCount = 0;
+            int iloscPile = 0;
             int deckCardCount = 0;
             int greenValue;
             int greenValueCheck = 0;
 
-            wczytajStanWartosci(&cardCount, &greenCount, &greenValue, &pileCount, &greenValueCheck, &deckCardCount);
+            wczytajStanWartosci(&cardCount, &greenCount, &greenValue, &pileCount, &greenValueCheck, &deckCardCount, &iloscPile);
 
             tabelaWartosciLoaded = (int*)malloc(cardCount*sizeof(int));
             if (tabelaWartosciLoaded == NULL) {
@@ -831,6 +920,18 @@ int main(){
                 return 1;
             }
 
+            tabelaKolorowPile = (int*)malloc(pileCount * sizeof(int));
+            if (tabelaKolorowPile == NULL) {
+                cout << "Allocation error" << endl;
+                return 1;
+            }
+
+            tabelaWartosciPile = (int*)malloc(deckCardCount * sizeof(int));
+            if (tabelaWartosciDeck == NULL) {
+                cout << "Allocation error" << endl;
+                return 1;
+            }
+
             n = LiczbaGraczy();
 
             players = (list_t**)malloc(n * sizeof(list_t*));
@@ -845,8 +946,14 @@ int main(){
                 init(deckCards[i]);
             }
 
+            pileCards = (list_t**)malloc(iloscPile * sizeof(list_t*));
+            for (int i = 0; i < iloscPile; i++) {
+                pileCards[i] = (list_t*)malloc(sizeof(list_t));
+                init(pileCards[i]);
+            }
 
-            wczytajStan(n, tabelaWartosciLoaded, cardCount, tabelaKolorowLoaded, players, colorsWithGreen, deckCards, tabelaWartosciDeck, tabelaKolorowDeck);
+
+            wczytajStan(n, tabelaWartosciLoaded, cardCount, tabelaKolorowLoaded, players, colorsWithGreen, deckCards, tabelaWartosciDeck, tabelaKolorowDeck, pileCards, tabelaWartosciPile, tabelaKolorowPile, iloscPile);
     
             if (greenCount == 0) {
                 cout << "Green cards does not exist" << endl;
@@ -874,6 +981,12 @@ int main(){
             cout << "decks: " << endl;
             for (int i = 0; i < n; i++) {
                 print(deckCards[i]);
+                cout << endl;
+            }
+            cout << endl;
+            cout << "piles: " << endl;
+            for (int i = 0; i < iloscPile; i++) {
+                print(pileCards[i]);
                 cout << endl;
             }
 
