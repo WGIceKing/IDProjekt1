@@ -875,18 +875,20 @@ void bubbleSort(intlist_t* l) {
     intlist_t* leftPointer;
     intlist_t* rightPointer = NULL;
 
-    do {
-        swapped = 0;
-        leftPointer = l;
-        while (leftPointer->next != rightPointer) {
-            if (leftPointer->value > leftPointer->next->value) {
-                swapTwo(leftPointer, leftPointer->next);
-                swapped = 1;
+    if (l != NULL) {
+        do {
+            swapped = 0;
+            leftPointer = l;
+            while (leftPointer->next != rightPointer) {
+                if (leftPointer->value > leftPointer->next->value) {
+                    swapTwo(leftPointer, leftPointer->next);
+                    swapped = 1;
+                }
+                leftPointer = leftPointer->next;
             }
-            leftPointer = leftPointer->next;
-        }
-        rightPointer = leftPointer;
-    } while (swapped == 1);
+            rightPointer = leftPointer;
+        } while (swapped == 1);
+    }
 }
 
 void rozlozNaKolory(intlist_t** listOfColorCards, int* tabelaWszystkichWartosci, int* tabelaWszystkichKolorow, int allCardsTogether) {
@@ -1143,9 +1145,11 @@ int main(){
 
             cout << endl;
             for (int i = 0; i < KOLORY; i++) {
-                cout << colors[i] << " cards values: ";
-                printInt(listOfColorCards[i]);
-                cout << endl;
+                if (listOfColorCards[i]->next != NULL) {
+                    cout << colors[i] << " cards values: ";
+                    printInt(listOfColorCards[i]);
+                    cout << endl;
+                }
             }
 
             break;
