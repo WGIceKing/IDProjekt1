@@ -23,8 +23,24 @@ typedef struct list {
     struct list* next;
 }list_t;
 
+typedef struct intlist {
+    int value;
+    struct intlist* next;
+}intlist_t;
+
 void init(list_t* head) {
     head->next = NULL;
+}
+
+void initInt(intlist_t* head) {
+    head->next = NULL;
+}
+
+void addElementInt(intlist_t* l, int value) {
+    intlist_t* x = (intlist_t*)malloc(sizeof(intlist_t));
+    x->value = value;
+    x->next = l->next;
+    l->next = x;
 }
 
 void addElement(list_t* l, int value, const char* color) {
@@ -47,6 +63,14 @@ void print(list_t* h) {
     h = h->next;
     while (h != NULL) {
         cout << h->karta.wartosc << " " << h->karta.kolor << " ";
+        h = h->next;
+    }
+}
+
+void printInt(intlist_t* h) {
+    h = h->next;
+    while (h != NULL) {
+        cout << h->value << " ";
         h = h->next;
     }
 }
@@ -838,6 +862,42 @@ void colorNumber(list_t *allCards, const char** colors, int sposob) {
     }
 }
 
+void rozlozNaKolory(intlist_t** listOfColorCards, int* tabelaWszystkichWartosci, int* tabelaWszystkichKolorow, int allCardsTogether) {
+    intlist_t* curZero = listOfColorCards[0];
+    intlist_t* curOne = listOfColorCards[1];
+    intlist_t* curTwo = listOfColorCards[2];
+    intlist_t* curThree = listOfColorCards[3];
+    intlist_t* curFour = listOfColorCards[4];
+    intlist_t* curFive = listOfColorCards[5];
+
+    for (int i = 0; i < allCardsTogether; i++) {
+        if (tabelaWszystkichKolorow[i] == BLUE) {
+            addElementInt(curZero, tabelaWszystkichWartosci[i]);
+            curZero = curZero->next;
+        }
+        if (tabelaWszystkichKolorow[i] == RED) {
+            addElementInt(curOne, tabelaWszystkichWartosci[i]);
+            curOne = curOne->next;
+        }
+        if (tabelaWszystkichKolorow[i] == VIOLET) {
+            addElementInt(curTwo, tabelaWszystkichWartosci[i]);
+            curTwo = curTwo->next;
+        }
+        if (tabelaWszystkichKolorow[i] == YELLOW) {
+            addElementInt(curThree, tabelaWszystkichWartosci[i]);
+            curThree = curThree->next;
+        }
+        if (tabelaWszystkichKolorow[i] == WHITE) {
+            addElementInt(curFour, tabelaWszystkichWartosci[i]);
+            curFour = curFour->next;
+        }
+        if (tabelaWszystkichKolorow[i] == BLACK) {
+            addElementInt(curFive, tabelaWszystkichWartosci[i]);
+            curFive = curFive->next;
+        }
+    }
+}
+
 int main(){
 
     int n; //l. graczy
@@ -859,6 +919,7 @@ int main(){
     list_t** players = NULL;
     list_t** deckCards = NULL;
     list_t** pileCards = NULL;
+    intlist_t** listOfColorCards = NULL;
     list_t allCards;
 
     FILE* fp;
@@ -972,8 +1033,6 @@ int main(){
                 return 1;
             }
 
-
-
             n = LiczbaGraczy();
 
             players = (list_t**)malloc(n * sizeof(list_t*));
@@ -992,6 +1051,12 @@ int main(){
             for (int i = 0; i < iloscPile; i++) {
                 pileCards[i] = (list_t*)malloc(sizeof(list_t));
                 init(pileCards[i]);
+            }
+
+            listOfColorCards = (intlist_t**)malloc(KOLORY * sizeof(intlist_t*));
+            for (int i = 0; i < KOLORY; i++) {
+                listOfColorCards[i] = (intlist_t*)malloc(sizeof(intlist_t));
+                initInt(listOfColorCards[i]);
             }
 
 
@@ -1041,13 +1106,19 @@ int main(){
                 addElement(cur, tabelaWszystkichWartosci[i], colorsWithGreen[tabelaWszystkichKolory[i] - 1]);
                 cur = cur->next;
             }
+            
+            colorNumber(&allCards, colors, sposob);
+            rozlozNaKolory(listOfColorCards, tabelaWszystkichWartosci, tabelaWszystkichKolory, allCardsTogether);
 
-            //print(&allCards);
+            cout << endl;
+            for (int i = 0; i < KOLORY; i++) {
+                cout << colors[i] << " cards values: ";
+                printInt(listOfColorCards[i]);
+                cout << endl;
+            }
 
             break;
     }
-
-    colorNumber(&allCards, colors, sposob);
 
     free(tabelaKart);
     free(tabelaWartosci);
