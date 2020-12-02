@@ -862,6 +862,33 @@ void colorNumber(list_t *allCards, const char** colors, int sposob) {
     }
 }
 
+void swapTwo(intlist_t* a, intlist_t* b) {
+    int bufor = a->value;
+    a->value = b->value;
+    b->value = bufor;
+}
+
+void bubbleSort(intlist_t* l) {
+    l = l->next;
+    int swapped;
+
+    intlist_t* leftPointer;
+    intlist_t* rightPointer = NULL;
+
+    do {
+        swapped = 0;
+        leftPointer = l;
+        while (leftPointer->next != rightPointer) {
+            if (leftPointer->value > leftPointer->next->value) {
+                swapTwo(leftPointer, leftPointer->next);
+                swapped = 1;
+            }
+            leftPointer = leftPointer->next;
+        }
+        rightPointer = leftPointer;
+    } while (swapped == 1);
+}
+
 void rozlozNaKolory(intlist_t** listOfColorCards, int* tabelaWszystkichWartosci, int* tabelaWszystkichKolorow, int allCardsTogether) {
     intlist_t* curZero = listOfColorCards[0];
     intlist_t* curOne = listOfColorCards[1];
@@ -895,6 +922,10 @@ void rozlozNaKolory(intlist_t** listOfColorCards, int* tabelaWszystkichWartosci,
             addElementInt(curFive, tabelaWszystkichWartosci[i]);
             curFive = curFive->next;
         }
+    }
+
+    for (int i = 0; i < KOLORY; i++) {
+        bubbleSort(listOfColorCards[i]);
     }
 }
 
