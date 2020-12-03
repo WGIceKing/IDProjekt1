@@ -190,17 +190,19 @@ int LiczbaGraczy() {
         int index = 0;
         if (i == 1) {
             char nGraczy;
+            int numberOfPlayers;
             while (line[index] != '\n') {
                 nGraczy = line[index];
                 index++;
             }
-            return (int)nGraczy - '0';
+            numberOfPlayers = (int)nGraczy - '0';;
+            return numberOfPlayers;
         }
     }
     fclose(loadFile);
 }
 
-void wczytajStanWartosci(int* cardCount, int* greenCount, int* greenValue, int* greenValueCheck, int* deckCardCount, int* iloscPile, int* iloscPileKart) {
+void wczytajStanWartosci(int* cardCount, int* greenCount, int* greenValue, int* greenValueCheck, int* deckCardCount, int* iloscPile, int* iloscPileKart, int* exploTreshold) {
 
     FILE* loadFile;
     loadFile = fopen("save.txt", "r");
@@ -220,8 +222,16 @@ void wczytajStanWartosci(int* cardCount, int* greenCount, int* greenValue, int* 
             playerNumber = (int)line[17] - '0';
             //(*pileCount) -= 3;
         }
+        if (i == 2) {
+            if ((int)line[23] >= 48 and (int)line[23] <= 57) {
+                (*exploTreshold) = 10* ((int)line[22] - '0') + (int)line[23] - '0';
+            }
+            else {
+                (*exploTreshold) = (int)line[22] - '0';
+            }
+        }
         (*iloscPile) = (int)line[0] - '0';
-        if (i > 1 and i < 2 * playerNumber + 2) {
+        if (i > 2 and i < 2 * playerNumber + 3) {
             int z = 0;
             int flaga = 0;
             char lineEnd[1000];
@@ -238,7 +248,7 @@ void wczytajStanWartosci(int* cardCount, int* greenCount, int* greenValue, int* 
             }
 
             lineEnd[z] = '\0';
-            if (i % 2 == 0) {
+            if (i % 2 == 1) {
 
                 int y = 0;
                 int even = 0;
@@ -292,7 +302,7 @@ void wczytajStanWartosci(int* cardCount, int* greenCount, int* greenValue, int* 
                     y++;
                 }
             }
-            if (i % 2 == 1) {
+            if (i % 2 == 0) {
 
                 int y = 0;
                 int even = 0;
@@ -349,7 +359,7 @@ void wczytajStanWartosci(int* cardCount, int* greenCount, int* greenValue, int* 
                 }
             }
         }
-        if (i >= 2 * playerNumber + 2) {
+        if (i >= 2 * playerNumber + 3) {
             int z = 0;
             int flaga = 0;
             char lineEnd[1000];
@@ -462,14 +472,14 @@ void wczytajStan(int n, int* tabelaWartosciLoaded, int cardCount, int* tabelaKol
     const char* black = "black";
     int i = 0;
 
-    for (i; i < 2 + (2 * n) + iloscPile; i++) {
+    for (i; i < 3 + (2 * n) + iloscPile; i++) {
         char line[1000];
         fgets(line, 1000, loadFile);
         int x = 0;
-        if (i > 1) {
+        if (i > 2) {
             list_t* cur = players[i/2 - 1];
-            list_t* curDeck = deckCards[i/2 - 1];
-            list_t* curPile = pileCards[i - (2 + 2 * n)];
+            list_t* curDeck = deckCards[i/2 - 2];
+            list_t* curPile = pileCards[i - (3 + 2 * n)];
             int z = 0;
             int flaga = 0;
             char lineEnd[1000];
@@ -486,7 +496,7 @@ void wczytajStan(int n, int* tabelaWartosciLoaded, int cardCount, int* tabelaKol
             }
 
             lineEnd[z] = '\0';
-            if (i % 2 == 0 and i < 2 * n + 2) {
+            if (i % 2 == 1 and i < 2 * n + 3) {
 
                 int y = 0;
                 int even = 0;
@@ -588,7 +598,7 @@ void wczytajStan(int n, int* tabelaWartosciLoaded, int cardCount, int* tabelaKol
                     y++;
                 }
             }
-            if (i % 2 == 1 and i < 2 * n + 2) {
+            if (i % 2 == 0 and i < 2 * n + 3) {
 
                 int y = 0;
                 int even = 0;
@@ -690,7 +700,7 @@ void wczytajStan(int n, int* tabelaWartosciLoaded, int cardCount, int* tabelaKol
                     y++;
                 }
             }
-            else if (i >= 2 * n + 2) {
+            else if (i >= 2 * n + 3) {
                 int y = 0;
                 int even = 0;
 
@@ -1018,6 +1028,7 @@ int main(){
     int g; //l. zielonych kart
     int gv; //wartosc zielonych kart
     int o; //l. kart innych kolorow
+    int exploTreshold;
     card* tabelaKart = NULL;
     int* tabelaWartosci = NULL;
     int* tabelaWartosciLoaded = NULL;
@@ -1102,7 +1113,7 @@ int main(){
                 colorCheck[i] = -1;
             }
 
-            wczytajStanWartosci(&cardCount, &greenCount, &greenValue, &greenValueCheck, &deckCardCount, &iloscPile, &iloscKartPile);
+            wczytajStanWartosci(&cardCount, &greenCount, &greenValue, &greenValueCheck, &deckCardCount, &iloscPile, &iloscKartPile, &exploTreshold);
 
             tabelaWartosciLoaded = (int*)malloc(cardCount*sizeof(int));
             if (tabelaWartosciLoaded == NULL) {
@@ -1240,6 +1251,8 @@ int main(){
             sprawdzKolory(listOfColorCards, equal, colors, colorCheck, listOfBeg);
 
             cout << endl;
+
+            cout << exploTreshold;
 
             break;
     }
