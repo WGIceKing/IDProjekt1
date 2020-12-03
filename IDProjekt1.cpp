@@ -77,9 +77,8 @@ void printInt(intlist_t* h) {
 }
 
 void printToFile(list_t* h, int i, FILE* fp) {
-    fprintf (fp, "%i player hand cards: ", i + 1);
-
-    while (h->next != NULL) {
+    h = h->next;
+    while (h != NULL) {
         fprintf(fp, "%i %s ", h->karta.wartosc, h->karta.kolor);
         h = h->next;
     }
@@ -138,9 +137,9 @@ void stworzTalie(int k, int g, int gv, int o, const char *colors[KOLORY], card t
     }
 }
 
-void reverseList(list_t** l) {
+void reverseList(list_t* l) {
     list_t* prev = NULL;
-    list_t* cur = *l;
+    list_t* cur = l->next;
     list_t* next = NULL;
     while (cur != NULL) {
         next = cur->next;
@@ -148,35 +147,41 @@ void reverseList(list_t** l) {
         prev = cur;
         cur = next;
     }
-    *l = prev;
+    l->next = prev;
 }
 
 void dajDoRak(int o, int k, int g, int n, list_t** players, card *tabelaKart) {
+    list_t* cur = NULL;
     for (int i = 0; i < o * k + g; i++) {
-        list_t* cur = players[i % n];
+        cur = players[i % n];
         addElement(cur, tabelaKart[i].wartosc, tabelaKart[i].kolor);
         cur = cur->next;
     }
     for (int i = 0; i < n; i++) {
-
-        reverseList(&players[i]);
+        reverseList(players[i]); 
     }
 }
 
-void wypiszStanDoPliku(int n, int k, int o, card *tabelaKart, int g, list_t** players, FILE* fp) {
+void wypiszStanDoPliku(int n, int k, int o, card *tabelaKart, int g, list_t** players, FILE* fp, int activePlayer, list_t** deckCards, list_t** pileCards) {
 
     int wielkoscPelnych = ((o * k + g) / n) + 1;
-    fprintf(fp, "active player = 1\n");
+    fprintf(fp, "active player = %i\n", activePlayer);
     fprintf(fp, "players number = %i\n", n);
+    fprintf(fp, "explosion treshold = 13\n");
 
     for (int i = 0; i < n; i++) {
+        fprintf(fp, "%i player hand cards: ", i + 1);
         printToFile(players[i], i, fp);
 
         fprintf(fp, "\n");
-        fprintf(fp, "%i player deck cards:\n", i + 1);
+        fprintf(fp, "%i player deck cards: ", i + 1);
+        printToFile(deckCards[i], i, fp);
+        fprintf(fp, "\n");
     }
     for (int i = 0; i < k; i++) {
-        fprintf(fp, "%i pile cards:\n", i + 1);
+        fprintf(fp, "%i pile cards: ", i + 1);
+        printToFile(pileCards[i], i, fp);
+        fprintf(fp, "\n");
     }
     fclose(fp);
 }
@@ -1096,6 +1101,10 @@ void sprawdzStan(list_t** players, int exploTreshold, list_t** pileCards, int nu
     }
 }
 
+void turn(list_t** players, list_t** pileCards, int numOfPlayers) {
+
+}
+
 int main(){
 
     int n; //l. graczy
@@ -1104,6 +1113,7 @@ int main(){
     int gv; //wartosc zielonych kart
     int o; //l. kart innych kolorow
     int exploTreshold;
+    int activePlayer;
     card* tabelaKart = NULL;
     int* tabelaWartosci = NULL;
     int* tabelaWartosciLoaded = NULL;
@@ -1138,6 +1148,7 @@ int main(){
     int sposob;
     switch (option) {
         case 'g':
+            activePlayer = 1;
             sposob = 0;
             FILE * fpclear;
             fpclear = fopen("save.txt", "w");
@@ -1167,8 +1178,20 @@ int main(){
                 init(players[i]);
             }
 
+            deckCards = (list_t**)malloc(n * sizeof(list_t*));
+            for (int i = 0; i < n; i++) {
+                deckCards[i] = (list_t*)malloc(sizeof(list_t));
+                init(deckCards[i]);
+            }
+
+            pileCards = (list_t**)malloc(k * sizeof(list_t*));
+            for (int i = 0; i < k; i++) {
+                pileCards[i] = (list_t*)malloc(sizeof(list_t));
+                init(pileCards[i]);
+            }
+
             dajDoRak(o, k, g, n, players, tabelaKart);
-            wypiszStanDoPliku(n, k, o, tabelaKart, g, players, fp);
+            wypiszStanDoPliku(n, k, o, tabelaKart, g, players, fp, activePlayer, deckCards, pileCards);
 
             break;
 
@@ -1183,7 +1206,6 @@ int main(){
             int greenValueCheck = 0;
             int equal = 0;
             int equalSize;
-            int activePlayer;
             int colorCheck[KOLORY]; //blue, red, violet, yellow, white, black
             int flagaOne = 0;
             int flagaTwo = 0;
