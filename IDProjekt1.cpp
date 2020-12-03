@@ -799,7 +799,7 @@ void wczytajStan(int n, int* tabelaWartosciLoaded, int cardCount, int* tabelaKol
     fclose(loadFile);
 }
 
-void colorNumber(list_t *allCards, const char** colors, int sposob) {
+void colorNumber(list_t *allCards, const char** colors, int sposob, int* equal, int* equalSize, int colorCheck[KOLORY]) {
     
     //int blueCount = 0;
     //int redCount = 0;
@@ -808,7 +808,12 @@ void colorNumber(list_t *allCards, const char** colors, int sposob) {
     //int whiteCount = 0;
     //int blackCount = 0;
 
-    int colorCount[6] = { 0, 0, 0, 0, 0, 0 }; //blue, red, violet, yellow, white, black
+    int colorCount[KOLORY];//blue, red, violet, yellow, white, black
+
+    for (int i = 0; i < KOLORY; i++) {
+        colorCount[i] = 0;
+    }
+
     allCards = allCards->next;
     while (allCards != NULL) {
         if (allCards->karta.kolor[0] != 'b') {
@@ -836,29 +841,39 @@ void colorNumber(list_t *allCards, const char** colors, int sposob) {
     }
     int ilosc;
     int flaga = 0;
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < KOLORY; i++) {
         if (colorCount[i] > 0) {
             ilosc = colorCount[i];
         }
     }
 
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < KOLORY; i++) {
         if (colorCount[i] > 0 and colorCount[i] != ilosc) {
             cout << "At least two colors with a different number of cards were found:" << endl;
             flaga++;
             break;
         }
+
     }
 
     if (flaga > 0) {
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < KOLORY; i++) {
             if (colorCount[i] > 0) {
                 cout << colors[i] << " cards are " << colorCount[i] << endl;
             }
         }
+        cout << endl;
     }
     else {
         cout << "The number cards of all colors is equal: " << ilosc << endl;
+        (*equal) = 1;
+        (*equalSize) = ilosc;
+
+        for (int i = 0; i < KOLORY; i++) {
+            if (colorCount[i] > 0) {
+                colorCheck[i] = i + 1;
+            }
+        }
     }
 }
 
@@ -931,6 +946,71 @@ void rozlozNaKolory(intlist_t** listOfColorCards, int* tabelaWszystkichWartosci,
     }
 }
 
+void sprawdzKolory(intlist_t** listOfColorCards, int equal, const char** colors, int colorCheck[KOLORY], intlist_t** listOfBeg) {
+
+    int equalValues = 0;
+    int flaga = 0;
+    int firstNotEmpty = 0;
+    int notEqual = 0; //1 if not equal, 0 if equal
+
+    for (int i = 0; i < KOLORY; i++) {
+        listOfBeg[i] = listOfColorCards[i];
+        if (colorCheck[i] > 0 and flaga == 0) {
+            firstNotEmpty = colorCheck[i] - 1;
+            flaga = 1;
+        }
+    }
+
+    if (equal == 1) {
+        for (int i = 0; i < KOLORY; i++) {
+            listOfColorCards[firstNotEmpty] = listOfBeg[firstNotEmpty]->next;
+            listOfColorCards[i] = listOfBeg[i]->next;
+
+            if (notEqual == 0) {
+                if (listOfBeg[i]->next != NULL and colorCheck[i] >= 0) {
+                    while (listOfColorCards[firstNotEmpty] != NULL) {
+                        if (listOfColorCards[firstNotEmpty]->value == listOfColorCards[i]->value) {
+                            listOfColorCards[firstNotEmpty] = listOfColorCards[firstNotEmpty]->next;
+                            listOfColorCards[i] = listOfColorCards[i]->next;
+                        }
+                        else {
+                            notEqual = 1;
+                            break;
+                        }
+                    }
+                }
+            }
+            else {
+                cout << "The values of cards of all colors are not identical: " << endl;
+                for (int j = 0; j < KOLORY; j++) {
+                    if (listOfBeg[j]->next != NULL) {
+                        cout << colors[j] << " cards values: ";
+                        printInt(listOfBeg[j]);
+                        cout << endl;
+                    }
+                }
+                break;
+            }
+        }
+        if (notEqual == 0) {
+            if(notEqual == 0) {
+            cout << "The values of cards of all colors are identical: " << endl;
+            printInt(listOfBeg[firstNotEmpty]);
+            }
+        }
+    }
+    else {
+        cout << "The values of cards of all colors are not identical: " << endl;
+        for (int j = 0; j < KOLORY; j++) {
+            if (listOfBeg[j]->next != NULL) {
+                cout << colors[j] << " cards values: ";
+                printInt(listOfBeg[j]);
+                cout << endl;
+            }
+        }
+    }
+}
+
 int main(){
 
     int n; //l. graczy
@@ -953,6 +1033,7 @@ int main(){
     list_t** deckCards = NULL;
     list_t** pileCards = NULL;
     intlist_t** listOfColorCards = NULL;
+    intlist_t** listOfBeg = NULL;
     list_t allCards;
 
     FILE* fp;
@@ -1013,6 +1094,13 @@ int main(){
             int deckCardCount = 0;
             int greenValue;
             int greenValueCheck = 0;
+            int equal = 0;
+            int equalSize;
+            int colorCheck[KOLORY]; //blue, red, violet, yellow, white, black
+
+            for (int i = 0; i < KOLORY; i++) {
+                colorCheck[i] = -1;
+            }
 
             wczytajStanWartosci(&cardCount, &greenCount, &greenValue, &greenValueCheck, &deckCardCount, &iloscPile, &iloscKartPile);
 
@@ -1092,6 +1180,12 @@ int main(){
                 initInt(listOfColorCards[i]);
             }
 
+            listOfBeg = (intlist_t**)malloc(KOLORY * sizeof(intlist_t*));
+            for (int i = 0; i < KOLORY; i++) {
+                listOfBeg[i] = (intlist_t*)malloc(sizeof(intlist_t));
+                initInt(listOfBeg[i]);
+            }
+
 
             wczytajStan(n, tabelaWartosciLoaded, cardCount, tabelaKolorowLoaded, players, colorsWithGreen, deckCards, tabelaWartosciDeck, tabelaKolorowDeck, pileCards, tabelaWartosciPile, tabelaKolorowPile, iloscPile, tabelaWszystkichKolory, tabelaWszystkichWartosci);
     
@@ -1140,17 +1234,12 @@ int main(){
                 cur = cur->next;
             }
             
-            colorNumber(&allCards, colors, sposob);
+            colorNumber(&allCards, colors, sposob, &equal, &equalSize, colorCheck);
             rozlozNaKolory(listOfColorCards, tabelaWszystkichWartosci, tabelaWszystkichKolory, allCardsTogether);
 
+            sprawdzKolory(listOfColorCards, equal, colors, colorCheck, listOfBeg);
+
             cout << endl;
-            for (int i = 0; i < KOLORY; i++) {
-                if (listOfColorCards[i]->next != NULL) {
-                    cout << colors[i] << " cards values: ";
-                    printInt(listOfColorCards[i]);
-                    cout << endl;
-                }
-            }
 
             break;
     }
