@@ -1,6 +1,7 @@
 ﻿#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <stdio.h>
+#include <stdlib.h>
 using namespace std;
 
 #define KOLORY 6
@@ -202,7 +203,7 @@ int LiczbaGraczy() {
     fclose(loadFile);
 }
 
-void wczytajStanWartosci(int* cardCount, int* greenCount, int* greenValue, int* greenValueCheck, int* deckCardCount, int* iloscPile, int* iloscPileKart, int* exploTreshold) {
+void wczytajStanWartosci(int* cardCount, int* greenCount, int* greenValue, int* greenValueCheck, int* deckCardCount, int* iloscPile, int* iloscPileKart, int* exploTreshold, int* activePlayer) {
 
     FILE* loadFile;
     loadFile = fopen("save.txt", "r");
@@ -218,6 +219,9 @@ void wczytajStanWartosci(int* cardCount, int* greenCount, int* greenValue, int* 
 
     while(fgets(line, 1000, loadFile) != NULL) {
         int x = 0;
+        if (i == 0) {
+            (*activePlayer) = (int)line[16] - '0';
+        }
         if (i == 1) {
             playerNumber = (int)line[17] - '0';
             //(*pileCount) -= 3;
@@ -257,6 +261,7 @@ void wczytajStanWartosci(int* cardCount, int* greenCount, int* greenValue, int* 
                     char element[10];
                     int index = 0;
                     int flagaDwa = 0;
+                    int valueLength = 0;
 
                     if (lineEnd[y] != '\n') {
                         while (lineEnd[y] != ' ') {
@@ -264,6 +269,7 @@ void wczytajStanWartosci(int* cardCount, int* greenCount, int* greenValue, int* 
                             index++;
                             y++;
                             flagaDwa++;
+                            valueLength++;
                         }
                     }
 
@@ -271,7 +277,12 @@ void wczytajStanWartosci(int* cardCount, int* greenCount, int* greenValue, int* 
                         element[index] = '\0';
 
                         if (even % 2 == 0) {
-                            value = (int)element[0] - '0';
+                            if (valueLength < 2) {
+                                value = (int)element[0] - '0';
+                            }
+                            else {
+                                value = 10 * ((int)element[0] - '0') + (int)element[1] - '0';
+                            }
                             (*cardCount)++;
                             even++;
                         }
@@ -311,6 +322,7 @@ void wczytajStanWartosci(int* cardCount, int* greenCount, int* greenValue, int* 
                     char element[10];
                     int index = 0;
                     int flagaDwa = 0;
+                    int valueLength = 0;
 
                     if (lineEnd[y] != '\n') {
                         while (lineEnd[y] != ' ') {
@@ -318,6 +330,7 @@ void wczytajStanWartosci(int* cardCount, int* greenCount, int* greenValue, int* 
                             index++;
                             y++;
                             flagaDwa++;
+                            valueLength++;
                         }
                     }
 
@@ -327,7 +340,12 @@ void wczytajStanWartosci(int* cardCount, int* greenCount, int* greenValue, int* 
                         element[index] = '\0';
 
                         if (even % 2 == 0) {
-                            value = (int)element[0] - '0';
+                            if (valueLength < 2) {
+                                value = (int)element[0] - '0';
+                            }
+                            else {
+                                value = 10 * ((int)element[0] - '0') + (int)element[1] - '0';
+                            }
                             (*deckCardCount)++;
                             even++;
                         }
@@ -1004,8 +1022,10 @@ void sprawdzKolory(intlist_t** listOfColorCards, int equal, const char** colors,
         }
         if (notEqual == 0) {
             if(notEqual == 0) {
-            cout << "The values of cards of all colors are identical: " << endl;
-            printInt(listOfBeg[firstNotEmpty]);
+                cout << endl;
+                cout << "The values of cards of all colors are identical: " << endl;
+                printInt(listOfBeg[firstNotEmpty]);
+                cout << endl;
             }
         }
     }
@@ -1018,6 +1038,61 @@ void sprawdzKolory(intlist_t** listOfColorCards, int equal, const char** colors,
                 cout << endl;
             }
         }
+    }
+}
+
+int listSize(list_t* h) {
+    h = h->next;
+    int size = 0;
+    while (h != NULL) {
+        size++;
+        h = h->next;
+    }
+    return size;
+}
+
+void sprawdzStan(list_t** players, int exploTreshold, list_t** pileCards, int numOfPlayers, int iloscPile, list_t** poczatekPile, int* flagaOne, int* flagaTwo, int* flagaThree) {
+    const char* green = "green";
+
+
+    for (int i = 0; i < iloscPile; i++) {
+        poczatekPile[i] = pileCards[i];
+    }
+
+    for (int i = 1; i < numOfPlayers; i++) {
+        if (abs(listSize(players[i - 1]) - listSize(players[i])) > 2) {
+            cout << "The number of players cards on hand is wrong" << endl;
+            (*flagaThree) = 1;
+            break;
+        }
+    }
+    for (int i = 0; i < iloscPile; i++) {
+        pileCards[i] = pileCards[i]->next;
+        while (pileCards[i]->next != NULL) {
+            if (pileCards[i]->karta.kolor != pileCards[i]->next->karta.kolor) {
+                if (pileCards[i]->karta.kolor != green and pileCards[i]->next->karta.kolor != green) {
+                    cout << "Two different colors were found on the " << i + 1 << " pile" << endl;
+                    (*flagaOne) = 1;
+                    break;
+                }
+            }
+            pileCards[i] = pileCards[i]->next;
+        }
+    }
+    for (int i = 0; i < iloscPile; i++) {
+        int sumaWartosci = 0;
+        poczatekPile[i] = poczatekPile[i]->next;
+        while (poczatekPile[i] != NULL) {
+            sumaWartosci += poczatekPile[i]->karta.wartosc;
+            poczatekPile[i] = poczatekPile[i]->next;
+        }
+        if (sumaWartosci > exploTreshold) {
+            cout << "Pile number " << i + 1 << " should explode earlier" << endl;
+            (*flagaTwo) = 1;
+        }
+    }
+    if ((*flagaOne) + (*flagaTwo) + (*flagaThree) == 0) {
+        cout << "Current state of the game is ok" << endl;
     }
 }
 
@@ -1045,6 +1120,7 @@ int main(){
     list_t** pileCards = NULL;
     intlist_t** listOfColorCards = NULL;
     intlist_t** listOfBeg = NULL;
+    list_t** poczatekPile = NULL;
     list_t allCards;
 
     FILE* fp;
@@ -1107,13 +1183,17 @@ int main(){
             int greenValueCheck = 0;
             int equal = 0;
             int equalSize;
+            int activePlayer;
             int colorCheck[KOLORY]; //blue, red, violet, yellow, white, black
+            int flagaOne = 0;
+            int flagaTwo = 0;
+            int flagaThree = 0;
 
             for (int i = 0; i < KOLORY; i++) {
                 colorCheck[i] = -1;
             }
 
-            wczytajStanWartosci(&cardCount, &greenCount, &greenValue, &greenValueCheck, &deckCardCount, &iloscPile, &iloscKartPile, &exploTreshold);
+            wczytajStanWartosci(&cardCount, &greenCount, &greenValue, &greenValueCheck, &deckCardCount, &iloscPile, &iloscKartPile, &exploTreshold, &activePlayer);
 
             tabelaWartosciLoaded = (int*)malloc(cardCount*sizeof(int));
             if (tabelaWartosciLoaded == NULL) {
@@ -1197,6 +1277,12 @@ int main(){
                 initInt(listOfBeg[i]);
             }
 
+            poczatekPile = (list_t**)malloc(sizeof(list_t*));
+            for (int i = 0; i < iloscPile; i++) {
+                poczatekPile[i] = (list_t*)malloc(sizeof(list_t));
+                init(poczatekPile[i]);
+            }
+
 
             wczytajStan(n, tabelaWartosciLoaded, cardCount, tabelaKolorowLoaded, players, colorsWithGreen, deckCards, tabelaWartosciDeck, tabelaKolorowDeck, pileCards, tabelaWartosciPile, tabelaKolorowPile, iloscPile, tabelaWszystkichKolory, tabelaWszystkichWartosci);
     
@@ -1250,9 +1336,9 @@ int main(){
 
             sprawdzKolory(listOfColorCards, equal, colors, colorCheck, listOfBeg);
 
-            cout << endl;
+            sprawdzStan(players, exploTreshold, pileCards, n, iloscPile, poczatekPile, &flagaOne, &flagaTwo, &flagaThree);
 
-            cout << exploTreshold;
+            cout << endl;
 
             break;
     }
