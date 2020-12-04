@@ -52,12 +52,20 @@ void addElement(list_t* l, int value, const char* color) {
     l->next = x;
 }
 
-void removeElement(list_t* l) {
-    if (l->next != NULL) {
-        void* x = l->next;
-        l->next = l->next->next;
-        free(x);
+void removeElementFront(list_t* l) {
+    list_t* head = l;
+    list_t* deleteObject;
+    if (l == NULL) {
+        cout << "List already empty" << endl;
     }
+    else {
+        head = head->next;
+        deleteObject = head;
+        head = head->next;
+        l->next = head;
+        free(deleteObject);
+    }
+
 }
 
 void print(list_t* h) {
@@ -162,14 +170,13 @@ void dajDoRak(int o, int k, int g, int n, list_t** players, card *tabelaKart) {
     }
 }
 
-void wypiszStanDoPliku(int n, int k, int o, card *tabelaKart, int g, list_t** players, FILE* fp, int activePlayer, list_t** deckCards, list_t** pileCards) {
+void wypiszStanDoPliku(int numberOfPlayers, int k, list_t** players, FILE* fp, int* activePlayer, list_t** deckCards, list_t** pileCards, int exploTreshold) {
 
-    int wielkoscPelnych = ((o * k + g) / n) + 1;
-    fprintf(fp, "active player = %i\n", activePlayer);
-    fprintf(fp, "players number = %i\n", n);
-    fprintf(fp, "explosion treshold = 13\n");
+    fprintf(fp, "active player = %i\n", (*activePlayer));
+    fprintf(fp, "players number = %i\n", numberOfPlayers);
+    fprintf(fp, "explosion treshold = %i\n", exploTreshold);
 
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < numberOfPlayers; i++) {
         fprintf(fp, "%i player hand cards: ", i + 1);
         printToFile(players[i], i, fp);
 
@@ -471,10 +478,7 @@ void wczytajStanWartosci(int* cardCount, int* greenCount, int* greenValue, int* 
 }
 
 
-void wczytajStan(int n, int* tabelaWartosciLoaded, int cardCount, int* tabelaKolorowLoaded, list_t** players, const char** colorsWithGreen, list_t** deckCards, int* tabelaWartosciDeck, int* tabelaKolorowDeck, list_t** pileCards, int* tabelaWartosciPile, int* tabelaKolorowPile, int iloscPile, int* tabelaWszystkichKolory, int* tabelaWszystkichWartosci) {
-
-    FILE* loadFile;
-    loadFile = fopen("save.txt", "r");
+void wczytajStan(int n, int* tabelaWartosciLoaded, int cardCount, int* tabelaKolorowLoaded, list_t** players, const char** colorsWithGreen, list_t** deckCards, int* tabelaWartosciDeck, int* tabelaKolorowDeck, list_t** pileCards, int* tabelaWartosciPile, int* tabelaKolorowPile, int iloscPile, int* tabelaWszystkichKolory, int* tabelaWszystkichWartosci, FILE* loadFile) {
 
     const char* colorName = NULL;
     int value = 0;
@@ -829,7 +833,6 @@ void wczytajStan(int n, int* tabelaWartosciLoaded, int cardCount, int* tabelaKol
             }
         }
     }
-    fclose(loadFile);
 }
 
 void colorNumber(list_t *allCards, const char** colors, int sposob, int* equal, int* equalSize, int colorCheck[KOLORY]) {
@@ -1101,8 +1104,18 @@ void sprawdzStan(list_t** players, int exploTreshold, list_t** pileCards, int nu
     }
 }
 
-void turn(list_t** players, list_t** pileCards, int numOfPlayers) {
-
+void turn(list_t** players, list_t** pileCards, int numOfPlayers, int* activePlayer, int iloscPile) {
+    const char* green = "green";
+    list_t* cur = pileCards[0];
+    players[(*activePlayer) - 1] = players[(*activePlayer) - 1]->next;
+    if (players[(*activePlayer) - 1]->karta.kolor == green) {
+        addElement(cur, players[(*activePlayer) - 1]->karta.wartosc, players[(*activePlayer) - 1]->karta.kolor);
+        removeElementFront(players[(*activePlayer) - 1]);
+        (*activePlayer)++;
+        if ((*activePlayer) > numOfPlayers) {
+            (*activePlayer) = 1;
+        }
+    }
 }
 
 int main(){
@@ -1114,6 +1127,7 @@ int main(){
     int o; //l. kart innych kolorow
     int exploTreshold;
     int activePlayer;
+    int iloscPile = 0;
     card* tabelaKart = NULL;
     int* tabelaWartosci = NULL;
     int* tabelaWartosciLoaded = NULL;
@@ -1154,8 +1168,10 @@ int main(){
             fpclear = fopen("save.txt", "w");
             fclose(fpclear);
 
-            cin >> n >> k >> g >> gv >> o;
+            cin >> n >> k >> g >> gv >> o >> exploTreshold;
             sprawdzZmienne(n, k, g, gv, o);
+
+            iloscPile = k;
 
             tabelaKart = (card*)malloc(o * k * sizeof(card) + g * sizeof(card));
             if (tabelaKart == NULL) {
@@ -1191,7 +1207,9 @@ int main(){
             }
 
             dajDoRak(o, k, g, n, players, tabelaKart);
-            wypiszStanDoPliku(n, k, o, tabelaKart, g, players, fp, activePlayer, deckCards, pileCards);
+            wypiszStanDoPliku(n, k, players, fp, &activePlayer, deckCards, pileCards, exploTreshold);
+
+            fclose(fp);
 
             break;
 
@@ -1200,7 +1218,6 @@ int main(){
             int greenCount = 0;
             int cardCount = 0;
             int iloscKartPile = 0;
-            int iloscPile = 0;
             int deckCardCount = 0;
             int greenValue;
             int greenValueCheck = 0;
@@ -1305,9 +1322,13 @@ int main(){
                 init(poczatekPile[i]);
             }
 
+            FILE* loadFile;
+            loadFile = fopen("save.txt", "r");
 
-            wczytajStan(n, tabelaWartosciLoaded, cardCount, tabelaKolorowLoaded, players, colorsWithGreen, deckCards, tabelaWartosciDeck, tabelaKolorowDeck, pileCards, tabelaWartosciPile, tabelaKolorowPile, iloscPile, tabelaWszystkichKolory, tabelaWszystkichWartosci);
+            wczytajStan(n, tabelaWartosciLoaded, cardCount, tabelaKolorowLoaded, players, colorsWithGreen, deckCards, tabelaWartosciDeck, tabelaKolorowDeck, pileCards, tabelaWartosciPile, tabelaKolorowPile, iloscPile, tabelaWszystkichKolory, tabelaWszystkichWartosci, loadFile);
     
+            fclose(loadFile);
+
             if (greenCount == 0) {
                 cout << "Green cards does not exist" << endl;
             }
@@ -1361,9 +1382,17 @@ int main(){
             sprawdzStan(players, exploTreshold, pileCards, n, iloscPile, poczatekPile, &flagaOne, &flagaTwo, &flagaThree);
 
             cout << endl;
-
             break;
     }
+
+    FILE* save;
+    save = fopen("save.txt", "w");
+
+    turn(players, pileCards, n, &activePlayer, iloscPile);
+
+    wypiszStanDoPliku(n, iloscPile, players, save, &activePlayer, deckCards, pileCards, exploTreshold);
+
+    fclose(save);
 
     free(tabelaKart);
     free(tabelaWartosci);
@@ -1376,6 +1405,5 @@ int main(){
     free(tabelaWszystkichKolory);
     free(tabelaWszystkichWartosci);
 
-    fclose(fp);
     return 0;
 }
