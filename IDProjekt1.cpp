@@ -15,7 +15,7 @@ using namespace std;
 #define BLACK 7
 
 struct card {
-    const char *kolor;
+    char kolor[10];
     int wartosc;
 };
 
@@ -44,15 +44,35 @@ void addElementInt(intlist_t* l, int value) {
     l->next = x;
 }
 
-void addElement(list_t* l, int value, const char* color) {
+void addElement(list_t* l, int value, char color[10]) {
     list_t* x = (list_t*)malloc(sizeof(list_t));
     x->karta.wartosc = value;
-    x->karta.kolor = color;
+    strcpy(x->karta.kolor, color);
     x->next = l->next;
     l->next = x;
 }
 
+void addLast(list_t* l, int value, char color[10]) {
+    list_t* cur = l;
+    list_t* x = (list_t*)malloc(sizeof(list_t));
+    x->karta.wartosc = value;
+    strcpy(x->karta.kolor, color);
+    x->next = NULL;
+    cur = cur->next;
+    if (cur == NULL) {
+        cur = x;
+    }
+    else {
+        while (l != NULL) {
+            cur = cur->next;
+        }
+        cur = x;
+    }
+    l->next = cur;
+}
+
 void removeElementFront(list_t* l) {
+    list_t* returnList = (list_t*)malloc(sizeof(list_t));
     list_t* head = l;
     list_t* deleteObject;
     if (l == NULL) {
@@ -84,7 +104,7 @@ void printInt(intlist_t* h) {
     }
 }
 
-void printToFile(list_t* h, int i, FILE* fp) {
+void printToFile(list_t* h, FILE* fp) {
     h = h->next;
     while (h != NULL) {
         fprintf(fp, "%i %s ", h->karta.wartosc, h->karta.kolor);
@@ -131,17 +151,24 @@ void wczytajWartosci(int tabela[], int o, int k, card tabelaKart[]) {
 }
 
 
-void stworzTalie(int k, int g, int gv, int o, const char *colors[KOLORY], card tabelaKart[], int *tabelaWartosci) {
+void stworzTalie(int k, int g, int gv, int o, const char* colors[KOLORY], card tabelaKart[], int* tabelaWartosci) {
     for (int i = 0; i < g; i++) {
         tabelaKart[i].wartosc = gv;
-        tabelaKart[i].kolor = "green";
+        strcpy(tabelaKart[i].kolor, "green");
     }
 
     for (int i = 0; i < k; i++) {
         for (int j = 0; j < o; j++) {
             tabelaKart[j + (i * o) + g].wartosc = tabelaWartosci[j];
-            tabelaKart[j + (i * o) + g].kolor = colors[i];
+            strcpy(tabelaKart[j + (i * o) + g].kolor, colors[i]);
         }
+    }
+
+    FILE* taliasave;
+    taliasave = fopen("talia_save.txt", "w");
+
+    for (int i = 0; i < o * k + g; i++) {
+        fprintf(taliasave, "%i %s ", tabelaKart[i].wartosc, tabelaKart[i].kolor);
     }
 }
 
@@ -158,7 +185,7 @@ void reverseList(list_t* l) {
     l->next = prev;
 }
 
-void dajDoRak(int o, int k, int g, int n, list_t** players, card *tabelaKart) {
+void dajDoRak(int o, int k, int g, int n, list_t** players, card* tabelaKart) {
     list_t* cur = NULL;
     for (int i = 0; i < o * k + g; i++) {
         cur = players[i % n];
@@ -166,11 +193,15 @@ void dajDoRak(int o, int k, int g, int n, list_t** players, card *tabelaKart) {
         cur = cur->next;
     }
     for (int i = 0; i < n; i++) {
-        reverseList(players[i]); 
+        reverseList(players[i]);
     }
 }
 
 void wypiszStanDoPliku(int numberOfPlayers, int k, list_t** players, FILE* fp, int* activePlayer, list_t** deckCards, list_t** pileCards, int exploTreshold) {
+
+    for (int i = 0; i < k; i++) {
+        reverseList(pileCards[i]);
+    }
 
     fprintf(fp, "active player = %i\n", (*activePlayer));
     fprintf(fp, "players number = %i\n", numberOfPlayers);
@@ -178,671 +209,133 @@ void wypiszStanDoPliku(int numberOfPlayers, int k, list_t** players, FILE* fp, i
 
     for (int i = 0; i < numberOfPlayers; i++) {
         fprintf(fp, "%i player hand cards: ", i + 1);
-        printToFile(players[i], i, fp);
+        printToFile(players[i], fp);
 
         fprintf(fp, "\n");
         fprintf(fp, "%i player deck cards: ", i + 1);
-        printToFile(deckCards[i], i, fp);
+        printToFile(deckCards[i], fp);
         fprintf(fp, "\n");
     }
     for (int i = 0; i < k; i++) {
         fprintf(fp, "%i pile cards: ", i + 1);
-        printToFile(pileCards[i], i, fp);
+        printToFile(pileCards[i],fp);
         fprintf(fp, "\n");
+    }
+}
+
+int numberOfPlayers() {
+    FILE* loadPlayerNumber;
+    loadPlayerNumber = fopen("save.txt", "r");
+    int n;
+    fscanf(loadPlayerNumber, "%*s %*s %*c %*d");
+    fscanf(loadPlayerNumber, "%*s %*s %*c %d", &n);
+
+    fclose(loadPlayerNumber);
+
+    return n;
+}
+
+void loadGameState(int* activePlayer, int numOfPlayers, int* exploTreshold, int* iloscPile, list_t** players, list_t** pileCards, list_t** deckCards, list_t* allCards) {
+    FILE* fp;
+    fp = fopen("save.txt", "r");
+    int active;
+    int value;
+    char color[10];
+    list_t* curAll = allCards;
+    fscanf(fp, "%*s %*s %*c %d", &active);
+    (*activePlayer) = active;
+    fscanf(fp, "%*s %*s %*c %*d");
+    int explo;
+    fscanf(fp, "%*s %*s %*c %d", &explo);
+    (*exploTreshold) = explo;
+
+    fscanf(fp, "%*d %*s %*s %*s");
+    for (int i = 0; i < 2 * numOfPlayers; i++) {
+        list_t* curPlayers = players[i / 2];
+        list_t* curDeck;
+        if (i == 1) {
+            curDeck = deckCards[0];
+        }
+        else {
+            curDeck = deckCards[i / 2];
+        }
+        while (1) {
+            fscanf(fp, "%d %s", &value, color);
+            if (strcmp(color, "player") == 0) {
+                fscanf(fp, "%*s %*s");
+                break;
+            }
+            if (strcmp(color, "pile") == 0) {
+                break;
+            }
+            if (i % 2 == 0) {
+                addElement(curPlayers, value, color);
+                addElement(curAll, value, color);
+                curPlayers = curPlayers->next;
+                curAll = curAll->next;
+            }
+            else {
+                addElement(curDeck, value, color);
+                addElement(curAll, value, color);
+                curDeck = curDeck->next;
+                curAll = curAll->next;
+            }
+        }
+    }
+    fscanf(fp, "%*s");
+    char colorPile[10];
+    int koniec = 1;
+    int index = 0;
+    while (koniec) {
+        list_t* curPile = pileCards[index];
+        index++;
+        (*iloscPile)++;
+        while (strcmp(colorPile, "pile") != 0) {
+            fscanf(fp, "%d %s", &value, colorPile);
+            if (strcmp(colorPile, "pile") != 0 and strcmp(colorPile, "cards:") != 0) {
+                addElement(curPile, value, colorPile);
+                addElement(curAll, value, colorPile);
+                curPile = curPile->next;
+                curAll = curAll->next;
+            }
+            if (feof(fp) != 0) {
+                koniec = 0;
+                break;
+            }
+        }
+        fscanf(fp, "%s", colorPile);
     }
     fclose(fp);
 }
 
-int LiczbaGraczy() {
-    FILE* loadFile;
-    loadFile = fopen("save.txt", "r");
-
-    for (int i = 0; i < 2; i++) {
-        char line[1000];
-        fgets(line, 1000, loadFile);
-        int index = 0;
-        if (i == 1) {
-            char nGraczy;
-            int numberOfPlayers;
-            while (line[index] != '\n') {
-                nGraczy = line[index];
-                index++;
-            }
-            numberOfPlayers = (int)nGraczy - '0';;
-            return numberOfPlayers;
-        }
-    }
-    fclose(loadFile);
-}
-
-void wczytajStanWartosci(int* cardCount, int* greenCount, int* greenValue, int* greenValueCheck, int* deckCardCount, int* iloscPile, int* iloscPileKart, int* exploTreshold, int* activePlayer) {
-
-    FILE* loadFile;
-    loadFile = fopen("save.txt", "r");
-
-    const char* colorName = NULL;
-    int value = 0;
-    int indexKolorow = 0;
-    const char* green = "green";
-    char line[1000];
-    int i = 0;
-    int playerNumber = 0;
+void checkGreens(list_t* allCards, int* greenCount, int* greenValue) {
+    allCards = allCards->next;
     int greenValueBufor = 0;
-
-    while(fgets(line, 1000, loadFile) != NULL) {
-        int x = 0;
-        if (i == 0) {
-            (*activePlayer) = (int)line[16] - '0';
-        }
-        if (i == 1) {
-            playerNumber = (int)line[17] - '0';
-            //(*pileCount) -= 3;
-        }
-        if (i == 2) {
-            if ((int)line[23] >= 48 and (int)line[23] <= 57) {
-                (*exploTreshold) = 10* ((int)line[22] - '0') + (int)line[23] - '0';
-            }
-            else {
-                (*exploTreshold) = (int)line[22] - '0';
+    int flaga = 0;
+    while (allCards != NULL) {
+        if (strcmp(allCards->karta.kolor, "green") == 0) {
+            (*greenCount)++;
+            (*greenValue) = allCards->karta.wartosc;
+            if ((*greenValue) != greenValueBufor) {
+                greenValueBufor = (*greenValue);
+                flaga++;
             }
         }
-        (*iloscPile) = (int)line[0] - '0';
-        if (i > 2 and i < 2 * playerNumber + 3) {
-            int z = 0;
-            int flaga = 0;
-            char lineEnd[1000];
-            while (line[x] != '\n') {
-                if (line[x] == ':') {
-                    flaga = flaga + 1;
-                }
-
-                if (flaga != 0) {
-                    lineEnd[z] = line[x + 1];
-                    z++;
-                }
-                x++;
-            }
-
-            lineEnd[z] = '\0';
-            if (i % 2 == 1) {
-
-                int y = 0;
-                int even = 0;
-
-                while (lineEnd[y + 1] != '\0') {
-                    char element[10];
-                    int index = 0;
-                    int flagaDwa = 0;
-                    int valueLength = 0;
-
-                    if (lineEnd[y] != '\n') {
-                        while (lineEnd[y] != ' ') {
-                            element[index] = lineEnd[y];
-                            index++;
-                            y++;
-                            flagaDwa++;
-                            valueLength++;
-                        }
-                    }
-
-                    if (flagaDwa > 0) {
-                        element[index] = '\0';
-
-                        if (even % 2 == 0) {
-                            if (valueLength < 2) {
-                                value = (int)element[0] - '0';
-                            }
-                            else {
-                                value = 10 * ((int)element[0] - '0') + (int)element[1] - '0';
-                            }
-                            (*cardCount)++;
-                            even++;
-                        }
-                        else {
-                            colorName = element;
-                            int compareIndex = 0;
-                            int flague = 0;
-                            while (element[compareIndex] != '\0') {
-                                if (element[compareIndex] == green[compareIndex]) {
-                                    compareIndex++;
-                                }
-                                else {
-                                    break;
-                                }
-                                flague++;
-                            }
-                            if (flague == 5) {
-                                (*greenCount)++;
-                                *greenValue = value;
-                                if (*greenValue != greenValueBufor) {
-                                    greenValueBufor = *greenValue;
-                                    (*greenValueCheck)++;
-                                }
-                            }
-                            even++;
-                        }
-                    }
-                    y++;
-                }
-            }
-            if (i % 2 == 0) {
-
-                int y = 0;
-                int even = 0;
-
-                while (lineEnd[y + 1] != '\0') {
-                    char element[10];
-                    int index = 0;
-                    int flagaDwa = 0;
-                    int valueLength = 0;
-
-                    if (lineEnd[y] != '\n') {
-                        while (lineEnd[y] != ' ') {
-                            element[index] = lineEnd[y];
-                            index++;
-                            y++;
-                            flagaDwa++;
-                            valueLength++;
-                        }
-                    }
-
-                    const char* colorName = NULL;
-
-                    if (flagaDwa > 0) {
-                        element[index] = '\0';
-
-                        if (even % 2 == 0) {
-                            if (valueLength < 2) {
-                                value = (int)element[0] - '0';
-                            }
-                            else {
-                                value = 10 * ((int)element[0] - '0') + (int)element[1] - '0';
-                            }
-                            (*deckCardCount)++;
-                            even++;
-                        }
-                        else {
-                            colorName = element;
-                            int compareIndex = 0;
-                            int flague = 0;
-                            while (element[compareIndex] != '\0') {
-                                if (element[compareIndex] == green[compareIndex]) {
-                                    compareIndex++;
-                                }
-                                else {
-                                    break;
-                                }
-                                flague++;
-                            }
-                            if (flague == 5) {
-                                (*greenCount)++;
-                                *greenValue = value;
-                                if (*greenValue != greenValueBufor) {
-                                    greenValueBufor = *greenValue;
-                                    (*greenValueCheck)++;
-                                }
-                            }
-                            even++;
-                        }
-                    }
-                    y++;
-                }
-            }
-        }
-        if (i >= 2 * playerNumber + 3) {
-            int z = 0;
-            int flaga = 0;
-            char lineEnd[1000];
-            while (line[x] != '\n') {
-                if (line[x] == ':') {
-                    flaga = flaga + 1;
-                }
-
-                if (flaga != 0) {
-                    lineEnd[z] = line[x + 1];
-                    z++;
-                }
-                x++;
-            }
-
-            lineEnd[z] = '\0';
-
-            int y = 0;
-            int even = 0;
-
-            while (lineEnd[y + 1] != '\0') {
-                char element[10];
-                int index = 0;
-                int flagaDwa = 0;
-                int valueLength = 0;
-
-                if (lineEnd[y] != '\n') {
-                    while (lineEnd[y] != ' ') {
-                        element[index] = lineEnd[y];
-                        index++;
-                        y++;
-                        flagaDwa++;
-                        valueLength++;
-                    }
-                }
-
-                const char* colorName = NULL;
-
-                if (flagaDwa > 0) {
-                   element[index] = '\0';
-
-                    if (even % 2 == 0) {
-                        if (valueLength < 2) {
-                            value = (int)element[0] - '0';
-                        }
-                        else {
-                            value = 10 * ((int)element[0] - '0') + (int)element[1] - '0';
-                        }
-                        if (value >= 0 and value <= 20) {
-                            (*iloscPileKart)++;
-                        }
-                        even++;
-                    }
-                    else {
-                        colorName = element;
-                        int compareIndex = 0;
-                        int flague = 0;
-                        while (element[compareIndex] != '\0') {
-                            if (element[compareIndex] == green[compareIndex]) {
-                                compareIndex++;
-                            }
-                            else {
-                                break;
-                            }
-                            flague++;
-                        }
-                        if (flague == 5) {
-                            (*greenCount)++;
-                            *greenValue = value;
-                            if (*greenValue != greenValueBufor) {
-                                greenValueBufor = *greenValue;
-                                (*greenValueCheck)++;
-                            }
-                        }
-                        even++;
-                    }
-                }
-                y++;
-            }
-            
-        }
-        char line[1000];
-        i++;
+        allCards = allCards->next;
     }
-    fclose(loadFile);
+    if ((*greenCount) == 0) {
+        cout << "Green cards does not exist" << endl;
+    }
+    else if (flaga > 1) {
+        cout << "Different green card values occured" << endl;
+    }
+    else {
+        cout << "Found " << (*greenCount) << " green cards, all with " << (*greenValue) << " value" << endl;
+    }
+    cout << endl;
 }
 
-
-void wczytajStan(int n, int* tabelaWartosciLoaded, int cardCount, int* tabelaKolorowLoaded, list_t** players, const char** colorsWithGreen, list_t** deckCards, int* tabelaWartosciDeck, int* tabelaKolorowDeck, list_t** pileCards, int* tabelaWartosciPile, int* tabelaKolorowPile, int iloscPile, int* tabelaWszystkichKolory, int* tabelaWszystkichWartosci, FILE* loadFile) {
-
-    const char* colorName = NULL;
-    int value = 0;
-    int indexWartosci = 0;
-    int indexWartosciDeck = 0;
-    int indexWartosciPile = 0;
-    int indexWartosciAll = 0;
-    int indexKolorow = 0;
-    int indexKolorowDeck = 0;
-    int indexKolorowPile = 0;
-    int indexKolorowAll = 0;
-    const char* green = "green";
-    const char* blue = "blue";
-    const char* red = "red";
-    const char* violet = "violet";
-    const char* yellow = "yellow";
-    const char* white = "white";
-    const char* black = "black";
-    int i = 0;
-
-    for (i; i < 3 + (2 * n) + iloscPile; i++) {
-        char line[1000];
-        fgets(line, 1000, loadFile);
-        int x = 0;
-        if (i > 2) {
-            list_t* cur = players[i/2 - 1];
-            list_t* curDeck = deckCards[i/2 - 2];
-            list_t* curPile = pileCards[i - (3 + 2 * n)];
-            int z = 0;
-            int flaga = 0;
-            char lineEnd[1000];
-            while (line[x] != '\n') {
-                if (line[x] == ':') {
-                    flaga = flaga + 1;
-                }
-
-                if (flaga != 0) {
-                    lineEnd[z] = line[x+1];
-                    z++;
-                }
-                x++;
-            }
-
-            lineEnd[z] = '\0';
-            if (i % 2 == 1 and i < 2 * n + 3) {
-
-                int y = 0;
-                int even = 0;
-
-                while (lineEnd[y + 1] != '\0') {
-                    char element[10];
-                    int index = 0;
-                    int flagaDwa = 0;
-                    int valueLength = 0;
-
-                    if (lineEnd[y] != '\n') {
-                        while (lineEnd[y] != ' ') {
-                            element[index] = lineEnd[y];
-                            index++;
-                            y++;
-                            flagaDwa++;
-                            valueLength++;
-                        }
-                    }
-
-                    if (flagaDwa > 0) {
-                        element[index] = '\0';
-
-                        if (even % 2 == 0) {
-                            if (valueLength < 2) {
-                                value = (int)element[0] - '0';
-                            }
-                            else {
-                                value = 10 * ((int)element[0] - '0') + (int)element[1] - '0';
-                            }
-                            tabelaWartosciLoaded[indexWartosci] = value;
-                            tabelaWszystkichWartosci[indexWartosciAll] = value;
-                            indexWartosciAll++;
-                            indexWartosci++;
-                            even++;
-                        }
-                        else {
-                            if (element[0] != 'b') {
-                                if (element[0] == 'g') {
-                                    tabelaKolorowLoaded[indexKolorow] = GREEN;
-                                    tabelaWszystkichKolory[indexKolorowAll] = GREEN;
-                                    indexKolorowAll++;
-                                    addElement(cur, value, colorsWithGreen[tabelaKolorowLoaded[indexKolorow] - 1]);
-                                    cur = cur->next;
-                                    indexKolorow++;
-                                }
-                                if (element[0] == 'r') {
-                                    tabelaKolorowLoaded[indexKolorow] = RED;
-                                    tabelaWszystkichKolory[indexKolorowAll] = RED;
-                                    indexKolorowAll++;
-                                    addElement(cur, value, colorsWithGreen[tabelaKolorowLoaded[indexKolorow] - 1]);
-                                    cur = cur->next;
-                                    indexKolorow++;
-                                }
-                                if (element[0] == 'y') {
-                                    tabelaKolorowLoaded[indexKolorow] = YELLOW;
-                                    tabelaWszystkichKolory[indexKolorowAll] = YELLOW;
-                                    indexKolorowAll++;
-                                    addElement(cur, value, colorsWithGreen[tabelaKolorowLoaded[indexKolorow] - 1]);
-                                    cur = cur->next;
-                                    indexKolorow++;
-                                }
-                                if (element[0] == 'w') {
-                                    tabelaKolorowLoaded[indexKolorow] = WHITE;
-                                    tabelaWszystkichKolory[indexKolorowAll] = WHITE;
-                                    indexKolorowAll++;
-                                    addElement(cur, value, colorsWithGreen[tabelaKolorowLoaded[indexKolorow] - 1]);
-                                    cur = cur->next;
-                                    indexKolorow++;
-                                }
-                                if (element[0] == 'v') {
-                                    tabelaKolorowLoaded[indexKolorow] = VIOLET;
-                                    tabelaWszystkichKolory[indexKolorowAll] = VIOLET;
-                                    indexKolorowAll++;
-                                    addElement(cur, value, colorsWithGreen[tabelaKolorowLoaded[indexKolorow] - 1]);
-                                    cur = cur->next;
-                                    indexKolorow++;
-                                }
-                            }
-                            else if (element[2] == 'u') {
-                                tabelaKolorowLoaded[indexKolorow] = BLUE;
-                                tabelaWszystkichKolory[indexKolorowAll] = BLUE;
-                                indexKolorowAll++;
-                                addElement(cur, value, colorsWithGreen[tabelaKolorowLoaded[indexKolorow] - 1]);
-                                cur = cur->next;
-                                indexKolorow++;
-                            }
-                            else {
-                                tabelaKolorowLoaded[indexKolorow] = BLACK;
-                                tabelaWszystkichKolory[indexKolorowAll] = BLACK;
-                                indexKolorowAll++;
-                                addElement(cur, value, colorsWithGreen[tabelaKolorowLoaded[indexKolorow] - 1]);
-                                cur = cur->next;
-                                indexKolorow++;
-                            }
-                            even++;
-                        }
-                    }
-                    y++;
-                }
-            }
-            if (i % 2 == 0 and i < 2 * n + 3) {
-
-                int y = 0;
-                int even = 0;
-
-                while (lineEnd[y + 1] != '\0') {
-                    char element[10];
-                    int index = 0;
-                    int flagaDwa = 0;
-                    int valueLength = 0;
-
-                    if (lineEnd[y] != '\n') {
-                        while (lineEnd[y] != ' ') {
-                            element[index] = lineEnd[y];
-                            index++;
-                            y++;
-                            flagaDwa++;
-                            valueLength++;
-                        }
-                    }
-
-                    if (flagaDwa > 0) {
-                        element[index] = '\0';
-
-                        if (even % 2 == 0) {
-                            if (valueLength < 2) {
-                                value = (int)element[0] - '0';
-                            }
-                            else {
-                                value = 10 * ((int)element[0] - '0') + (int)element[1] - '0';
-                            }
-                            tabelaWartosciDeck[indexWartosciDeck] = value;
-                            tabelaWszystkichWartosci[indexWartosciAll] = value;
-                            indexWartosciAll++;
-                            indexWartosciDeck++;
-                            even++;
-                        }
-                        else {
-                            if (element[0] != 'b') {
-                                if (element[0] == 'g') {
-                                    tabelaKolorowDeck[indexKolorowDeck] = GREEN;
-                                    tabelaWszystkichKolory[indexKolorowAll] = GREEN;
-                                    indexKolorowAll++;
-                                    addElement(curDeck, value, colorsWithGreen[tabelaKolorowDeck[indexKolorowDeck] - 1]);
-                                    curDeck = curDeck->next;
-                                    indexKolorowDeck++;
-                                }
-                                if (element[0] == 'r') {
-                                    tabelaKolorowDeck[indexKolorowDeck] = RED;
-                                    tabelaWszystkichKolory[indexKolorowAll] = RED;
-                                    indexKolorowAll++;
-                                    addElement(curDeck, value, colorsWithGreen[tabelaKolorowDeck[indexKolorowDeck] - 1]);
-                                    curDeck = curDeck->next;
-                                    indexKolorowDeck++;
-                                }
-                                if (element[0] == 'y') {
-                                    tabelaKolorowDeck[indexKolorowDeck] = YELLOW;
-                                    tabelaWszystkichKolory[indexKolorowAll] = YELLOW;
-                                    indexKolorowAll++;
-                                    addElement(curDeck, value, colorsWithGreen[tabelaKolorowDeck[indexKolorowDeck] - 1]);
-                                    curDeck = curDeck->next;
-                                    indexKolorowDeck++;
-                                }
-                                if (element[0] == 'w') {
-                                    tabelaKolorowDeck[indexKolorowDeck] = WHITE;
-                                    tabelaWszystkichKolory[indexKolorowAll] = WHITE;
-                                    indexKolorowAll++;
-                                    addElement(curDeck, value, colorsWithGreen[tabelaKolorowDeck[indexKolorowDeck] - 1]);
-                                    curDeck = curDeck->next;
-                                    indexKolorowDeck++;
-                                }
-                                if (element[0] == 'v') {
-                                    tabelaKolorowDeck[indexKolorowDeck] = VIOLET;
-                                    tabelaWszystkichKolory[indexKolorowAll] = VIOLET;
-                                    indexKolorowAll++;
-                                    addElement(curDeck, value, colorsWithGreen[tabelaKolorowDeck[indexKolorowDeck] - 1]);
-                                    curDeck = curDeck->next;
-                                    indexKolorowDeck++;
-                                }
-                            }
-                            else if (element[2] == 'u') {
-                                tabelaKolorowDeck[indexKolorowDeck] = BLUE;
-                                tabelaWszystkichKolory[indexKolorowAll] = BLUE;
-                                indexKolorowAll++;
-                                addElement(curDeck, value, colorsWithGreen[tabelaKolorowDeck[indexKolorowDeck] - 1]);
-                                curDeck = curDeck->next;
-                                indexKolorowDeck++;
-                            }
-                            else {
-                                tabelaKolorowDeck[indexKolorowDeck] = BLACK;
-                                tabelaWszystkichKolory[indexKolorowAll] = BLACK;
-                                indexKolorowAll++;
-                                addElement(curDeck, value, colorsWithGreen[tabelaKolorowDeck[indexKolorowDeck] - 1]);
-                                curDeck = curDeck->next;
-                                indexKolorowDeck++;
-                            }
-                            even++;
-                        }
-                    }
-                    y++;
-                }
-            }
-            else if (i >= 2 * n + 3) {
-                int y = 0;
-                int even = 0;
-
-                while (lineEnd[y + 1] != '\0') {
-                    char element[10];
-                    int index = 0;
-                    int flagaDwa = 0;
-                    int valueLength = 0;
-
-                    if (lineEnd[y] != '\n') {
-                        while (lineEnd[y] != ' ') {
-                            element[index] = lineEnd[y];
-                            index++;
-                            y++;
-                            flagaDwa++;
-                            valueLength++;
-                        }
-                    }
-
-                    if (flagaDwa > 0) {
-                        element[index] = '\0';
-
-                        if (even % 2 == 0) {
-                            if (valueLength < 2) {
-                                value = (int)element[0] - '0';
-                            }
-                            else {
-                                value = 10 * ((int)element[0] - '0') + (int)element[1] - '0';
-                            }
-
-                            if (value >= 0 and value <= 20) {
-                                tabelaWartosciPile[indexWartosciPile] = value;
-                                tabelaWszystkichWartosci[indexWartosciAll] = value;
-                                indexWartosciAll++;
-                                indexWartosciPile++;
-                            }
-                            even++;
-                        }
-                        else if(value >= 0 and value <= 20) {
-                            if (element[0] != 'b') {
-                                if (element[0] == 'g') {
-                                    tabelaKolorowPile[indexKolorowPile] = GREEN;
-                                    tabelaWszystkichKolory[indexKolorowAll] = GREEN;
-                                    indexKolorowAll++;
-                                    addElement(curPile, value, colorsWithGreen[tabelaKolorowPile[indexKolorowPile] - 1]);
-                                    curPile = curPile->next;
-                                    indexKolorowPile++;
-                                }
-                                if (element[0] == 'r') {
-                                    tabelaKolorowPile[indexKolorowPile] = RED;
-                                    tabelaWszystkichKolory[indexKolorowAll] = RED;
-                                    indexKolorowAll++;
-                                    addElement(curPile, value, colorsWithGreen[tabelaKolorowPile[indexKolorowPile] - 1]);
-                                    curPile = curPile->next;
-                                    indexKolorowPile++;
-                                }
-                                if (element[0] == 'y') {
-                                    tabelaKolorowPile[indexKolorowPile] = YELLOW;
-                                    tabelaWszystkichKolory[indexKolorowAll] = YELLOW;
-                                    indexKolorowAll++;
-                                    addElement(curPile, value, colorsWithGreen[tabelaKolorowPile[indexKolorowPile] - 1]);
-                                    curPile = curPile->next;
-                                    indexKolorowPile++;
-                                }
-                                if (element[0] == 'w') {
-                                    tabelaKolorowPile[indexKolorowPile] = WHITE;
-                                    tabelaWszystkichKolory[indexKolorowAll] = WHITE;
-                                    indexKolorowAll++;
-                                    addElement(curPile, value, colorsWithGreen[tabelaKolorowPile[indexKolorowPile] - 1]);
-                                    curPile = curPile->next;
-                                    indexKolorowPile++;
-                                }
-                                if (element[0] == 'v') {
-                                    tabelaKolorowPile[indexKolorowPile] = VIOLET;
-                                    tabelaWszystkichKolory[indexKolorowAll] = VIOLET;
-                                    indexKolorowAll++;
-                                    addElement(curPile, value, colorsWithGreen[tabelaKolorowPile[indexKolorowPile] - 1]);
-                                    curPile = curPile->next;
-                                    indexKolorowPile++;
-                                }
-                            }
-                            else if (element[2] == 'u') {
-                                tabelaKolorowPile[indexKolorowPile] = BLUE;
-                                tabelaWszystkichKolory[indexKolorowAll] = BLUE;
-                                indexKolorowAll++;
-                                addElement(curPile, value, colorsWithGreen[tabelaKolorowPile[indexKolorowPile] - 1]);
-                                curPile = curPile->next;
-                                indexKolorowPile++;
-                            }
-                            else {
-                                tabelaKolorowPile[indexKolorowPile] = BLACK;
-                                tabelaWszystkichKolory[indexKolorowAll] = BLACK;
-                                indexKolorowAll++;
-                                addElement(curPile, value, colorsWithGreen[tabelaKolorowPile[indexKolorowPile] - 1]);
-                                curPile = curPile->next;
-                                indexKolorowPile++;
-                            }
-                            even++;
-                        }
-                    }
-                    y++;
-                }
-            }
-        }
-    }
-}
-
-void colorNumber(list_t *allCards, const char** colors, int sposob, int* equal, int* equalSize, int colorCheck[KOLORY]) {
-    
-    //int blueCount = 0;
-    //int redCount = 0;
-    //int yellowCount = 0;
-    //int violetCount = 0;
-    //int whiteCount = 0;
-    //int blackCount = 0;
+void colorNumber(list_t* allCards, const char** colors, int sposob, int* equal, int* equalSize, int colorCheck[KOLORY]) {
 
     int colorCount[KOLORY];//blue, red, violet, yellow, white, black
 
@@ -852,29 +345,27 @@ void colorNumber(list_t *allCards, const char** colors, int sposob, int* equal, 
 
     allCards = allCards->next;
     while (allCards != NULL) {
-        if (allCards->karta.kolor[0] != 'b') {
-
-            if (allCards->karta.kolor[0] == 'r') {
-                colorCount[1]++;
-            }
-            if (allCards->karta.kolor[0] == 'y') {
-                colorCount[3]++;
-            }
-            if (allCards->karta.kolor[0] == 'w') {
-                colorCount[4]++;
-            }
-            if (allCards->karta.kolor[0] == 'v') {
-                colorCount[2]++;
-            }
-        }
-        else if (allCards->karta.kolor[2] == 'u') {
+        if (strcmp(allCards->karta.kolor, "blue") == 0) {
             colorCount[0]++;
         }
-        else {
+        if (strcmp(allCards->karta.kolor, "red") == 0) {
+            colorCount[1]++;
+        }
+        if (strcmp(allCards->karta.kolor, "violet") == 0) {
+            colorCount[2]++;
+        }
+        if (strcmp(allCards->karta.kolor, "yellow") == 0) {
+            colorCount[3]++;
+        }
+        if (strcmp(allCards->karta.kolor, "white") == 0) {
+            colorCount[4]++;
+        }
+        if (strcmp(allCards->karta.kolor, "black") == 0) {
             colorCount[5]++;
         }
         allCards = allCards->next;
     }
+
     int ilosc;
     int flaga = 0;
     for (int i = 0; i < KOLORY; i++) {
@@ -942,7 +433,7 @@ void bubbleSort(intlist_t* l) {
     }
 }
 
-void rozlozNaKolory(intlist_t** listOfColorCards, int* tabelaWszystkichWartosci, int* tabelaWszystkichKolorow, int allCardsTogether) {
+void rozlozNaKolory(intlist_t** listOfColorCards, list_t* allCards) {
     intlist_t* curZero = listOfColorCards[0];
     intlist_t* curOne = listOfColorCards[1];
     intlist_t* curTwo = listOfColorCards[2];
@@ -950,36 +441,41 @@ void rozlozNaKolory(intlist_t** listOfColorCards, int* tabelaWszystkichWartosci,
     intlist_t* curFour = listOfColorCards[4];
     intlist_t* curFive = listOfColorCards[5];
 
-    for (int i = 0; i < allCardsTogether; i++) {
-        if (tabelaWszystkichKolorow[i] == BLUE) {
-            addElementInt(curZero, tabelaWszystkichWartosci[i]);
+    allCards = allCards->next;
+    while (allCards != NULL) {
+        if (strcmp(allCards->karta.kolor, "blue") == 0) {
+            addElementInt(curZero, allCards->karta.wartosc);
             curZero = curZero->next;
         }
-        if (tabelaWszystkichKolorow[i] == RED) {
-            addElementInt(curOne, tabelaWszystkichWartosci[i]);
+        if (strcmp(allCards->karta.kolor, "red") == 0) {
+            addElementInt(curOne, allCards->karta.wartosc);
             curOne = curOne->next;
         }
-        if (tabelaWszystkichKolorow[i] == VIOLET) {
-            addElementInt(curTwo, tabelaWszystkichWartosci[i]);
+        if (strcmp(allCards->karta.kolor, "violet") == 0) {
+            addElementInt(curTwo, allCards->karta.wartosc);
             curTwo = curTwo->next;
         }
-        if (tabelaWszystkichKolorow[i] == YELLOW) {
-            addElementInt(curThree, tabelaWszystkichWartosci[i]);
+        if (strcmp(allCards->karta.kolor, "yellow") == 0) {
+            addElementInt(curThree, allCards->karta.wartosc);
             curThree = curThree->next;
         }
-        if (tabelaWszystkichKolorow[i] == WHITE) {
-            addElementInt(curFour, tabelaWszystkichWartosci[i]);
+        if (strcmp(allCards->karta.kolor, "white") == 0) {
+            addElementInt(curFour, allCards->karta.wartosc);
             curFour = curFour->next;
         }
-        if (tabelaWszystkichKolorow[i] == BLACK) {
-            addElementInt(curFive, tabelaWszystkichWartosci[i]);
+        if (strcmp(allCards->karta.kolor, "black") == 0) {
+            addElementInt(curFive, allCards->karta.wartosc);
             curFive = curFive->next;
         }
+        allCards = allCards->next;
     }
+
+    printInt(listOfColorCards[5]);
 
     for (int i = 0; i < KOLORY; i++) {
         bubbleSort(listOfColorCards[i]);
     }
+    cout << endl;
 }
 
 void sprawdzKolory(intlist_t** listOfColorCards, int equal, const char** colors, int colorCheck[KOLORY], intlist_t** listOfBeg) {
@@ -1029,7 +525,7 @@ void sprawdzKolory(intlist_t** listOfColorCards, int equal, const char** colors,
             }
         }
         if (notEqual == 0) {
-            if(notEqual == 0) {
+            if (notEqual == 0) {
                 cout << endl;
                 cout << "The values of cards of all colors are identical: " << endl;
                 printInt(listOfBeg[firstNotEmpty]);
@@ -1059,66 +555,261 @@ int listSize(list_t* h) {
     return size;
 }
 
-void sprawdzStan(list_t** players, int exploTreshold, list_t** pileCards, int numOfPlayers, int iloscPile, list_t** poczatekPile, int* flagaOne, int* flagaTwo, int* flagaThree) {
-    const char* green = "green";
-
-
-    for (int i = 0; i < iloscPile; i++) {
-        poczatekPile[i] = pileCards[i];
-    }
-
-    for (int i = 1; i < numOfPlayers; i++) {
-        if (abs(listSize(players[i - 1]) - listSize(players[i])) > 2) {
-            cout << "The number of players cards on hand is wrong" << endl;
-            (*flagaThree) = 1;
-            break;
-        }
-    }
-    for (int i = 0; i < iloscPile; i++) {
-        pileCards[i] = pileCards[i]->next;
-        while (pileCards[i]->next != NULL) {
-            if (pileCards[i]->karta.kolor != pileCards[i]->next->karta.kolor) {
-                if (pileCards[i]->karta.kolor != green and pileCards[i]->next->karta.kolor != green) {
+void sprawdzKoloryPiles(int iloscPiles, list_t** pileCards) {
+    for (int i = 0; i < iloscPiles; i++) {
+        list_t* curPile = pileCards[i];
+        curPile = curPile->next;
+        while (curPile != NULL) {
+            if (curPile->next != NULL) {
+                if (strcmp(curPile->karta.kolor, curPile->next->karta.kolor) != 0) {
                     cout << "Two different colors were found on the " << i + 1 << " pile" << endl;
-                    (*flagaOne) = 1;
-                    break;
                 }
             }
-            pileCards[i] = pileCards[i]->next;
+            curPile = curPile->next;
         }
-    }
-    for (int i = 0; i < iloscPile; i++) {
-        int sumaWartosci = 0;
-        poczatekPile[i] = poczatekPile[i]->next;
-        while (poczatekPile[i] != NULL) {
-            sumaWartosci += poczatekPile[i]->karta.wartosc;
-            poczatekPile[i] = poczatekPile[i]->next;
-        }
-        if (sumaWartosci > exploTreshold) {
-            cout << "Pile number " << i + 1 << " should explode earlier" << endl;
-            (*flagaTwo) = 1;
-        }
-    }
-    if ((*flagaOne) + (*flagaTwo) + (*flagaThree) == 0) {
-        cout << "Current state of the game is ok" << endl;
     }
 }
 
-void turn(list_t** players, list_t** pileCards, int numOfPlayers, int* activePlayer, int iloscPile) {
+void sprawdzExploPiles(int iloscPiles, list_t** pileCards, int exploTreshold) {
+    for (int i = 0; i < iloscPiles; i++) {
+        int sumaWart = 0;
+        list_t* curPile = pileCards[i];
+        curPile = curPile->next;
+        while (curPile != NULL) {
+            sumaWart += curPile->karta.wartosc;
+            curPile = curPile->next;
+        }
+        if (sumaWart > exploTreshold) {
+            cout << "Pile number " << i + 1 << " should explode earlier" << endl;
+        }
+    }
+}
+
+void sprawdzStan(int numOfPlayers, list_t** players) {
+    for (int i = 1; i < numOfPlayers; i++) {
+        int roznica = (listSize(players[i - 1]) - listSize(players[i]));
+        if (roznica > 2 or roznica < -2) {
+            cout << "The number of players cards on hand is wrong" << endl;
+            break;
+        }
+    }
+}
+
+int checkIfHasColor(const char* color, list_t** pileCards, int i) { //1 jesli ma, 0 jesli nie ma 
+    list_t* bufor = pileCards[i];
+    bufor = bufor->next;
+    while (bufor != NULL) {
+        if (strcmp(bufor->karta.kolor, color) == 0) {
+            return 1;
+            break;
+        }
+        bufor = bufor->next;
+    }
+    return 0;
+}
+
+int checkIfOnlyGreen(list_t** pileCards, int i) {
+    list_t* bufor = pileCards[i];
+    bufor = bufor->next;
+    int onlyGreen = 1; //1 same zielone, 0 nie same zielone
+    while (bufor != NULL) {
+        if (strcmp(bufor->karta.kolor, "green") != 0){
+            onlyGreen = 0;
+        }
+        bufor = bufor->next;
+    }
+    return onlyGreen;
+}
+
+int sprawdzEksplozje(int exploTreshold, list_t** pileCards, list_t** poczatekPile, int iloscPile) {
+
+    for (int i = 0; i < iloscPile; i++) {
+        int sumaWartosci = 0;
+        list_t* bufor = (list_t*)malloc(sizeof(list_t));
+        bufor = pileCards[i]->next;
+        while (bufor != NULL) {
+            sumaWartosci += bufor->karta.wartosc;
+            bufor = bufor->next;
+        }
+        if (sumaWartosci > exploTreshold) {
+            return i + 1;
+            break;
+        }
+    }
+    return 0;
+}
+
+void dodajDoDecku(list_t** pileCards, list_t** deckCards, int explo, int* activePlayer) {
+    list_t* pileBeg = pileCards[explo];
+    pileBeg = pileBeg->next;
+    list_t* cur = deckCards[(*activePlayer) - 1];
+    while (pileBeg != NULL) {
+        addElement(cur, pileBeg->karta.wartosc, pileBeg->karta.kolor);
+        cur = cur->next;
+        pileBeg = pileBeg->next;
+    }
+    pileCards[explo]->next = NULL;
+}
+
+void turn(list_t** players, list_t** pileCards, int numOfPlayers, int* activePlayer, int iloscPile, int exploTreshold, list_t** poczatekPile, list_t** deckCards) {
     const char* green = "green";
-    list_t* cur = pileCards[0];
-    players[(*activePlayer) - 1] = players[(*activePlayer) - 1]->next;
-    if (players[(*activePlayer) - 1]->karta.kolor == green) {
-        addElement(cur, players[(*activePlayer) - 1]->karta.wartosc, players[(*activePlayer) - 1]->karta.kolor);
+    int flaga = 0;
+    int flagaDwa = 1;
+    if (strcmp(players[(*activePlayer) - 1]->next->karta.kolor, "green") == 0) {
+        flaga++;
+        list_t* playersBeg = players[(*activePlayer) - 1];
+        playersBeg = playersBeg->next;
+        addElement(pileCards[0], playersBeg->karta.wartosc, playersBeg->karta.kolor);
         removeElementFront(players[(*activePlayer) - 1]);
+        int explo = sprawdzEksplozje(exploTreshold, pileCards, poczatekPile, iloscPile);
+        if (explo > 0) {
+            dodajDoDecku(pileCards, deckCards, explo - 1, activePlayer);
+        }
         (*activePlayer)++;
         if ((*activePlayer) > numOfPlayers) {
             (*activePlayer) = 1;
         }
     }
+    else {
+        for (int i = 0; i < iloscPile; i++) {
+            if (checkIfHasColor(players[(*activePlayer) - 1]->next->karta.kolor, pileCards, i) == 1) {
+                flaga++;
+                list_t* playersBeg = players[(*activePlayer) - 1];
+                playersBeg = playersBeg->next;
+                addElement(pileCards[i], playersBeg->karta.wartosc, playersBeg->karta.kolor);
+                removeElementFront(players[(*activePlayer) - 1]);
+                int explo = sprawdzEksplozje(exploTreshold, pileCards, poczatekPile, iloscPile);
+                if (explo > 0) {
+                    dodajDoDecku(pileCards, deckCards, explo - 1, activePlayer);
+                }
+                (*activePlayer)++;
+                if ((*activePlayer) > numOfPlayers) {
+                    (*activePlayer) = 1;
+                }
+                break;
+            }
+        }
+    }
+    if(flaga == 0) {
+        for (int i = 0; i < iloscPile; i++) {
+            if (checkIfOnlyGreen(pileCards, i) == 1 or listSize(pileCards[i]) == 0) {
+                flagaDwa = 0;
+                list_t* playersBeg = players[(*activePlayer) - 1];
+                playersBeg = playersBeg->next;
+                addElement(pileCards[i], playersBeg->karta.wartosc, playersBeg->karta.kolor);
+                removeElementFront(players[(*activePlayer) - 1]);
+                int explo = sprawdzEksplozje(exploTreshold, pileCards, poczatekPile, iloscPile);
+                if (explo > 0) {
+                    dodajDoDecku(pileCards, deckCards, explo - 1, activePlayer);
+                }
+                (*activePlayer)++;
+                if ((*activePlayer) > numOfPlayers) {
+                    (*activePlayer) = 1;
+                }
+                break;
+            }
+        }
+    }
 }
 
-int main(){
+int allHandsEmpty(list_t** players, int numOfPlayers) {
+    int flaga = 0;
+    for (int i = 0; i < numOfPlayers; i++) {
+        if (listSize(players[i]) == 0) {
+            flaga++;
+        }
+    }
+    if (flaga == numOfPlayers) {
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
+
+void immunity(int** immuneList, int numOfPlayers, list_t** deckCards, const char** colors, int iloscPile, int wynikiGraczy[KOLORY]) {
+    for (int i = 0; i < numOfPlayers; i++) {
+        list_t* cur = deckCards[i];
+        cur = cur->next;
+        while (cur != NULL) {
+            if (strcmp(cur->karta.kolor, "blue") == 0) {
+                immuneList[i][BLUE - 2]++;
+            }
+            if (strcmp(cur->karta.kolor, "red") == 0) {
+                immuneList[i][RED - 2]++;
+            }
+            if (strcmp(cur->karta.kolor, "violet") == 0) {
+                immuneList[i][VIOLET - 2]++;
+            }
+            if (strcmp(cur->karta.kolor, "yellow") == 0) {
+                immuneList[i][YELLOW - 2]++;
+            }
+            if (strcmp(cur->karta.kolor, "white") == 0) {
+                immuneList[i][WHITE - 2]++;
+            }
+            if (strcmp(cur->karta.kolor, "black") == 0) {
+                immuneList[i][BLACK - 2]++;
+            }
+            cur = cur->next;
+        }
+    }
+
+    for (int j = 0; j < iloscPile; j++) {
+        int max = 0;
+        int indexMax;
+        int remisy = 0;
+        for (int i = 0; i < numOfPlayers; i++) {
+            if (immuneList[i][j] > max) {
+                indexMax = i;
+                max = immuneList[i][j];
+            }
+            else if (immuneList[i][j] > 0 and immuneList[i][j] == max) {
+                remisy++;
+            }
+        }
+        if (remisy == 0) {
+            cout << "gracz " << indexMax + 1 << " odporny na " << colors[j] << endl;
+            int sumaDoOdjecia = 0;
+            list_t* cur = deckCards[indexMax];
+            cur = cur->next;
+            while (cur != NULL) {
+                if (strcmp(cur->karta.kolor, colors[j]) == 0) {
+                    sumaDoOdjecia += 1;
+                }
+                cur = cur->next;
+            }
+            wynikiGraczy[indexMax] = wynikiGraczy[indexMax] - sumaDoOdjecia;
+        }
+    }
+}
+
+void scores(list_t** deckCards, int numOfPlayers, int** immuneList, const char** colors, int iloscPile) {
+    int wynikiGraczy[KOLORY];
+    for (int i = 0; i < numOfPlayers; i++) {
+        int sumaPunktow = 0;
+        list_t* cur = deckCards[i];
+        cur = cur->next;
+        while (cur != NULL) {
+            if (cur->karta.kolor == "green") {
+                sumaPunktow += 2;
+            }
+            else {
+                sumaPunktow += 1;
+            }
+            cur = cur->next;
+        }
+        wynikiGraczy[i] = sumaPunktow;
+        //cout << "Wynik Gracza " << i + 1 << " = " << wynikiGraczy[i] << endl;
+    }
+
+    immunity(immuneList, numOfPlayers, deckCards, colors, iloscPile, wynikiGraczy);
+
+    for (int i = 0; i < numOfPlayers; i++) {
+        cout << "Wynik Gracza " << i + 1 << " = " << wynikiGraczy[i] << endl;
+    }
+}
+
+int main() {
 
     int n; //l. graczy
     int k; //l. kotlow
@@ -1130,280 +821,181 @@ int main(){
     int iloscPile = 0;
     card* tabelaKart = NULL;
     int* tabelaWartosci = NULL;
-    int* tabelaWartosciLoaded = NULL;
-    int* tabelaKolorowLoaded = NULL;
-    int* tabelaPileLoaded = NULL;
-    int* tabelaWartosciDeck = NULL;
-    int* tabelaKolorowDeck = NULL;
-    int* tabelaWartosciPile = NULL;
-    int* tabelaKolorowPile = NULL;
-    int* tabelaWszystkichWartosci = NULL;
-    int* tabelaWszystkichKolory = NULL;
+    int* immuneColors = NULL;
     list_t** players = NULL;
     list_t** deckCards = NULL;
     list_t** pileCards = NULL;
     intlist_t** listOfColorCards = NULL;
     intlist_t** listOfBeg = NULL;
+    int** immuneList = NULL;
     list_t** poczatekPile = NULL;
     list_t allCards;
-
-    FILE* fp;
-    fp = fopen("save.txt", "a");
-
+    int* wynikiGraczy = NULL;
 
     const char* colors[KOLORY] = { "blue", "red", "violet", "yellow", "white", "black" };
     const char* colorsWithGreen[COLORSWITHGREEN] = { "green", "blue", "red", "violet", "yellow", "white", "black" };
 
     char option;
-    
+
     cout << "l - wczytaj | g - wygeneruj" << endl;
     cin >> option;
 
     int sposob;
     switch (option) {
-        case 'g':
-            activePlayer = 1;
-            sposob = 0;
-            FILE * fpclear;
-            fpclear = fopen("save.txt", "w");
-            fclose(fpclear);
+    case 'g':
+        activePlayer = 1;
+        sposob = 0;
 
-            cin >> n >> k >> g >> gv >> o >> exploTreshold;
-            sprawdzZmienne(n, k, g, gv, o);
+        cin >> n >> k >> g >> gv >> o;
+        sprawdzZmienne(n, k, g, gv, o);
 
-            iloscPile = k;
+        iloscPile = k;
 
-            tabelaKart = (card*)malloc(o * k * sizeof(card) + g * sizeof(card));
-            if (tabelaKart == NULL) {
-                cout << "Allocation error" << endl;
-                return 1;
-            }
+        tabelaKart = (card*)malloc(o * k * sizeof(card) + g * sizeof(card));
+        if (tabelaKart == NULL) {
+            cout << "Allocation error" << endl;
+            return 1;
+        }
 
-            tabelaWartosci = (int*)malloc(o * k * sizeof(int) + g * sizeof(int));
-            if (tabelaWartosci == NULL) {
-                cout << "Allocation error" << endl;
-                return 1;
-            }
+        tabelaWartosci = (int*)malloc(o * k * sizeof(int) + g * sizeof(int));
+        if (tabelaWartosci == NULL) {
+            cout << "Allocation error" << endl;
+            return 1;
+        }
 
-            wczytajWartosci(tabelaWartosci, o, k, tabelaKart);
-            stworzTalie(k, g, gv, o, colors, tabelaKart, tabelaWartosci);
+        wczytajWartosci(tabelaWartosci, o, k, tabelaKart);
+        cin >> exploTreshold;
+        stworzTalie(k, g, gv, o, colors, tabelaKart, tabelaWartosci);
 
-            players = (list_t**)malloc(n * sizeof(list_t*));
-            for (int i = 0; i < n; i++) {
-                players[i] = (list_t*)malloc(sizeof(list_t));
-                init(players[i]);
-            }
+        players = (list_t**)malloc(n * sizeof(list_t*));
+        for (int i = 0; i < n; i++) {
+            players[i] = (list_t*)malloc(sizeof(list_t));
+            init(players[i]);
+        }
 
-            deckCards = (list_t**)malloc(n * sizeof(list_t*));
-            for (int i = 0; i < n; i++) {
-                deckCards[i] = (list_t*)malloc(sizeof(list_t));
-                init(deckCards[i]);
-            }
+        deckCards = (list_t**)malloc(n * sizeof(list_t*));
+        for (int i = 0; i < n; i++) {
+            deckCards[i] = (list_t*)malloc(sizeof(list_t));
+            init(deckCards[i]);
+        }
 
-            pileCards = (list_t**)malloc(k * sizeof(list_t*));
-            for (int i = 0; i < k; i++) {
-                pileCards[i] = (list_t*)malloc(sizeof(list_t));
-                init(pileCards[i]);
-            }
+        pileCards = (list_t**)malloc(KOLORY * sizeof(list_t*));
+        for (int i = 0; i < KOLORY; i++) {
+            pileCards[i] = (list_t*)malloc(sizeof(list_t));
+            init(pileCards[i]);
+        }
 
-            dajDoRak(o, k, g, n, players, tabelaKart);
-            wypiszStanDoPliku(n, k, players, fp, &activePlayer, deckCards, pileCards, exploTreshold);
+        dajDoRak(o, k, g, n, players, tabelaKart);
 
-            fclose(fp);
+        FILE* fp;
+        fp = fopen("save_begin_status.txt", "w");
 
-            break;
+        wypiszStanDoPliku(n, k, players, fp, &activePlayer, deckCards, pileCards, exploTreshold);
 
-        case 'l':
-            sposob = 1;
-            int greenCount = 0;
-            int cardCount = 0;
-            int iloscKartPile = 0;
-            int deckCardCount = 0;
-            int greenValue;
-            int greenValueCheck = 0;
-            int equal = 0;
-            int equalSize;
-            int colorCheck[KOLORY]; //blue, red, violet, yellow, white, black
-            int flagaOne = 0;
-            int flagaTwo = 0;
-            int flagaThree = 0;
+        fclose(fp);
 
-            for (int i = 0; i < KOLORY; i++) {
-                colorCheck[i] = -1;
-            }
+        free(tabelaKart);
+        free(tabelaWartosci);
 
-            wczytajStanWartosci(&cardCount, &greenCount, &greenValue, &greenValueCheck, &deckCardCount, &iloscPile, &iloscKartPile, &exploTreshold, &activePlayer);
+        break;
 
-            tabelaWartosciLoaded = (int*)malloc(cardCount*sizeof(int));
-            if (tabelaWartosciLoaded == NULL) {
-                cout << "Allocation error" << endl;
-                return 1;
-            }
+    case 'l':
+        sposob = 1;
+        int greenCount = 0;
+        int cardCount = 0;
+        int iloscKartPile = 0;
+        int deckCardCount = 0;
+        int greenValue = 0;
+        int equal = 0;
+        int equalSize;
+        int colorCheck[KOLORY]; //blue, red, violet, yellow, white, black
+        int flagaOne = 0;
+        int flagaTwo = 0;
+        int flagaThree = 0;
 
-            tabelaKolorowLoaded = (int*)malloc(cardCount * sizeof(int));
-            if (tabelaKolorowLoaded == NULL) {
-                cout << "Allocation error" << endl;
-                return 1;
-            }
+        for (int i = 0; i < KOLORY; i++) {
+            colorCheck[i] = -1;
+        }
 
-            tabelaKolorowDeck = (int*)malloc(deckCardCount * sizeof(int));
-            if (tabelaKolorowDeck == NULL) {
-                cout << "Allocation error" << endl;
-                return 1;
-            }
+        int allCardsTogether = iloscKartPile + deckCardCount + cardCount;
+        n = numberOfPlayers();
 
-            tabelaWartosciDeck = (int*)malloc(deckCardCount * sizeof(int));
-            if (tabelaWartosciDeck == NULL) {
-                cout << "Allocation error" << endl;
-                return 1;
-            }
+        players = (list_t**)malloc(n * sizeof(list_t*));
+        for (int i = 0; i < n; i++) {
+            players[i] = (list_t*)malloc(sizeof(list_t));
+            init(players[i]);
+        }
 
-            tabelaKolorowPile = (int*)malloc(iloscKartPile * sizeof(int));
-            if (tabelaKolorowPile == NULL) {
-                cout << "Allocation error" << endl;
-                return 1;
-            }
+        deckCards = (list_t**)malloc(n * sizeof(list_t*));
+        for (int i = 0; i < n; i++) {
+            deckCards[i] = (list_t*)malloc(sizeof(list_t));
+            init(deckCards[i]);
+        }
 
-            tabelaWartosciPile = (int*)malloc(iloscKartPile * sizeof(int));
-            if (tabelaWartosciDeck == NULL) {
-                cout << "Allocation error" << endl;
-                return 1;
-            }
+        pileCards = (list_t**)malloc(KOLORY * sizeof(list_t*));
+        for (int i = 0; i < KOLORY; i++) {
+            pileCards[i] = (list_t*)malloc(sizeof(list_t));
+            init(pileCards[i]);
+        }
 
-            int allCardsTogether = iloscKartPile + deckCardCount + cardCount;
+        listOfColorCards = (intlist_t**)malloc(KOLORY * sizeof(intlist_t*));
+        for (int i = 0; i < KOLORY; i++) {
+            listOfColorCards[i] = (intlist_t*)malloc(sizeof(intlist_t));
+            initInt(listOfColorCards[i]);
+        }
 
-            tabelaWszystkichWartosci = (int*)malloc(allCardsTogether * sizeof(int));
-            if (tabelaWszystkichWartosci == NULL) {
-                cout << "Allocation error" << endl;
-                return 1;
-            }
+        listOfBeg = (intlist_t**)malloc(KOLORY * sizeof(intlist_t*));
+        for (int i = 0; i < KOLORY; i++) {
+            listOfBeg[i] = (intlist_t*)malloc(sizeof(intlist_t));
+            initInt(listOfBeg[i]);
+        }
 
-            tabelaWszystkichKolory = (int*)malloc(allCardsTogether * sizeof(int));
-            if (tabelaWszystkichKolory == NULL) {
-                cout << "Allocation error" << endl;
-                return 1;
-            }
+        poczatekPile = (list_t**)malloc(sizeof(list_t*));
+        for (int i = 0; i < iloscPile; i++) {
+            poczatekPile[i] = (list_t*)malloc(sizeof(list_t));
+            init(poczatekPile[i]);
+        }
 
-            n = LiczbaGraczy();
+        init(&allCards);
 
-            players = (list_t**)malloc(n * sizeof(list_t*));
-            for (int i = 0; i < n; i++) {
-                players[i] = (list_t*)malloc(sizeof(list_t));
-                init(players[i]);
-            }
+        loadGameState(&activePlayer, n, &exploTreshold, &iloscPile, players, pileCards, deckCards, &allCards);
+        checkGreens(&allCards, &greenCount, &greenValue);
+        colorNumber(&allCards, colors, sposob, &equal, &equalSize, colorCheck);
+        rozlozNaKolory(listOfColorCards, &allCards);
+        sprawdzKolory(listOfColorCards, equal, colors, colorCheck, listOfBeg);
+        //sprawdzStan(players, exploTreshold, pileCards, n, iloscPile, poczatekPile, &flagaOne, &flagaTwo, &flagaThree);
+        sprawdzStan(n, players);
+        sprawdzKoloryPiles(iloscPile, pileCards);
+        sprawdzExploPiles(iloscPile, pileCards, exploTreshold);
 
-            deckCards = (list_t**)malloc(n * sizeof(list_t*));
-            for (int i = 0; i < n; i++) {
-                deckCards[i] = (list_t*)malloc(sizeof(list_t));
-                init(deckCards[i]);
-            }
-
-            pileCards = (list_t**)malloc(iloscPile * sizeof(list_t*));
-            for (int i = 0; i < iloscPile; i++) {
-                pileCards[i] = (list_t*)malloc(sizeof(list_t));
-                init(pileCards[i]);
-            }
-
-            listOfColorCards = (intlist_t**)malloc(KOLORY * sizeof(intlist_t*));
-            for (int i = 0; i < KOLORY; i++) {
-                listOfColorCards[i] = (intlist_t*)malloc(sizeof(intlist_t));
-                initInt(listOfColorCards[i]);
-            }
-
-            listOfBeg = (intlist_t**)malloc(KOLORY * sizeof(intlist_t*));
-            for (int i = 0; i < KOLORY; i++) {
-                listOfBeg[i] = (intlist_t*)malloc(sizeof(intlist_t));
-                initInt(listOfBeg[i]);
-            }
-
-            poczatekPile = (list_t**)malloc(sizeof(list_t*));
-            for (int i = 0; i < iloscPile; i++) {
-                poczatekPile[i] = (list_t*)malloc(sizeof(list_t));
-                init(poczatekPile[i]);
-            }
-
-            FILE* loadFile;
-            loadFile = fopen("save.txt", "r");
-
-            wczytajStan(n, tabelaWartosciLoaded, cardCount, tabelaKolorowLoaded, players, colorsWithGreen, deckCards, tabelaWartosciDeck, tabelaKolorowDeck, pileCards, tabelaWartosciPile, tabelaKolorowPile, iloscPile, tabelaWszystkichKolory, tabelaWszystkichWartosci, loadFile);
-    
-            fclose(loadFile);
-
-            if (greenCount == 0) {
-                cout << "Green cards does not exist" << endl;
-            }
-            else {
-                if (greenValueCheck > 1) {
-                    cout << "Different green cards values occurred" << endl;
-                }
-                else {
-                    cout << "Green number: " << greenCount << endl;
-                    cout << "Green value: " << greenValue << endl;
-                }
-            }
-
-            cout << "Deck card number: " << deckCardCount << endl;
-            cout << "Card number: " << cardCount << endl;
-            cout << "Pile number: " << iloscKartPile << endl;
-            cout << endl;
-
-            cout << "hands: " << endl;
-            for (int i = 0; i < n; i++) {
-                print(players[i]);
-                cout << endl;
-            }
-            cout << endl;
-            cout << "decks: " << endl;
-            for (int i = 0; i < n; i++) {
-                print(deckCards[i]);
-                cout << endl;
-            }
-            cout << endl;
-            cout << "piles: " << endl;
-            for (int i = 0; i < iloscPile; i++) {
-                print(pileCards[i]);
-                cout << endl;
-            }
-            cout << endl;
-
-            init(&allCards);
-
-            list_t* cur = &allCards;
-            for (int i = 0; i < allCardsTogether; i++) {
-                addElement(cur, tabelaWszystkichWartosci[i], colorsWithGreen[tabelaWszystkichKolory[i] - 1]);
-                cur = cur->next;
-            }
-            
-            colorNumber(&allCards, colors, sposob, &equal, &equalSize, colorCheck);
-            rozlozNaKolory(listOfColorCards, tabelaWszystkichWartosci, tabelaWszystkichKolory, allCardsTogether);
-
-            sprawdzKolory(listOfColorCards, equal, colors, colorCheck, listOfBeg);
-
-            sprawdzStan(players, exploTreshold, pileCards, n, iloscPile, poczatekPile, &flagaOne, &flagaTwo, &flagaThree);
-
-            cout << endl;
-            break;
+        cout << endl;
+        break;
     }
 
     FILE* save;
-    save = fopen("save.txt", "w");
+    save = fopen("save_results.txt", "w");
 
-    turn(players, pileCards, n, &activePlayer, iloscPile);
-
-    wypiszStanDoPliku(n, iloscPile, players, save, &activePlayer, deckCards, pileCards, exploTreshold);
+    int koniec = 1;
+    while (allHandsEmpty(players, n) != 1) {
+        turn(players, pileCards, n, &activePlayer, iloscPile, exploTreshold, poczatekPile, deckCards);
+        wypiszStanDoPliku(n, iloscPile, players, save, &activePlayer, deckCards, pileCards, exploTreshold);
+        fprintf(save, "\n");
+    }
 
     fclose(save);
 
-    free(tabelaKart);
-    free(tabelaWartosci);
-    free(tabelaWartosciLoaded);
-    free(tabelaKolorowDeck);
-    free(tabelaWartosciDeck);
-    free(tabelaKolorowLoaded);
-    free(tabelaKolorowPile);
-    free(tabelaWartosciPile);
-    free(tabelaWszystkichKolory);
-    free(tabelaWszystkichWartosci);
+    immuneList = (int**)malloc(n * sizeof(int*));
+    for (int i = 0; i < n; i++) {
+        immuneList[i] = (int*)malloc(KOLORY * sizeof(int));
+        for (int j = 0; j < KOLORY; j++) {
+            immuneList[i][j] = 0;
+        }
+    }
+
+    scores(deckCards, n, immuneList, colors, iloscPile);
+
+    char end;
+    cin >> end;
 
     return 0;
 }

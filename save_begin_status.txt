@@ -1,0 +1,12 @@
+active player = 1
+players number = 3
+explosion treshold = 13
+1 player hand cards: 4 green 4 green 4 green 1 blue 2 blue 4 blue 5 blue 7 blue 1 red 2 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
+1 player deck cards: 
+2 player hand cards: 4 green 4 green 4 green 1 blue 2 blue 5 blue 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
+2 player deck cards: 
+3 player hand cards: 4 green 4 green 1 blue 2 blue 4 blue 5 blue 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 5 violet 7 violet 
+3 player deck cards: 
+1 pile cards: 
+2 pile cards: 
+3 pile cards: 
