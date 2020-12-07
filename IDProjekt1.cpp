@@ -2,6 +2,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 using namespace std;
 
 #define KOLORY 6
@@ -185,6 +186,16 @@ void reverseList(list_t* l) {
     l->next = prev;
 }
 
+int listSize(list_t* h) {
+    h = h->next;
+    int size = 0;
+    while (h != NULL) {
+        size++;
+        h = h->next;
+    }
+    return size;
+}
+
 void dajDoRak(int o, int k, int g, int n, list_t** players, card* tabelaKart) {
     list_t* cur = NULL;
     for (int i = 0; i < o * k + g; i++) {
@@ -251,6 +262,8 @@ void loadGameState(int* activePlayer, int numOfPlayers, int* exploTreshold, int*
 
     fscanf(fp, "%*d %*s %*s %*s");
     for (int i = 0; i < 2 * numOfPlayers; i++) {
+        int handCount = 0;
+        int deckCount = 0;
         list_t* curPlayers = players[i / 2];
         list_t* curDeck;
         if (i == 1) {
@@ -273,12 +286,14 @@ void loadGameState(int* activePlayer, int numOfPlayers, int* exploTreshold, int*
                 addElement(curAll, value, color);
                 curPlayers = curPlayers->next;
                 curAll = curAll->next;
+                handCount++;
             }
             else {
                 addElement(curDeck, value, color);
                 addElement(curAll, value, color);
                 curDeck = curDeck->next;
                 curAll = curAll->next;
+                deckCount++;
             }
         }
     }
@@ -306,6 +321,14 @@ void loadGameState(int* activePlayer, int numOfPlayers, int* exploTreshold, int*
         fscanf(fp, "%s", colorPile);
     }
     fclose(fp);
+
+    for (int i = 0; i < numOfPlayers; i++) {
+        cout << i + 1 << " player has " << listSize(players[i]) << " cards on hand" << endl;
+        cout << i + 1 << " player has " << listSize(deckCards[i]) << " in front of him" << endl;
+    }
+    for (int i = 0; i < (*iloscPile); i++) {
+        cout << "there are " << listSize(pileCards[i]) << " cards on " << i + 1 << " pile" << endl;
+    }
 }
 
 void checkGreens(list_t* allCards, int* greenCount, int* greenValue) {
@@ -545,27 +568,23 @@ void sprawdzKolory(intlist_t** listOfColorCards, int equal, const char** colors,
     }
 }
 
-int listSize(list_t* h) {
-    h = h->next;
-    int size = 0;
-    while (h != NULL) {
-        size++;
-        h = h->next;
-    }
-    return size;
-}
-
 void sprawdzKoloryPiles(int iloscPiles, list_t** pileCards) {
     for (int i = 0; i < iloscPiles; i++) {
+        char bufor[10];
+        int flaga = 0;
         list_t* curPile = pileCards[i];
         curPile = curPile->next;
         while (curPile != NULL) {
-            if (curPile->next != NULL) {
-                if (strcmp(curPile->karta.kolor, curPile->next->karta.kolor) != 0) {
-                    cout << "Two different colors were found on the " << i + 1 << " pile" << endl;
+            if (strcmp(curPile->karta.kolor, "green") != 0) {
+                if (strcmp(curPile->karta.kolor, bufor) != 0) {
+                    strcpy(bufor, curPile->karta.kolor);
+                    flaga++;
                 }
             }
             curPile = curPile->next;
+        }
+        if (flaga > 1) {
+            cout << "Two different colors were found on the " << i + 1 << " pile" << endl;
         }
     }
 }
@@ -963,14 +982,21 @@ int main() {
         colorNumber(&allCards, colors, sposob, &equal, &equalSize, colorCheck);
         rozlozNaKolory(listOfColorCards, &allCards);
         sprawdzKolory(listOfColorCards, equal, colors, colorCheck, listOfBeg);
-        //sprawdzStan(players, exploTreshold, pileCards, n, iloscPile, poczatekPile, &flagaOne, &flagaTwo, &flagaThree);
         sprawdzStan(n, players);
         sprawdzKoloryPiles(iloscPile, pileCards);
         sprawdzExploPiles(iloscPile, pileCards, exploTreshold);
 
+        for (int i = 0; i < KOLORY; i++) {
+            free(listOfColorCards[i]);
+            free(listOfBeg[i]);
+        }
+
+        free(listOfColorCards);
+        free(listOfBeg);
         cout << endl;
         break;
     }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     FILE* save;
     save = fopen("save_results.txt", "w");
@@ -993,6 +1019,20 @@ int main() {
     }
 
     scores(deckCards, n, immuneList, colors, iloscPile);
+
+    for (int i = 0; i < n; i++) {
+        free(players[i]);
+        free(deckCards[i]);
+        free(immuneList[i]);
+    }
+    for (int i = 0; i < KOLORY; i++) {
+        free(pileCards[i]);
+    }
+    free(players);
+    free(deckCards);
+    free(immuneList);
+    free(pileCards);
+    free(poczatekPile);
 
     char end;
     cin >> end;

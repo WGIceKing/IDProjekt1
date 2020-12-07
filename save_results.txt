@@ -1,650 +1,726 @@
 active player = 2
-players number = 3
-explosion treshold = 13
-1 player hand cards: 4 green 4 green 1 blue 2 blue 4 blue 5 blue 7 blue 1 red 2 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
+players number = 6
+explosion treshold = 8
+1 player hand cards: 5 blue 7 red 1 yellow 2 white 4 black 
 1 player deck cards: 
-2 player hand cards: 4 green 4 green 4 green 1 blue 2 blue 5 blue 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
+2 player hand cards: 4 green 7 blue 1 violet 2 yellow 4 white 5 black 
 2 player deck cards: 
-3 player hand cards: 4 green 4 green 1 blue 2 blue 4 blue 5 blue 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 5 violet 7 violet 
+3 player hand cards: 4 green 1 red 2 violet 4 yellow 5 white 7 black 
 3 player deck cards: 
+4 player hand cards: 1 blue 2 red 4 violet 5 yellow 7 white 
+4 player deck cards: 
+5 player hand cards: 2 blue 4 red 5 violet 7 yellow 1 black 
+5 player deck cards: 
+6 player hand cards: 4 blue 5 red 7 violet 1 white 2 black 
+6 player deck cards: 
 1 pile cards: 4 green 
 2 pile cards: 
 3 pile cards: 
+4 pile cards: 
+5 pile cards: 
+6 pile cards: 
 
 active player = 3
-players number = 3
-explosion treshold = 13
-1 player hand cards: 4 green 4 green 1 blue 2 blue 4 blue 5 blue 7 blue 1 red 2 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
+players number = 6
+explosion treshold = 8
+1 player hand cards: 5 blue 7 red 1 yellow 2 white 4 black 
 1 player deck cards: 
-2 player hand cards: 4 green 4 green 1 blue 2 blue 5 blue 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
+2 player hand cards: 7 blue 1 violet 2 yellow 4 white 5 black 
 2 player deck cards: 
-3 player hand cards: 4 green 4 green 1 blue 2 blue 4 blue 5 blue 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 5 violet 7 violet 
+3 player hand cards: 4 green 1 red 2 violet 4 yellow 5 white 7 black 
 3 player deck cards: 
+4 player hand cards: 1 blue 2 red 4 violet 5 yellow 7 white 
+4 player deck cards: 
+5 player hand cards: 2 blue 4 red 5 violet 7 yellow 1 black 
+5 player deck cards: 
+6 player hand cards: 4 blue 5 red 7 violet 1 white 2 black 
+6 player deck cards: 
 1 pile cards: 4 green 4 green 
 2 pile cards: 
 3 pile cards: 
+4 pile cards: 
+5 pile cards: 
+6 pile cards: 
 
-active player = 1
-players number = 3
-explosion treshold = 13
-1 player hand cards: 4 green 4 green 1 blue 2 blue 4 blue 5 blue 7 blue 1 red 2 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
+active player = 4
+players number = 6
+explosion treshold = 8
+1 player hand cards: 5 blue 7 red 1 yellow 2 white 4 black 
 1 player deck cards: 
-2 player hand cards: 4 green 4 green 1 blue 2 blue 5 blue 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
+2 player hand cards: 7 blue 1 violet 2 yellow 4 white 5 black 
 2 player deck cards: 
-3 player hand cards: 4 green 1 blue 2 blue 4 blue 5 blue 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 5 violet 7 violet 
-3 player deck cards: 
-1 pile cards: 4 green 4 green 4 green 
-2 pile cards: 
-3 pile cards: 
-
-active player = 2
-players number = 3
-explosion treshold = 13
-1 player hand cards: 4 green 1 blue 2 blue 4 blue 5 blue 7 blue 1 red 2 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-1 player deck cards: 4 green 4 green 4 green 4 green 
-2 player hand cards: 4 green 4 green 1 blue 2 blue 5 blue 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-2 player deck cards: 
-3 player hand cards: 4 green 1 blue 2 blue 4 blue 5 blue 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 5 violet 7 violet 
-3 player deck cards: 
+3 player hand cards: 1 red 2 violet 4 yellow 5 white 7 black 
+3 player deck cards: 4 green 4 green 4 green 
+4 player hand cards: 1 blue 2 red 4 violet 5 yellow 7 white 
+4 player deck cards: 
+5 player hand cards: 2 blue 4 red 5 violet 7 yellow 1 black 
+5 player deck cards: 
+6 player hand cards: 4 blue 5 red 7 violet 1 white 2 black 
+6 player deck cards: 
 1 pile cards: 
 2 pile cards: 
 3 pile cards: 
+4 pile cards: 
+5 pile cards: 
+6 pile cards: 
 
-active player = 3
-players number = 3
-explosion treshold = 13
-1 player hand cards: 4 green 1 blue 2 blue 4 blue 5 blue 7 blue 1 red 2 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-1 player deck cards: 4 green 4 green 4 green 4 green 
-2 player hand cards: 4 green 1 blue 2 blue 5 blue 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
+active player = 5
+players number = 6
+explosion treshold = 8
+1 player hand cards: 5 blue 7 red 1 yellow 2 white 4 black 
+1 player deck cards: 
+2 player hand cards: 7 blue 1 violet 2 yellow 4 white 5 black 
 2 player deck cards: 
-3 player hand cards: 4 green 1 blue 2 blue 4 blue 5 blue 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 5 violet 7 violet 
-3 player deck cards: 
-1 pile cards: 4 green 
-2 pile cards: 
-3 pile cards: 
-
-active player = 1
-players number = 3
-explosion treshold = 13
-1 player hand cards: 4 green 1 blue 2 blue 4 blue 5 blue 7 blue 1 red 2 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-1 player deck cards: 4 green 4 green 4 green 4 green 
-2 player hand cards: 4 green 1 blue 2 blue 5 blue 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-2 player deck cards: 
-3 player hand cards: 1 blue 2 blue 4 blue 5 blue 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 5 violet 7 violet 
-3 player deck cards: 
-1 pile cards: 4 green 4 green 
-2 pile cards: 
-3 pile cards: 
-
-active player = 2
-players number = 3
-explosion treshold = 13
-1 player hand cards: 1 blue 2 blue 4 blue 5 blue 7 blue 1 red 2 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-1 player deck cards: 4 green 4 green 4 green 4 green 
-2 player hand cards: 4 green 1 blue 2 blue 5 blue 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-2 player deck cards: 
-3 player hand cards: 1 blue 2 blue 4 blue 5 blue 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 5 violet 7 violet 
-3 player deck cards: 
-1 pile cards: 4 green 4 green 4 green 
-2 pile cards: 
-3 pile cards: 
-
-active player = 3
-players number = 3
-explosion treshold = 13
-1 player hand cards: 1 blue 2 blue 4 blue 5 blue 7 blue 1 red 2 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-1 player deck cards: 4 green 4 green 4 green 4 green 
-2 player hand cards: 1 blue 2 blue 5 blue 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-2 player deck cards: 4 green 4 green 4 green 4 green 
-3 player hand cards: 1 blue 2 blue 4 blue 5 blue 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 5 violet 7 violet 
-3 player deck cards: 
-1 pile cards: 
-2 pile cards: 
-3 pile cards: 
-
-active player = 1
-players number = 3
-explosion treshold = 13
-1 player hand cards: 1 blue 2 blue 4 blue 5 blue 7 blue 1 red 2 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-1 player deck cards: 4 green 4 green 4 green 4 green 
-2 player hand cards: 1 blue 2 blue 5 blue 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-2 player deck cards: 4 green 4 green 4 green 4 green 
-3 player hand cards: 2 blue 4 blue 5 blue 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 5 violet 7 violet 
-3 player deck cards: 
+3 player hand cards: 1 red 2 violet 4 yellow 5 white 7 black 
+3 player deck cards: 4 green 4 green 4 green 
+4 player hand cards: 2 red 4 violet 5 yellow 7 white 
+4 player deck cards: 
+5 player hand cards: 2 blue 4 red 5 violet 7 yellow 1 black 
+5 player deck cards: 
+6 player hand cards: 4 blue 5 red 7 violet 1 white 2 black 
+6 player deck cards: 
 1 pile cards: 1 blue 
 2 pile cards: 
 3 pile cards: 
+4 pile cards: 
+5 pile cards: 
+6 pile cards: 
 
-active player = 2
-players number = 3
-explosion treshold = 13
-1 player hand cards: 2 blue 4 blue 5 blue 7 blue 1 red 2 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-1 player deck cards: 4 green 4 green 4 green 4 green 
-2 player hand cards: 1 blue 2 blue 5 blue 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-2 player deck cards: 4 green 4 green 4 green 4 green 
-3 player hand cards: 2 blue 4 blue 5 blue 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 5 violet 7 violet 
-3 player deck cards: 
-1 pile cards: 1 blue 1 blue 
+active player = 6
+players number = 6
+explosion treshold = 8
+1 player hand cards: 5 blue 7 red 1 yellow 2 white 4 black 
+1 player deck cards: 
+2 player hand cards: 7 blue 1 violet 2 yellow 4 white 5 black 
+2 player deck cards: 
+3 player hand cards: 1 red 2 violet 4 yellow 5 white 7 black 
+3 player deck cards: 4 green 4 green 4 green 
+4 player hand cards: 2 red 4 violet 5 yellow 7 white 
+4 player deck cards: 
+5 player hand cards: 4 red 5 violet 7 yellow 1 black 
+5 player deck cards: 
+6 player hand cards: 4 blue 5 red 7 violet 1 white 2 black 
+6 player deck cards: 
+1 pile cards: 1 blue 2 blue 
 2 pile cards: 
 3 pile cards: 
-
-active player = 3
-players number = 3
-explosion treshold = 13
-1 player hand cards: 2 blue 4 blue 5 blue 7 blue 1 red 2 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-1 player deck cards: 4 green 4 green 4 green 4 green 
-2 player hand cards: 2 blue 5 blue 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-2 player deck cards: 4 green 4 green 4 green 4 green 
-3 player hand cards: 2 blue 4 blue 5 blue 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 5 violet 7 violet 
-3 player deck cards: 
-1 pile cards: 1 blue 1 blue 1 blue 
-2 pile cards: 
-3 pile cards: 
+4 pile cards: 
+5 pile cards: 
+6 pile cards: 
 
 active player = 1
-players number = 3
-explosion treshold = 13
-1 player hand cards: 2 blue 4 blue 5 blue 7 blue 1 red 2 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-1 player deck cards: 4 green 4 green 4 green 4 green 
-2 player hand cards: 2 blue 5 blue 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-2 player deck cards: 4 green 4 green 4 green 4 green 
-3 player hand cards: 4 blue 5 blue 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 5 violet 7 violet 
-3 player deck cards: 
-1 pile cards: 1 blue 1 blue 1 blue 2 blue 
+players number = 6
+explosion treshold = 8
+1 player hand cards: 5 blue 7 red 1 yellow 2 white 4 black 
+1 player deck cards: 
+2 player hand cards: 7 blue 1 violet 2 yellow 4 white 5 black 
+2 player deck cards: 
+3 player hand cards: 1 red 2 violet 4 yellow 5 white 7 black 
+3 player deck cards: 4 green 4 green 4 green 
+4 player hand cards: 2 red 4 violet 5 yellow 7 white 
+4 player deck cards: 
+5 player hand cards: 4 red 5 violet 7 yellow 1 black 
+5 player deck cards: 
+6 player hand cards: 5 red 7 violet 1 white 2 black 
+6 player deck cards: 
+1 pile cards: 2 blue 1 blue 4 blue 
 2 pile cards: 
 3 pile cards: 
+4 pile cards: 
+5 pile cards: 
+6 pile cards: 
 
 active player = 2
-players number = 3
-explosion treshold = 13
-1 player hand cards: 4 blue 5 blue 7 blue 1 red 2 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-1 player deck cards: 4 green 4 green 4 green 4 green 
-2 player hand cards: 2 blue 5 blue 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-2 player deck cards: 4 green 4 green 4 green 4 green 
-3 player hand cards: 4 blue 5 blue 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 5 violet 7 violet 
-3 player deck cards: 
-1 pile cards: 2 blue 1 blue 1 blue 1 blue 2 blue 
-2 pile cards: 
-3 pile cards: 
-
-active player = 3
-players number = 3
-explosion treshold = 13
-1 player hand cards: 4 blue 5 blue 7 blue 1 red 2 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-1 player deck cards: 4 green 4 green 4 green 4 green 
-2 player hand cards: 5 blue 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-2 player deck cards: 4 green 4 green 4 green 4 green 
-3 player hand cards: 4 blue 5 blue 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 5 violet 7 violet 
-3 player deck cards: 
-1 pile cards: 2 blue 1 blue 1 blue 1 blue 2 blue 2 blue 
-2 pile cards: 
-3 pile cards: 
-
-active player = 1
-players number = 3
-explosion treshold = 13
-1 player hand cards: 4 blue 5 blue 7 blue 1 red 2 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-1 player deck cards: 4 green 4 green 4 green 4 green 
-2 player hand cards: 5 blue 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-2 player deck cards: 4 green 4 green 4 green 4 green 
-3 player hand cards: 5 blue 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 5 violet 7 violet 
-3 player deck cards: 
-1 pile cards: 2 blue 2 blue 1 blue 1 blue 1 blue 2 blue 4 blue 
-2 pile cards: 
-3 pile cards: 
-
-active player = 2
-players number = 3
-explosion treshold = 13
-1 player hand cards: 5 blue 7 blue 1 red 2 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-1 player deck cards: 4 blue 2 blue 2 blue 1 blue 1 blue 1 blue 2 blue 4 blue 4 green 4 green 4 green 4 green 
-2 player hand cards: 5 blue 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-2 player deck cards: 4 green 4 green 4 green 4 green 
-3 player hand cards: 5 blue 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 5 violet 7 violet 
-3 player deck cards: 
+players number = 6
+explosion treshold = 8
+1 player hand cards: 7 red 1 yellow 2 white 4 black 
+1 player deck cards: 5 blue 2 blue 1 blue 4 blue 
+2 player hand cards: 7 blue 1 violet 2 yellow 4 white 5 black 
+2 player deck cards: 
+3 player hand cards: 1 red 2 violet 4 yellow 5 white 7 black 
+3 player deck cards: 4 green 4 green 4 green 
+4 player hand cards: 2 red 4 violet 5 yellow 7 white 
+4 player deck cards: 
+5 player hand cards: 4 red 5 violet 7 yellow 1 black 
+5 player deck cards: 
+6 player hand cards: 5 red 7 violet 1 white 2 black 
+6 player deck cards: 
 1 pile cards: 
 2 pile cards: 
 3 pile cards: 
+4 pile cards: 
+5 pile cards: 
+6 pile cards: 
 
 active player = 3
-players number = 3
-explosion treshold = 13
-1 player hand cards: 5 blue 7 blue 1 red 2 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-1 player deck cards: 4 blue 2 blue 2 blue 1 blue 1 blue 1 blue 2 blue 4 blue 4 green 4 green 4 green 4 green 
-2 player hand cards: 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-2 player deck cards: 4 green 4 green 4 green 4 green 
-3 player hand cards: 5 blue 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 5 violet 7 violet 
-3 player deck cards: 
-1 pile cards: 5 blue 
-2 pile cards: 
-3 pile cards: 
-
-active player = 1
-players number = 3
-explosion treshold = 13
-1 player hand cards: 5 blue 7 blue 1 red 2 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-1 player deck cards: 4 blue 2 blue 2 blue 1 blue 1 blue 1 blue 2 blue 4 blue 4 green 4 green 4 green 4 green 
-2 player hand cards: 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-2 player deck cards: 4 green 4 green 4 green 4 green 
-3 player hand cards: 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 5 violet 7 violet 
-3 player deck cards: 
-1 pile cards: 5 blue 5 blue 
-2 pile cards: 
-3 pile cards: 
-
-active player = 2
-players number = 3
-explosion treshold = 13
-1 player hand cards: 7 blue 1 red 2 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-1 player deck cards: 5 blue 5 blue 5 blue 4 blue 2 blue 2 blue 1 blue 1 blue 1 blue 2 blue 4 blue 4 green 4 green 4 green 4 green 
-2 player hand cards: 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-2 player deck cards: 4 green 4 green 4 green 4 green 
-3 player hand cards: 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 5 violet 7 violet 
-3 player deck cards: 
-1 pile cards: 
-2 pile cards: 
-3 pile cards: 
-
-active player = 3
-players number = 3
-explosion treshold = 13
-1 player hand cards: 7 blue 1 red 2 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-1 player deck cards: 5 blue 5 blue 5 blue 4 blue 2 blue 2 blue 1 blue 1 blue 1 blue 2 blue 4 blue 4 green 4 green 4 green 4 green 
-2 player hand cards: 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-2 player deck cards: 4 green 4 green 4 green 4 green 
-3 player hand cards: 7 blue 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 5 violet 7 violet 
-3 player deck cards: 
+players number = 6
+explosion treshold = 8
+1 player hand cards: 7 red 1 yellow 2 white 4 black 
+1 player deck cards: 5 blue 2 blue 1 blue 4 blue 
+2 player hand cards: 1 violet 2 yellow 4 white 5 black 
+2 player deck cards: 
+3 player hand cards: 1 red 2 violet 4 yellow 5 white 7 black 
+3 player deck cards: 4 green 4 green 4 green 
+4 player hand cards: 2 red 4 violet 5 yellow 7 white 
+4 player deck cards: 
+5 player hand cards: 4 red 5 violet 7 yellow 1 black 
+5 player deck cards: 
+6 player hand cards: 5 red 7 violet 1 white 2 black 
+6 player deck cards: 
 1 pile cards: 7 blue 
 2 pile cards: 
 3 pile cards: 
+4 pile cards: 
+5 pile cards: 
+6 pile cards: 
 
-active player = 1
-players number = 3
-explosion treshold = 13
-1 player hand cards: 7 blue 1 red 2 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-1 player deck cards: 5 blue 5 blue 5 blue 4 blue 2 blue 2 blue 1 blue 1 blue 1 blue 2 blue 4 blue 4 green 4 green 4 green 4 green 
-2 player hand cards: 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-2 player deck cards: 4 green 4 green 4 green 4 green 
-3 player hand cards: 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 5 violet 7 violet 
-3 player deck cards: 7 blue 7 blue 
-1 pile cards: 
-2 pile cards: 
-3 pile cards: 
-
-active player = 2
-players number = 3
-explosion treshold = 13
-1 player hand cards: 1 red 2 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-1 player deck cards: 5 blue 5 blue 5 blue 4 blue 2 blue 2 blue 1 blue 1 blue 1 blue 2 blue 4 blue 4 green 4 green 4 green 4 green 
-2 player hand cards: 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-2 player deck cards: 4 green 4 green 4 green 4 green 
-3 player hand cards: 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 5 violet 7 violet 
-3 player deck cards: 7 blue 7 blue 
-1 pile cards: 7 blue 
-2 pile cards: 
-3 pile cards: 
-
-active player = 3
-players number = 3
-explosion treshold = 13
-1 player hand cards: 1 red 2 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-1 player deck cards: 5 blue 5 blue 5 blue 4 blue 2 blue 2 blue 1 blue 1 blue 1 blue 2 blue 4 blue 4 green 4 green 4 green 4 green 
-2 player hand cards: 2 red 4 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-2 player deck cards: 4 green 4 green 4 green 4 green 
-3 player hand cards: 1 red 2 red 4 red 5 red 7 red 1 violet 2 violet 5 violet 7 violet 
-3 player deck cards: 7 blue 7 blue 
+active player = 4
+players number = 6
+explosion treshold = 8
+1 player hand cards: 7 red 1 yellow 2 white 4 black 
+1 player deck cards: 5 blue 2 blue 1 blue 4 blue 
+2 player hand cards: 1 violet 2 yellow 4 white 5 black 
+2 player deck cards: 
+3 player hand cards: 2 violet 4 yellow 5 white 7 black 
+3 player deck cards: 4 green 4 green 4 green 
+4 player hand cards: 2 red 4 violet 5 yellow 7 white 
+4 player deck cards: 
+5 player hand cards: 4 red 5 violet 7 yellow 1 black 
+5 player deck cards: 
+6 player hand cards: 5 red 7 violet 1 white 2 black 
+6 player deck cards: 
 1 pile cards: 7 blue 
 2 pile cards: 1 red 
 3 pile cards: 
+4 pile cards: 
+5 pile cards: 
+6 pile cards: 
+
+active player = 5
+players number = 6
+explosion treshold = 8
+1 player hand cards: 7 red 1 yellow 2 white 4 black 
+1 player deck cards: 5 blue 2 blue 1 blue 4 blue 
+2 player hand cards: 1 violet 2 yellow 4 white 5 black 
+2 player deck cards: 
+3 player hand cards: 2 violet 4 yellow 5 white 7 black 
+3 player deck cards: 4 green 4 green 4 green 
+4 player hand cards: 4 violet 5 yellow 7 white 
+4 player deck cards: 
+5 player hand cards: 4 red 5 violet 7 yellow 1 black 
+5 player deck cards: 
+6 player hand cards: 5 red 7 violet 1 white 2 black 
+6 player deck cards: 
+1 pile cards: 7 blue 
+2 pile cards: 1 red 2 red 
+3 pile cards: 
+4 pile cards: 
+5 pile cards: 
+6 pile cards: 
+
+active player = 6
+players number = 6
+explosion treshold = 8
+1 player hand cards: 7 red 1 yellow 2 white 4 black 
+1 player deck cards: 5 blue 2 blue 1 blue 4 blue 
+2 player hand cards: 1 violet 2 yellow 4 white 5 black 
+2 player deck cards: 
+3 player hand cards: 2 violet 4 yellow 5 white 7 black 
+3 player deck cards: 4 green 4 green 4 green 
+4 player hand cards: 4 violet 5 yellow 7 white 
+4 player deck cards: 
+5 player hand cards: 5 violet 7 yellow 1 black 
+5 player deck cards: 
+6 player hand cards: 5 red 7 violet 1 white 2 black 
+6 player deck cards: 
+1 pile cards: 7 blue 
+2 pile cards: 2 red 1 red 4 red 
+3 pile cards: 
+4 pile cards: 
+5 pile cards: 
+6 pile cards: 
 
 active player = 1
-players number = 3
-explosion treshold = 13
-1 player hand cards: 1 red 2 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-1 player deck cards: 5 blue 5 blue 5 blue 4 blue 2 blue 2 blue 1 blue 1 blue 1 blue 2 blue 4 blue 4 green 4 green 4 green 4 green 
-2 player hand cards: 2 red 4 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-2 player deck cards: 4 green 4 green 4 green 4 green 
-3 player hand cards: 2 red 4 red 5 red 7 red 1 violet 2 violet 5 violet 7 violet 
-3 player deck cards: 7 blue 7 blue 
-1 pile cards: 7 blue 
-2 pile cards: 1 red 1 red 
-3 pile cards: 
-
-active player = 2
-players number = 3
-explosion treshold = 13
-1 player hand cards: 2 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-1 player deck cards: 5 blue 5 blue 5 blue 4 blue 2 blue 2 blue 1 blue 1 blue 1 blue 2 blue 4 blue 4 green 4 green 4 green 4 green 
-2 player hand cards: 2 red 4 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-2 player deck cards: 4 green 4 green 4 green 4 green 
-3 player hand cards: 2 red 4 red 5 red 7 red 1 violet 2 violet 5 violet 7 violet 
-3 player deck cards: 7 blue 7 blue 
-1 pile cards: 7 blue 
-2 pile cards: 1 red 1 red 1 red 
-3 pile cards: 
-
-active player = 3
-players number = 3
-explosion treshold = 13
-1 player hand cards: 2 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-1 player deck cards: 5 blue 5 blue 5 blue 4 blue 2 blue 2 blue 1 blue 1 blue 1 blue 2 blue 4 blue 4 green 4 green 4 green 4 green 
-2 player hand cards: 4 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-2 player deck cards: 4 green 4 green 4 green 4 green 
-3 player hand cards: 2 red 4 red 5 red 7 red 1 violet 2 violet 5 violet 7 violet 
-3 player deck cards: 7 blue 7 blue 
-1 pile cards: 7 blue 
-2 pile cards: 1 red 1 red 1 red 2 red 
-3 pile cards: 
-
-active player = 1
-players number = 3
-explosion treshold = 13
-1 player hand cards: 2 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-1 player deck cards: 5 blue 5 blue 5 blue 4 blue 2 blue 2 blue 1 blue 1 blue 1 blue 2 blue 4 blue 4 green 4 green 4 green 4 green 
-2 player hand cards: 4 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-2 player deck cards: 4 green 4 green 4 green 4 green 
-3 player hand cards: 4 red 5 red 7 red 1 violet 2 violet 5 violet 7 violet 
-3 player deck cards: 7 blue 7 blue 
-1 pile cards: 7 blue 
-2 pile cards: 2 red 1 red 1 red 1 red 2 red 
-3 pile cards: 
-
-active player = 2
-players number = 3
-explosion treshold = 13
-1 player hand cards: 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-1 player deck cards: 5 blue 5 blue 5 blue 4 blue 2 blue 2 blue 1 blue 1 blue 1 blue 2 blue 4 blue 4 green 4 green 4 green 4 green 
-2 player hand cards: 4 red 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-2 player deck cards: 4 green 4 green 4 green 4 green 
-3 player hand cards: 4 red 5 red 7 red 1 violet 2 violet 5 violet 7 violet 
-3 player deck cards: 7 blue 7 blue 
-1 pile cards: 7 blue 
-2 pile cards: 2 red 1 red 1 red 1 red 2 red 2 red 
-3 pile cards: 
-
-active player = 3
-players number = 3
-explosion treshold = 13
-1 player hand cards: 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-1 player deck cards: 5 blue 5 blue 5 blue 4 blue 2 blue 2 blue 1 blue 1 blue 1 blue 2 blue 4 blue 4 green 4 green 4 green 4 green 
-2 player hand cards: 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-2 player deck cards: 4 green 4 green 4 green 4 green 
-3 player hand cards: 4 red 5 red 7 red 1 violet 2 violet 5 violet 7 violet 
-3 player deck cards: 7 blue 7 blue 
-1 pile cards: 7 blue 
-2 pile cards: 2 red 2 red 1 red 1 red 1 red 2 red 4 red 
-3 pile cards: 
-
-active player = 1
-players number = 3
-explosion treshold = 13
-1 player hand cards: 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-1 player deck cards: 5 blue 5 blue 5 blue 4 blue 2 blue 2 blue 1 blue 1 blue 1 blue 2 blue 4 blue 4 green 4 green 4 green 4 green 
-2 player hand cards: 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-2 player deck cards: 4 green 4 green 4 green 4 green 
-3 player hand cards: 5 red 7 red 1 violet 2 violet 5 violet 7 violet 
-3 player deck cards: 4 red 2 red 2 red 1 red 1 red 1 red 2 red 4 red 7 blue 7 blue 
+players number = 6
+explosion treshold = 8
+1 player hand cards: 7 red 1 yellow 2 white 4 black 
+1 player deck cards: 5 blue 2 blue 1 blue 4 blue 
+2 player hand cards: 1 violet 2 yellow 4 white 5 black 
+2 player deck cards: 
+3 player hand cards: 2 violet 4 yellow 5 white 7 black 
+3 player deck cards: 4 green 4 green 4 green 
+4 player hand cards: 4 violet 5 yellow 7 white 
+4 player deck cards: 
+5 player hand cards: 5 violet 7 yellow 1 black 
+5 player deck cards: 
+6 player hand cards: 7 violet 1 white 2 black 
+6 player deck cards: 5 red 2 red 1 red 4 red 
 1 pile cards: 7 blue 
 2 pile cards: 
 3 pile cards: 
+4 pile cards: 
+5 pile cards: 
+6 pile cards: 
 
 active player = 2
-players number = 3
-explosion treshold = 13
-1 player hand cards: 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-1 player deck cards: 5 blue 5 blue 5 blue 4 blue 2 blue 2 blue 1 blue 1 blue 1 blue 2 blue 4 blue 4 green 4 green 4 green 4 green 
-2 player hand cards: 5 red 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-2 player deck cards: 4 green 4 green 4 green 4 green 
-3 player hand cards: 5 red 7 red 1 violet 2 violet 5 violet 7 violet 
-3 player deck cards: 4 red 2 red 2 red 1 red 1 red 1 red 2 red 4 red 7 blue 7 blue 
-1 pile cards: 7 blue 
-2 pile cards: 5 red 
-3 pile cards: 
-
-active player = 3
-players number = 3
-explosion treshold = 13
-1 player hand cards: 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-1 player deck cards: 5 blue 5 blue 5 blue 4 blue 2 blue 2 blue 1 blue 1 blue 1 blue 2 blue 4 blue 4 green 4 green 4 green 4 green 
-2 player hand cards: 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-2 player deck cards: 4 green 4 green 4 green 4 green 
-3 player hand cards: 5 red 7 red 1 violet 2 violet 5 violet 7 violet 
-3 player deck cards: 4 red 2 red 2 red 1 red 1 red 1 red 2 red 4 red 7 blue 7 blue 
-1 pile cards: 7 blue 
-2 pile cards: 5 red 5 red 
-3 pile cards: 
-
-active player = 1
-players number = 3
-explosion treshold = 13
-1 player hand cards: 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-1 player deck cards: 5 blue 5 blue 5 blue 4 blue 2 blue 2 blue 1 blue 1 blue 1 blue 2 blue 4 blue 4 green 4 green 4 green 4 green 
-2 player hand cards: 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-2 player deck cards: 4 green 4 green 4 green 4 green 
-3 player hand cards: 7 red 1 violet 2 violet 5 violet 7 violet 
-3 player deck cards: 5 red 5 red 5 red 4 red 2 red 2 red 1 red 1 red 1 red 2 red 4 red 7 blue 7 blue 
-1 pile cards: 7 blue 
-2 pile cards: 
-3 pile cards: 
-
-active player = 2
-players number = 3
-explosion treshold = 13
-1 player hand cards: 1 violet 2 violet 4 violet 5 violet 7 violet 
-1 player deck cards: 5 blue 5 blue 5 blue 4 blue 2 blue 2 blue 1 blue 1 blue 1 blue 2 blue 4 blue 4 green 4 green 4 green 4 green 
-2 player hand cards: 7 red 1 violet 2 violet 4 violet 5 violet 7 violet 
-2 player deck cards: 4 green 4 green 4 green 4 green 
-3 player hand cards: 7 red 1 violet 2 violet 5 violet 7 violet 
-3 player deck cards: 5 red 5 red 5 red 4 red 2 red 2 red 1 red 1 red 1 red 2 red 4 red 7 blue 7 blue 
+players number = 6
+explosion treshold = 8
+1 player hand cards: 1 yellow 2 white 4 black 
+1 player deck cards: 5 blue 2 blue 1 blue 4 blue 
+2 player hand cards: 1 violet 2 yellow 4 white 5 black 
+2 player deck cards: 
+3 player hand cards: 2 violet 4 yellow 5 white 7 black 
+3 player deck cards: 4 green 4 green 4 green 
+4 player hand cards: 4 violet 5 yellow 7 white 
+4 player deck cards: 
+5 player hand cards: 5 violet 7 yellow 1 black 
+5 player deck cards: 
+6 player hand cards: 7 violet 1 white 2 black 
+6 player deck cards: 5 red 2 red 1 red 4 red 
 1 pile cards: 7 blue 
 2 pile cards: 7 red 
 3 pile cards: 
+4 pile cards: 
+5 pile cards: 
+6 pile cards: 
 
 active player = 3
-players number = 3
-explosion treshold = 13
-1 player hand cards: 1 violet 2 violet 4 violet 5 violet 7 violet 
-1 player deck cards: 5 blue 5 blue 5 blue 4 blue 2 blue 2 blue 1 blue 1 blue 1 blue 2 blue 4 blue 4 green 4 green 4 green 4 green 
-2 player hand cards: 1 violet 2 violet 4 violet 5 violet 7 violet 
-2 player deck cards: 7 red 7 red 4 green 4 green 4 green 4 green 
-3 player hand cards: 7 red 1 violet 2 violet 5 violet 7 violet 
-3 player deck cards: 5 red 5 red 5 red 4 red 2 red 2 red 1 red 1 red 1 red 2 red 4 red 7 blue 7 blue 
-1 pile cards: 7 blue 
-2 pile cards: 
-3 pile cards: 
-
-active player = 1
-players number = 3
-explosion treshold = 13
-1 player hand cards: 1 violet 2 violet 4 violet 5 violet 7 violet 
-1 player deck cards: 5 blue 5 blue 5 blue 4 blue 2 blue 2 blue 1 blue 1 blue 1 blue 2 blue 4 blue 4 green 4 green 4 green 4 green 
-2 player hand cards: 1 violet 2 violet 4 violet 5 violet 7 violet 
-2 player deck cards: 7 red 7 red 4 green 4 green 4 green 4 green 
-3 player hand cards: 1 violet 2 violet 5 violet 7 violet 
-3 player deck cards: 5 red 5 red 5 red 4 red 2 red 2 red 1 red 1 red 1 red 2 red 4 red 7 blue 7 blue 
-1 pile cards: 7 blue 
-2 pile cards: 7 red 
-3 pile cards: 
-
-active player = 2
-players number = 3
-explosion treshold = 13
-1 player hand cards: 2 violet 4 violet 5 violet 7 violet 
-1 player deck cards: 5 blue 5 blue 5 blue 4 blue 2 blue 2 blue 1 blue 1 blue 1 blue 2 blue 4 blue 4 green 4 green 4 green 4 green 
-2 player hand cards: 1 violet 2 violet 4 violet 5 violet 7 violet 
-2 player deck cards: 7 red 7 red 4 green 4 green 4 green 4 green 
-3 player hand cards: 1 violet 2 violet 5 violet 7 violet 
-3 player deck cards: 5 red 5 red 5 red 4 red 2 red 2 red 1 red 1 red 1 red 2 red 4 red 7 blue 7 blue 
+players number = 6
+explosion treshold = 8
+1 player hand cards: 1 yellow 2 white 4 black 
+1 player deck cards: 5 blue 2 blue 1 blue 4 blue 
+2 player hand cards: 2 yellow 4 white 5 black 
+2 player deck cards: 
+3 player hand cards: 2 violet 4 yellow 5 white 7 black 
+3 player deck cards: 4 green 4 green 4 green 
+4 player hand cards: 4 violet 5 yellow 7 white 
+4 player deck cards: 
+5 player hand cards: 5 violet 7 yellow 1 black 
+5 player deck cards: 
+6 player hand cards: 7 violet 1 white 2 black 
+6 player deck cards: 5 red 2 red 1 red 4 red 
 1 pile cards: 7 blue 
 2 pile cards: 7 red 
 3 pile cards: 1 violet 
+4 pile cards: 
+5 pile cards: 
+6 pile cards: 
 
-active player = 3
-players number = 3
-explosion treshold = 13
-1 player hand cards: 2 violet 4 violet 5 violet 7 violet 
-1 player deck cards: 5 blue 5 blue 5 blue 4 blue 2 blue 2 blue 1 blue 1 blue 1 blue 2 blue 4 blue 4 green 4 green 4 green 4 green 
-2 player hand cards: 2 violet 4 violet 5 violet 7 violet 
-2 player deck cards: 7 red 7 red 4 green 4 green 4 green 4 green 
-3 player hand cards: 1 violet 2 violet 5 violet 7 violet 
-3 player deck cards: 5 red 5 red 5 red 4 red 2 red 2 red 1 red 1 red 1 red 2 red 4 red 7 blue 7 blue 
+active player = 4
+players number = 6
+explosion treshold = 8
+1 player hand cards: 1 yellow 2 white 4 black 
+1 player deck cards: 5 blue 2 blue 1 blue 4 blue 
+2 player hand cards: 2 yellow 4 white 5 black 
+2 player deck cards: 
+3 player hand cards: 4 yellow 5 white 7 black 
+3 player deck cards: 4 green 4 green 4 green 
+4 player hand cards: 4 violet 5 yellow 7 white 
+4 player deck cards: 
+5 player hand cards: 5 violet 7 yellow 1 black 
+5 player deck cards: 
+6 player hand cards: 7 violet 1 white 2 black 
+6 player deck cards: 5 red 2 red 1 red 4 red 
 1 pile cards: 7 blue 
 2 pile cards: 7 red 
-3 pile cards: 1 violet 1 violet 
+3 pile cards: 1 violet 2 violet 
+4 pile cards: 
+5 pile cards: 
+6 pile cards: 
 
-active player = 1
-players number = 3
-explosion treshold = 13
-1 player hand cards: 2 violet 4 violet 5 violet 7 violet 
-1 player deck cards: 5 blue 5 blue 5 blue 4 blue 2 blue 2 blue 1 blue 1 blue 1 blue 2 blue 4 blue 4 green 4 green 4 green 4 green 
-2 player hand cards: 2 violet 4 violet 5 violet 7 violet 
-2 player deck cards: 7 red 7 red 4 green 4 green 4 green 4 green 
-3 player hand cards: 2 violet 5 violet 7 violet 
-3 player deck cards: 5 red 5 red 5 red 4 red 2 red 2 red 1 red 1 red 1 red 2 red 4 red 7 blue 7 blue 
+active player = 5
+players number = 6
+explosion treshold = 8
+1 player hand cards: 1 yellow 2 white 4 black 
+1 player deck cards: 5 blue 2 blue 1 blue 4 blue 
+2 player hand cards: 2 yellow 4 white 5 black 
+2 player deck cards: 
+3 player hand cards: 4 yellow 5 white 7 black 
+3 player deck cards: 4 green 4 green 4 green 
+4 player hand cards: 5 yellow 7 white 
+4 player deck cards: 
+5 player hand cards: 5 violet 7 yellow 1 black 
+5 player deck cards: 
+6 player hand cards: 7 violet 1 white 2 black 
+6 player deck cards: 5 red 2 red 1 red 4 red 
 1 pile cards: 7 blue 
 2 pile cards: 7 red 
-3 pile cards: 1 violet 1 violet 1 violet 
+3 pile cards: 2 violet 1 violet 4 violet 
+4 pile cards: 
+5 pile cards: 
+6 pile cards: 
 
-active player = 2
-players number = 3
-explosion treshold = 13
-1 player hand cards: 4 violet 5 violet 7 violet 
-1 player deck cards: 5 blue 5 blue 5 blue 4 blue 2 blue 2 blue 1 blue 1 blue 1 blue 2 blue 4 blue 4 green 4 green 4 green 4 green 
-2 player hand cards: 2 violet 4 violet 5 violet 7 violet 
-2 player deck cards: 7 red 7 red 4 green 4 green 4 green 4 green 
-3 player hand cards: 2 violet 5 violet 7 violet 
-3 player deck cards: 5 red 5 red 5 red 4 red 2 red 2 red 1 red 1 red 1 red 2 red 4 red 7 blue 7 blue 
-1 pile cards: 7 blue 
-2 pile cards: 7 red 
-3 pile cards: 1 violet 1 violet 1 violet 2 violet 
-
-active player = 3
-players number = 3
-explosion treshold = 13
-1 player hand cards: 4 violet 5 violet 7 violet 
-1 player deck cards: 5 blue 5 blue 5 blue 4 blue 2 blue 2 blue 1 blue 1 blue 1 blue 2 blue 4 blue 4 green 4 green 4 green 4 green 
-2 player hand cards: 4 violet 5 violet 7 violet 
-2 player deck cards: 7 red 7 red 4 green 4 green 4 green 4 green 
-3 player hand cards: 2 violet 5 violet 7 violet 
-3 player deck cards: 5 red 5 red 5 red 4 red 2 red 2 red 1 red 1 red 1 red 2 red 4 red 7 blue 7 blue 
-1 pile cards: 7 blue 
-2 pile cards: 7 red 
-3 pile cards: 2 violet 1 violet 1 violet 1 violet 2 violet 
-
-active player = 1
-players number = 3
-explosion treshold = 13
-1 player hand cards: 4 violet 5 violet 7 violet 
-1 player deck cards: 5 blue 5 blue 5 blue 4 blue 2 blue 2 blue 1 blue 1 blue 1 blue 2 blue 4 blue 4 green 4 green 4 green 4 green 
-2 player hand cards: 4 violet 5 violet 7 violet 
-2 player deck cards: 7 red 7 red 4 green 4 green 4 green 4 green 
-3 player hand cards: 5 violet 7 violet 
-3 player deck cards: 5 red 5 red 5 red 4 red 2 red 2 red 1 red 1 red 1 red 2 red 4 red 7 blue 7 blue 
-1 pile cards: 7 blue 
-2 pile cards: 7 red 
-3 pile cards: 2 violet 1 violet 1 violet 1 violet 2 violet 2 violet 
-
-active player = 2
-players number = 3
-explosion treshold = 13
-1 player hand cards: 5 violet 7 violet 
-1 player deck cards: 5 blue 5 blue 5 blue 4 blue 2 blue 2 blue 1 blue 1 blue 1 blue 2 blue 4 blue 4 green 4 green 4 green 4 green 
-2 player hand cards: 4 violet 5 violet 7 violet 
-2 player deck cards: 7 red 7 red 4 green 4 green 4 green 4 green 
-3 player hand cards: 5 violet 7 violet 
-3 player deck cards: 5 red 5 red 5 red 4 red 2 red 2 red 1 red 1 red 1 red 2 red 4 red 7 blue 7 blue 
-1 pile cards: 7 blue 
-2 pile cards: 7 red 
-3 pile cards: 2 violet 2 violet 1 violet 1 violet 1 violet 2 violet 4 violet 
-
-active player = 3
-players number = 3
-explosion treshold = 13
-1 player hand cards: 5 violet 7 violet 
-1 player deck cards: 5 blue 5 blue 5 blue 4 blue 2 blue 2 blue 1 blue 1 blue 1 blue 2 blue 4 blue 4 green 4 green 4 green 4 green 
-2 player hand cards: 5 violet 7 violet 
-2 player deck cards: 4 violet 2 violet 2 violet 1 violet 1 violet 1 violet 2 violet 4 violet 7 red 7 red 4 green 4 green 4 green 4 green 
-3 player hand cards: 5 violet 7 violet 
-3 player deck cards: 5 red 5 red 5 red 4 red 2 red 2 red 1 red 1 red 1 red 2 red 4 red 7 blue 7 blue 
+active player = 6
+players number = 6
+explosion treshold = 8
+1 player hand cards: 1 yellow 2 white 4 black 
+1 player deck cards: 5 blue 2 blue 1 blue 4 blue 
+2 player hand cards: 2 yellow 4 white 5 black 
+2 player deck cards: 
+3 player hand cards: 4 yellow 5 white 7 black 
+3 player deck cards: 4 green 4 green 4 green 
+4 player hand cards: 5 yellow 7 white 
+4 player deck cards: 
+5 player hand cards: 7 yellow 1 black 
+5 player deck cards: 5 violet 2 violet 1 violet 4 violet 
+6 player hand cards: 7 violet 1 white 2 black 
+6 player deck cards: 5 red 2 red 1 red 4 red 
 1 pile cards: 7 blue 
 2 pile cards: 7 red 
 3 pile cards: 
+4 pile cards: 
+5 pile cards: 
+6 pile cards: 
 
 active player = 1
-players number = 3
-explosion treshold = 13
-1 player hand cards: 5 violet 7 violet 
-1 player deck cards: 5 blue 5 blue 5 blue 4 blue 2 blue 2 blue 1 blue 1 blue 1 blue 2 blue 4 blue 4 green 4 green 4 green 4 green 
-2 player hand cards: 5 violet 7 violet 
-2 player deck cards: 4 violet 2 violet 2 violet 1 violet 1 violet 1 violet 2 violet 4 violet 7 red 7 red 4 green 4 green 4 green 4 green 
-3 player hand cards: 7 violet 
-3 player deck cards: 5 red 5 red 5 red 4 red 2 red 2 red 1 red 1 red 1 red 2 red 4 red 7 blue 7 blue 
-1 pile cards: 7 blue 
-2 pile cards: 7 red 
-3 pile cards: 5 violet 
-
-active player = 2
-players number = 3
-explosion treshold = 13
-1 player hand cards: 7 violet 
-1 player deck cards: 5 blue 5 blue 5 blue 4 blue 2 blue 2 blue 1 blue 1 blue 1 blue 2 blue 4 blue 4 green 4 green 4 green 4 green 
-2 player hand cards: 5 violet 7 violet 
-2 player deck cards: 4 violet 2 violet 2 violet 1 violet 1 violet 1 violet 2 violet 4 violet 7 red 7 red 4 green 4 green 4 green 4 green 
-3 player hand cards: 7 violet 
-3 player deck cards: 5 red 5 red 5 red 4 red 2 red 2 red 1 red 1 red 1 red 2 red 4 red 7 blue 7 blue 
-1 pile cards: 7 blue 
-2 pile cards: 7 red 
-3 pile cards: 5 violet 5 violet 
-
-active player = 3
-players number = 3
-explosion treshold = 13
-1 player hand cards: 7 violet 
-1 player deck cards: 5 blue 5 blue 5 blue 4 blue 2 blue 2 blue 1 blue 1 blue 1 blue 2 blue 4 blue 4 green 4 green 4 green 4 green 
-2 player hand cards: 7 violet 
-2 player deck cards: 5 violet 5 violet 5 violet 4 violet 2 violet 2 violet 1 violet 1 violet 1 violet 2 violet 4 violet 7 red 7 red 4 green 4 green 4 green 4 green 
-3 player hand cards: 7 violet 
-3 player deck cards: 5 red 5 red 5 red 4 red 2 red 2 red 1 red 1 red 1 red 2 red 4 red 7 blue 7 blue 
-1 pile cards: 7 blue 
-2 pile cards: 7 red 
-3 pile cards: 
-
-active player = 1
-players number = 3
-explosion treshold = 13
-1 player hand cards: 7 violet 
-1 player deck cards: 5 blue 5 blue 5 blue 4 blue 2 blue 2 blue 1 blue 1 blue 1 blue 2 blue 4 blue 4 green 4 green 4 green 4 green 
-2 player hand cards: 7 violet 
-2 player deck cards: 5 violet 5 violet 5 violet 4 violet 2 violet 2 violet 1 violet 1 violet 1 violet 2 violet 4 violet 7 red 7 red 4 green 4 green 4 green 4 green 
-3 player hand cards: 
-3 player deck cards: 5 red 5 red 5 red 4 red 2 red 2 red 1 red 1 red 1 red 2 red 4 red 7 blue 7 blue 
+players number = 6
+explosion treshold = 8
+1 player hand cards: 1 yellow 2 white 4 black 
+1 player deck cards: 5 blue 2 blue 1 blue 4 blue 
+2 player hand cards: 2 yellow 4 white 5 black 
+2 player deck cards: 
+3 player hand cards: 4 yellow 5 white 7 black 
+3 player deck cards: 4 green 4 green 4 green 
+4 player hand cards: 5 yellow 7 white 
+4 player deck cards: 
+5 player hand cards: 7 yellow 1 black 
+5 player deck cards: 5 violet 2 violet 1 violet 4 violet 
+6 player hand cards: 1 white 2 black 
+6 player deck cards: 5 red 2 red 1 red 4 red 
 1 pile cards: 7 blue 
 2 pile cards: 7 red 
 3 pile cards: 7 violet 
+4 pile cards: 
+5 pile cards: 
+6 pile cards: 
 
 active player = 2
-players number = 3
-explosion treshold = 13
-1 player hand cards: 
-1 player deck cards: 7 violet 7 violet 5 blue 5 blue 5 blue 4 blue 2 blue 2 blue 1 blue 1 blue 1 blue 2 blue 4 blue 4 green 4 green 4 green 4 green 
-2 player hand cards: 7 violet 
-2 player deck cards: 5 violet 5 violet 5 violet 4 violet 2 violet 2 violet 1 violet 1 violet 1 violet 2 violet 4 violet 7 red 7 red 4 green 4 green 4 green 4 green 
-3 player hand cards: 
-3 player deck cards: 5 red 5 red 5 red 4 red 2 red 2 red 1 red 1 red 1 red 2 red 4 red 7 blue 7 blue 
+players number = 6
+explosion treshold = 8
+1 player hand cards: 2 white 4 black 
+1 player deck cards: 5 blue 2 blue 1 blue 4 blue 
+2 player hand cards: 2 yellow 4 white 5 black 
+2 player deck cards: 
+3 player hand cards: 4 yellow 5 white 7 black 
+3 player deck cards: 4 green 4 green 4 green 
+4 player hand cards: 5 yellow 7 white 
+4 player deck cards: 
+5 player hand cards: 7 yellow 1 black 
+5 player deck cards: 5 violet 2 violet 1 violet 4 violet 
+6 player hand cards: 1 white 2 black 
+6 player deck cards: 5 red 2 red 1 red 4 red 
 1 pile cards: 7 blue 
 2 pile cards: 7 red 
-3 pile cards: 
+3 pile cards: 7 violet 
+4 pile cards: 1 yellow 
+5 pile cards: 
+6 pile cards: 
 
 active player = 3
-players number = 3
-explosion treshold = 13
+players number = 6
+explosion treshold = 8
+1 player hand cards: 2 white 4 black 
+1 player deck cards: 5 blue 2 blue 1 blue 4 blue 
+2 player hand cards: 4 white 5 black 
+2 player deck cards: 
+3 player hand cards: 4 yellow 5 white 7 black 
+3 player deck cards: 4 green 4 green 4 green 
+4 player hand cards: 5 yellow 7 white 
+4 player deck cards: 
+5 player hand cards: 7 yellow 1 black 
+5 player deck cards: 5 violet 2 violet 1 violet 4 violet 
+6 player hand cards: 1 white 2 black 
+6 player deck cards: 5 red 2 red 1 red 4 red 
+1 pile cards: 7 blue 
+2 pile cards: 7 red 
+3 pile cards: 7 violet 
+4 pile cards: 1 yellow 2 yellow 
+5 pile cards: 
+6 pile cards: 
+
+active player = 4
+players number = 6
+explosion treshold = 8
+1 player hand cards: 2 white 4 black 
+1 player deck cards: 5 blue 2 blue 1 blue 4 blue 
+2 player hand cards: 4 white 5 black 
+2 player deck cards: 
+3 player hand cards: 5 white 7 black 
+3 player deck cards: 4 green 4 green 4 green 
+4 player hand cards: 5 yellow 7 white 
+4 player deck cards: 
+5 player hand cards: 7 yellow 1 black 
+5 player deck cards: 5 violet 2 violet 1 violet 4 violet 
+6 player hand cards: 1 white 2 black 
+6 player deck cards: 5 red 2 red 1 red 4 red 
+1 pile cards: 7 blue 
+2 pile cards: 7 red 
+3 pile cards: 7 violet 
+4 pile cards: 2 yellow 1 yellow 4 yellow 
+5 pile cards: 
+6 pile cards: 
+
+active player = 5
+players number = 6
+explosion treshold = 8
+1 player hand cards: 2 white 4 black 
+1 player deck cards: 5 blue 2 blue 1 blue 4 blue 
+2 player hand cards: 4 white 5 black 
+2 player deck cards: 
+3 player hand cards: 5 white 7 black 
+3 player deck cards: 4 green 4 green 4 green 
+4 player hand cards: 7 white 
+4 player deck cards: 5 yellow 2 yellow 1 yellow 4 yellow 
+5 player hand cards: 7 yellow 1 black 
+5 player deck cards: 5 violet 2 violet 1 violet 4 violet 
+6 player hand cards: 1 white 2 black 
+6 player deck cards: 5 red 2 red 1 red 4 red 
+1 pile cards: 7 blue 
+2 pile cards: 7 red 
+3 pile cards: 7 violet 
+4 pile cards: 
+5 pile cards: 
+6 pile cards: 
+
+active player = 6
+players number = 6
+explosion treshold = 8
+1 player hand cards: 2 white 4 black 
+1 player deck cards: 5 blue 2 blue 1 blue 4 blue 
+2 player hand cards: 4 white 5 black 
+2 player deck cards: 
+3 player hand cards: 5 white 7 black 
+3 player deck cards: 4 green 4 green 4 green 
+4 player hand cards: 7 white 
+4 player deck cards: 5 yellow 2 yellow 1 yellow 4 yellow 
+5 player hand cards: 1 black 
+5 player deck cards: 5 violet 2 violet 1 violet 4 violet 
+6 player hand cards: 1 white 2 black 
+6 player deck cards: 5 red 2 red 1 red 4 red 
+1 pile cards: 7 blue 
+2 pile cards: 7 red 
+3 pile cards: 7 violet 
+4 pile cards: 7 yellow 
+5 pile cards: 
+6 pile cards: 
+
+active player = 1
+players number = 6
+explosion treshold = 8
+1 player hand cards: 2 white 4 black 
+1 player deck cards: 5 blue 2 blue 1 blue 4 blue 
+2 player hand cards: 4 white 5 black 
+2 player deck cards: 
+3 player hand cards: 5 white 7 black 
+3 player deck cards: 4 green 4 green 4 green 
+4 player hand cards: 7 white 
+4 player deck cards: 5 yellow 2 yellow 1 yellow 4 yellow 
+5 player hand cards: 1 black 
+5 player deck cards: 5 violet 2 violet 1 violet 4 violet 
+6 player hand cards: 2 black 
+6 player deck cards: 5 red 2 red 1 red 4 red 
+1 pile cards: 7 blue 
+2 pile cards: 7 red 
+3 pile cards: 7 violet 
+4 pile cards: 7 yellow 
+5 pile cards: 1 white 
+6 pile cards: 
+
+active player = 2
+players number = 6
+explosion treshold = 8
+1 player hand cards: 4 black 
+1 player deck cards: 5 blue 2 blue 1 blue 4 blue 
+2 player hand cards: 4 white 5 black 
+2 player deck cards: 
+3 player hand cards: 5 white 7 black 
+3 player deck cards: 4 green 4 green 4 green 
+4 player hand cards: 7 white 
+4 player deck cards: 5 yellow 2 yellow 1 yellow 4 yellow 
+5 player hand cards: 1 black 
+5 player deck cards: 5 violet 2 violet 1 violet 4 violet 
+6 player hand cards: 2 black 
+6 player deck cards: 5 red 2 red 1 red 4 red 
+1 pile cards: 7 blue 
+2 pile cards: 7 red 
+3 pile cards: 7 violet 
+4 pile cards: 7 yellow 
+5 pile cards: 1 white 2 white 
+6 pile cards: 
+
+active player = 3
+players number = 6
+explosion treshold = 8
+1 player hand cards: 4 black 
+1 player deck cards: 5 blue 2 blue 1 blue 4 blue 
+2 player hand cards: 5 black 
+2 player deck cards: 
+3 player hand cards: 5 white 7 black 
+3 player deck cards: 4 green 4 green 4 green 
+4 player hand cards: 7 white 
+4 player deck cards: 5 yellow 2 yellow 1 yellow 4 yellow 
+5 player hand cards: 1 black 
+5 player deck cards: 5 violet 2 violet 1 violet 4 violet 
+6 player hand cards: 2 black 
+6 player deck cards: 5 red 2 red 1 red 4 red 
+1 pile cards: 7 blue 
+2 pile cards: 7 red 
+3 pile cards: 7 violet 
+4 pile cards: 7 yellow 
+5 pile cards: 2 white 1 white 4 white 
+6 pile cards: 
+
+active player = 4
+players number = 6
+explosion treshold = 8
+1 player hand cards: 4 black 
+1 player deck cards: 5 blue 2 blue 1 blue 4 blue 
+2 player hand cards: 5 black 
+2 player deck cards: 
+3 player hand cards: 7 black 
+3 player deck cards: 5 white 2 white 1 white 4 white 4 green 4 green 4 green 
+4 player hand cards: 7 white 
+4 player deck cards: 5 yellow 2 yellow 1 yellow 4 yellow 
+5 player hand cards: 1 black 
+5 player deck cards: 5 violet 2 violet 1 violet 4 violet 
+6 player hand cards: 2 black 
+6 player deck cards: 5 red 2 red 1 red 4 red 
+1 pile cards: 7 blue 
+2 pile cards: 7 red 
+3 pile cards: 7 violet 
+4 pile cards: 7 yellow 
+5 pile cards: 
+6 pile cards: 
+
+active player = 5
+players number = 6
+explosion treshold = 8
+1 player hand cards: 4 black 
+1 player deck cards: 5 blue 2 blue 1 blue 4 blue 
+2 player hand cards: 5 black 
+2 player deck cards: 
+3 player hand cards: 7 black 
+3 player deck cards: 5 white 2 white 1 white 4 white 4 green 4 green 4 green 
+4 player hand cards: 
+4 player deck cards: 5 yellow 2 yellow 1 yellow 4 yellow 
+5 player hand cards: 1 black 
+5 player deck cards: 5 violet 2 violet 1 violet 4 violet 
+6 player hand cards: 2 black 
+6 player deck cards: 5 red 2 red 1 red 4 red 
+1 pile cards: 7 blue 
+2 pile cards: 7 red 
+3 pile cards: 7 violet 
+4 pile cards: 7 yellow 
+5 pile cards: 7 white 
+6 pile cards: 
+
+active player = 6
+players number = 6
+explosion treshold = 8
+1 player hand cards: 4 black 
+1 player deck cards: 5 blue 2 blue 1 blue 4 blue 
+2 player hand cards: 5 black 
+2 player deck cards: 
+3 player hand cards: 7 black 
+3 player deck cards: 5 white 2 white 1 white 4 white 4 green 4 green 4 green 
+4 player hand cards: 
+4 player deck cards: 5 yellow 2 yellow 1 yellow 4 yellow 
+5 player hand cards: 
+5 player deck cards: 5 violet 2 violet 1 violet 4 violet 
+6 player hand cards: 2 black 
+6 player deck cards: 5 red 2 red 1 red 4 red 
+1 pile cards: 7 blue 
+2 pile cards: 7 red 
+3 pile cards: 7 violet 
+4 pile cards: 7 yellow 
+5 pile cards: 7 white 
+6 pile cards: 1 black 
+
+active player = 1
+players number = 6
+explosion treshold = 8
+1 player hand cards: 4 black 
+1 player deck cards: 5 blue 2 blue 1 blue 4 blue 
+2 player hand cards: 5 black 
+2 player deck cards: 
+3 player hand cards: 7 black 
+3 player deck cards: 5 white 2 white 1 white 4 white 4 green 4 green 4 green 
+4 player hand cards: 
+4 player deck cards: 5 yellow 2 yellow 1 yellow 4 yellow 
+5 player hand cards: 
+5 player deck cards: 5 violet 2 violet 1 violet 4 violet 
+6 player hand cards: 
+6 player deck cards: 5 red 2 red 1 red 4 red 
+1 pile cards: 7 blue 
+2 pile cards: 7 red 
+3 pile cards: 7 violet 
+4 pile cards: 7 yellow 
+5 pile cards: 7 white 
+6 pile cards: 1 black 2 black 
+
+active player = 2
+players number = 6
+explosion treshold = 8
 1 player hand cards: 
-1 player deck cards: 7 violet 7 violet 5 blue 5 blue 5 blue 4 blue 2 blue 2 blue 1 blue 1 blue 1 blue 2 blue 4 blue 4 green 4 green 4 green 4 green 
+1 player deck cards: 5 blue 2 blue 1 blue 4 blue 
+2 player hand cards: 5 black 
+2 player deck cards: 
+3 player hand cards: 7 black 
+3 player deck cards: 5 white 2 white 1 white 4 white 4 green 4 green 4 green 
+4 player hand cards: 
+4 player deck cards: 5 yellow 2 yellow 1 yellow 4 yellow 
+5 player hand cards: 
+5 player deck cards: 5 violet 2 violet 1 violet 4 violet 
+6 player hand cards: 
+6 player deck cards: 5 red 2 red 1 red 4 red 
+1 pile cards: 7 blue 
+2 pile cards: 7 red 
+3 pile cards: 7 violet 
+4 pile cards: 7 yellow 
+5 pile cards: 7 white 
+6 pile cards: 2 black 1 black 4 black 
+
+active player = 3
+players number = 6
+explosion treshold = 8
+1 player hand cards: 
+1 player deck cards: 5 blue 2 blue 1 blue 4 blue 
 2 player hand cards: 
-2 player deck cards: 5 violet 5 violet 5 violet 4 violet 2 violet 2 violet 1 violet 1 violet 1 violet 2 violet 4 violet 7 red 7 red 4 green 4 green 4 green 4 green 
-3 player hand cards: 
-3 player deck cards: 5 red 5 red 5 red 4 red 2 red 2 red 1 red 1 red 1 red 2 red 4 red 7 blue 7 blue 
+2 player deck cards: 5 black 2 black 1 black 4 black 
+3 player hand cards: 7 black 
+3 player deck cards: 5 white 2 white 1 white 4 white 4 green 4 green 4 green 
+4 player hand cards: 
+4 player deck cards: 5 yellow 2 yellow 1 yellow 4 yellow 
+5 player hand cards: 
+5 player deck cards: 5 violet 2 violet 1 violet 4 violet 
+6 player hand cards: 
+6 player deck cards: 5 red 2 red 1 red 4 red 
 1 pile cards: 7 blue 
 2 pile cards: 7 red 
 3 pile cards: 7 violet 
+4 pile cards: 7 yellow 
+5 pile cards: 7 white 
+6 pile cards: 
+
+active player = 4
+players number = 6
+explosion treshold = 8
+1 player hand cards: 
+1 player deck cards: 5 blue 2 blue 1 blue 4 blue 
+2 player hand cards: 
+2 player deck cards: 5 black 2 black 1 black 4 black 
+3 player hand cards: 
+3 player deck cards: 5 white 2 white 1 white 4 white 4 green 4 green 4 green 
+4 player hand cards: 
+4 player deck cards: 5 yellow 2 yellow 1 yellow 4 yellow 
+5 player hand cards: 
+5 player deck cards: 5 violet 2 violet 1 violet 4 violet 
+6 player hand cards: 
+6 player deck cards: 5 red 2 red 1 red 4 red 
+1 pile cards: 7 blue 
+2 pile cards: 7 red 
+3 pile cards: 7 violet 
+4 pile cards: 7 yellow 
+5 pile cards: 7 white 
+6 pile cards: 7 black 
 
